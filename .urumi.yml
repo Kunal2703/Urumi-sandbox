@@ -1,0 +1,9 @@
+config_version: 1
+
+wp_config_local: wp-config-local.php
+
+folder_mappings:
+  - source: plugins
+    target: wp-content/plugins
+  - source: themes
+    target: wp-content/themes

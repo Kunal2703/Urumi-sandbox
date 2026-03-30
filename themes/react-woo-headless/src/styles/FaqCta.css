@@ -1,0 +1,488 @@
+/* =============================================
+   FaqCta — Playful Pastel FAQ Blocks + CTA
+   ============================================= */
+
+/* ---------- Section wrapper ---------- */
+.faqcta-section {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 40px 120px;
+  background: linear-gradient(
+    170deg,
+    #FFF5F7 0%,      /* whisper pink  */
+    #F0F4FF 30%,     /* ice blue      */
+    #F5F0FF 60%,     /* pale lavender */
+    #FFF9EC 100%     /* cream peach   */
+  );
+}
+
+/* ---------- Floating decorative blobs ---------- */
+.faqcta-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.40;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.faqcta-blob--1 {
+  width: 400px;
+  height: 400px;
+  background: #FFD6E0;
+  top: -100px;
+  right: -60px;
+  animation: faqcta-float 14s ease-in-out infinite alternate;
+}
+
+.faqcta-blob--2 {
+  width: 340px;
+  height: 340px;
+  background: #D4F0FF;
+  bottom: 10%;
+  left: -80px;
+  animation: faqcta-float 18s ease-in-out infinite alternate-reverse;
+}
+
+.faqcta-blob--3 {
+  width: 280px;
+  height: 280px;
+  background: #E2D6FF;
+  top: 45%;
+  right: 20%;
+  animation: faqcta-float 16s ease-in-out infinite alternate;
+}
+
+@keyframes faqcta-float {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(25px, -20px) scale(1.06); }
+}
+
+/* ---------- Inner content ---------- */
+.faqcta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.faqcta-inner--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Title ---------- */
+.faqcta-title {
+  text-align: center;
+  margin-bottom: 52px;
+  line-height: 1.25;
+}
+
+.faqcta-title__fun {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  color: #2D1B4E;
+  letter-spacing: -0.02em;
+}
+
+.faqcta-title__sub {
+  font-size: clamp(1rem, 2.4vw, 1.35rem);
+  font-weight: 500;
+  color: #7C6B9A;
+  letter-spacing: 0.01em;
+}
+
+/* =============================================
+   FAQ Stack — rounded blocks stacked like
+   playing blocks with slight rotation
+   ============================================= */
+.faq-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 56px;
+}
+
+/* ---------- Individual FAQ block ---------- */
+.faq-block {
+  /* Reset button styles */
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  text-align: left;
+
+  background: var(--block-bg);
+  border: 2px solid var(--block-border);
+  border-radius: 20px;
+  padding: 22px 28px;
+  position: relative;
+
+  /* Playful tilt */
+  transform: rotate(var(--block-rotate)) translateY(30px) scale(0.96);
+  opacity: 0;
+
+  transition:
+    transform 0.45s ease-out,
+    opacity 0.5s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  transition-delay: var(--stagger);
+
+  /* Subtle shadow */
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.04),
+    0 1px 4px rgba(0, 0, 0, 0.03);
+}
+
+.faq-block--visible {
+  opacity: 1;
+  transform: rotate(var(--block-rotate)) translateY(0) scale(1);
+}
+
+/* Hover — lift but keep same rotation (no wobble) */
+.faq-block:hover {
+  transform: rotate(var(--block-rotate)) translateY(-3px) scale(1.01);
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.07),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+  border-color: var(--block-accent);
+}
+
+.faq-block:focus-visible {
+  outline: 3px solid var(--block-accent);
+  outline-offset: 3px;
+}
+
+/* Open state — straighten when expanded */
+.faq-block--open {
+  transform: rotate(0deg) translateY(0) scale(1);
+  border-color: var(--block-accent);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Wobble animation removed */
+
+/* ---------- Header row ---------- */
+.faq-block__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.faq-block__question {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  font-weight: 650;
+  color: #2D1B4E;
+  line-height: 1.45;
+}
+
+/* ---------- Icon (+ / ×) ---------- */
+.faq-block__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+}
+
+.faq-block__icon--open {
+  transform: rotate(45deg);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.faq-icon-v {
+  transition: opacity 0.25s ease;
+}
+
+.faq-block__icon--open .faq-icon-v {
+  opacity: 0;
+}
+
+/* ---------- Answer body ---------- */
+.faq-block__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.faq-block__answer {
+  margin: 0;
+  padding-top: 14px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #5A4E72;
+}
+
+/* =============================================
+   Final CTA — oversized "Let's build it!" button
+   ============================================= */
+.faqcta-cta-wrap {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(40px) scale(0.92);
+  transition: opacity 0.7s ease 0.6s, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s;
+}
+
+.faqcta-cta-wrap--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.faqcta-cta-btn {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  /* Large — bigger than the FAQ blocks */
+  padding: 26px 64px;
+  min-width: 340px;
+  border-radius: 28px;
+
+  /* Gradient background — pastel purple → pink */
+  background: linear-gradient(135deg, #B49AEA 0%, #E87D93 50%, #F5A263 100%);
+  background-size: 200% 200%;
+  animation: faqcta-gradient-shift 4s ease infinite;
+
+  color: #fff;
+  font-size: clamp(1.25rem, 3vw, 1.65rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+
+  box-shadow:
+    0 8px 32px rgba(180, 154, 234, 0.35),
+    0 4px 16px rgba(232, 125, 147, 0.25),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer sweep */
+.faqcta-cta-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 100%
+  );
+  animation: faqcta-shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes faqcta-shimmer {
+  0%   { left: -100%; }
+  60%  { left: 100%; }
+  100% { left: 100%; }
+}
+
+@keyframes faqcta-gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Hover — bounce up + glow */
+.faqcta-cta-btn:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow:
+    0 14px 44px rgba(180, 154, 234, 0.45),
+    0 6px 22px rgba(232, 125, 147, 0.35),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.faqcta-cta-btn:active {
+  transform: translateY(-1px) scale(1.01);
+}
+
+.faqcta-cta-btn:focus-visible {
+  outline: 3px solid #B49AEA;
+  outline-offset: 4px;
+}
+
+/* Pulse ring behind button */
+.faqcta-cta-btn::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 34px;
+  border: 2px solid rgba(180, 154, 234, 0.3);
+  animation: faqcta-pulse-ring 2.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes faqcta-pulse-ring {
+  0%   { transform: scale(1); opacity: 0.5; }
+  50%  { transform: scale(1.06); opacity: 0; }
+  100% { transform: scale(1); opacity: 0.5; }
+}
+
+.faqcta-cta-btn__text {
+  position: relative;
+  z-index: 1;
+}
+
+.faqcta-cta-btn__arrow {
+  position: relative;
+  z-index: 1;
+  font-size: 1.4em;
+  transition: transform 0.3s ease;
+}
+
+.faqcta-cta-btn:hover .faqcta-cta-btn__arrow {
+  transform: translateX(5px);
+}
+
+/* Sub text */
+.faqcta-cta-sub {
+  margin-top: 18px;
+  font-size: 0.9rem;
+  color: #9B8AB8;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Dentist credit line ---------- */
+.faqcta-dentist-credit {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 1rem;
+  color: rgba(80, 70, 110, 0.9);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  margin: 0;
+  padding: 0 20px;
+  animation: faqcta-credit-fade-in 1.2s ease-out 0.6s both;
+  transition: color 0.3s ease;
+}
+
+.faqcta-dentist-credit:hover {
+  color: rgba(150, 140, 170, 0.85);
+}
+
+.faqcta-dentist-credit__tooth {
+  display: inline-block;
+  font-size: 0.85em;
+  animation: faqcta-tooth-wiggle 3s ease-in-out infinite;
+  filter: grayscale(0.3) opacity(0.7);
+}
+
+.faqcta-dentist-credit:hover .faqcta-dentist-credit__tooth {
+  filter: grayscale(0) opacity(1);
+  animation: faqcta-tooth-bounce 0.6s ease-in-out;
+}
+
+.faqcta-dentist-credit__link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(150, 140, 170, 0.35);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.faqcta-dentist-credit__link:hover {
+  color: rgba(180, 154, 234, 0.8);
+  border-bottom-color: rgba(180, 154, 234, 0.5);
+}
+
+@keyframes faqcta-credit-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes faqcta-tooth-wiggle {
+  0%, 85%, 100% { transform: rotate(0deg); }
+  88% { transform: rotate(-8deg); }
+  91% { transform: rotate(8deg); }
+  94% { transform: rotate(-5deg); }
+  97% { transform: rotate(3deg); }
+}
+
+@keyframes faqcta-tooth-bounce {
+  0%   { transform: scale(1) rotate(0deg); }
+  25%  { transform: scale(1.3) rotate(-10deg); }
+  50%  { transform: scale(1.1) rotate(5deg); }
+  75%  { transform: scale(1.2) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media (max-width: 768px) {
+  .faqcta-section {
+    padding: 72px 20px 88px;
+  }
+
+  .faq-block {
+    padding: 18px 20px;
+    border-radius: 16px;
+    /* Tone down rotation on mobile */
+    --block-rotate: calc(var(--block-rotate) * 0.5) !important;
+  }
+
+  .faqcta-cta-btn {
+    min-width: unset;
+    width: 100%;
+    padding: 22px 36px;
+    border-radius: 22px;
+    font-size: 1.2rem;
+  }
+
+  .faqcta-title {
+    margin-bottom: 36px;
+  }
+
+  .faq-stack {
+    margin-bottom: 40px;
+  }
+
+  .faqcta-dentist-credit {
+    bottom: 18px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .faq-block__icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .faqcta-cta-btn {
+    padding: 20px 28px;
+  }
+}

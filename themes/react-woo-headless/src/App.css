@@ -1,0 +1,571 @@
+/**
+ * Luxury Fashion Theme Styles - Inspired by Chanel
+ *
+ * @author Urumi.ai
+ */
+
+/* 
+ * Google Fonts (Playfair Display, Montserrat, Space Grotesk) 
+ * Loaded via <link> in index.php head for non-blocking delivery 
+ * DO NOT use @import here — it blocks rendering
+ */
+
+:root {
+  --luxury-black: #000000;
+  --luxury-white: #FFFFFF;
+  --luxury-cream: #F5F5F0;
+  --luxury-gray: #8E8E8E;
+  --luxury-light-gray: #E5E5E5;
+  --serif-font: 'Playfair Display', serif;
+  --sans-font: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Page loading placeholder (shown during lazy chunk loads) */
+.page-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--sans-font);
+  background-color: var(--luxury-white);
+  color: var(--luxury-black);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.app.luxury-theme {
+  width: 100%;
+  min-height: 100vh;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+/* Site Header - Enterprise Style */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 1.25rem 3rem;
+  box-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.05),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.site-logo:hover {
+  opacity: 0.85;
+}
+
+.logo-image {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.logo-text {
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-headline);
+}
+
+.site-nav {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.nav-link {
+  font-family: 'Funnel Sans', -apple-system, sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+  color: var(--text-body);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  color: var(--primary-color);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-color) 100%);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  opacity: 0.6;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* CTA Navigation Link - Uses unified button system */
+.nav-link-cta {
+  font-family: 'Funnel Sans', -apple-system, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgb(47 42 140 / 85%);
+  color: #ffffff;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-link-cta:hover {
+  background: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.nav-link-cta:active {
+  transform: translateY(0);
+}
+
+/* Cart Icon */
+.cart-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.cart-icon-btn:hover {
+  opacity: 0.6;
+}
+
+.cart-icon-btn svg {
+  color: var(--luxury-black);
+}
+
+.cart-count-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--luxury-black);
+  color: var(--luxury-white);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.4rem;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Collection Title */
+.collection-title {
+  text-align: center;
+  padding: 5rem 2rem 3rem;
+}
+
+.collection-title h2 {
+  font-family: var(--serif-font);
+  font-size: 2.5rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: var(--luxury-black);
+  margin-bottom: 2rem;
+}
+
+.title-divider {
+  width: 60px;
+  height: 1px;
+  background-color: var(--luxury-black);
+  margin: 0 auto;
+}
+
+/* Product List Container */
+.product-list-container {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+/* Luxury Grid Layout */
+.product-grid.luxury-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 3rem 0;
+}
+
+/* Luxury Product Card */
+.product-card.luxury-card {
+  background: var(--luxury-white);
+  border: none;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+}
+
+.product-card.luxury-card:hover {
+  transform: none;
+  box-shadow: none;
+  z-index: 10;
+}
+
+/* Luxury Image Wrapper */
+.product-image-wrapper.luxury-image {
+  position: relative;
+  width: 100%;
+  padding-top: 133.33%; /* 3:4 Aspect Ratio - more editorial */
+  overflow: hidden;
+  background-color: var(--luxury-cream);
+}
+
+.luxury-image .product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  filter: grayscale(0%);
+}
+
+.product-card.luxury-card:hover .product-image {
+  transform: scale(1.08);
+}
+
+/* Carousel Dots - Traditional Gray Style */
+.carousel-dots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 5;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(128, 128, 128, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.carousel-dot:hover {
+  background-color: rgba(128, 128, 128, 0.8);
+}
+
+.carousel-dot.active {
+  background-color: rgba(128, 128, 128, 0.9);
+}
+
+/* Image Overlay */
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.product-card.luxury-card:hover .image-overlay {
+  opacity: 1;
+}
+
+.view-details-btn {
+  padding: 0.75rem 2rem;
+  background-color: var(--luxury-white);
+  color: var(--luxury-black);
+  border: none;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--sans-font);
+}
+
+.view-details-btn:hover {
+  background-color: var(--luxury-black);
+  color: var(--luxury-white);
+  letter-spacing: 3px;
+}
+
+/* Luxury Product Info */
+.product-info.luxury-info {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background-color: var(--luxury-white);
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.product-name.luxury-name {
+  font-family: var(--sans-font);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--luxury-black);
+  line-height: 1.6;
+  min-height: auto;
+  display: block;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: unset;
+  overflow: visible;
+}
+
+.product-price.luxury-price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin-top: 0.5rem;
+}
+
+.luxury-price .current-price {
+  font-family: var(--sans-font);
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--luxury-gray);
+  letter-spacing: 1px;
+}
+
+/* Loading State */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 2rem;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--luxury-light-gray);
+  border-top: 2px solid var(--luxury-black);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-state p {
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--luxury-gray);
+}
+
+/* Error State */
+.error-state {
+  text-align: center;
+  padding: 5rem 2rem;
+  font-size: 0.9rem;
+  color: var(--luxury-gray);
+  letter-spacing: 1px;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 5rem 2rem;
+  font-size: 0.9rem;
+  color: var(--luxury-gray);
+  letter-spacing: 1px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .product-grid.luxury-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .product-card.luxury-card:nth-child(3n) {
+    border-right: 1px solid var(--luxury-light-gray);
+  }
+
+  .product-card.luxury-card:nth-child(2n) {
+    border-right: none;
+  }
+
+  .collection-title h2 {
+    font-size: 2rem;
+    letter-spacing: 3px;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-header {
+    padding: 1rem 1.5rem;
+  }
+
+  .header-content {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+
+  .site-logo {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  .logo-image {
+    height: 28px;
+  }
+
+  .logo-text {
+    font-size: 1.125rem;
+  }
+
+  .site-nav {
+    gap: 1rem;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+  }
+
+  .nav-link {
+    font-size: 0.75rem;
+  }
+
+  /* Hide Blog link on mobile */
+  .nav-link-blog {
+    display: none;
+  }
+
+  /* Hide For WooCommerce link on mobile */
+  .nav-link-woocommerce {
+    display: none;
+  }
+
+  .nav-link-cta {
+    display: none;
+  }
+
+  .collection-title {
+    padding: 3rem 1rem 2rem;
+  }
+
+  .collection-title h2 {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  .product-grid.luxury-grid {
+    grid-template-columns: 1fr;
+    padding: 2rem 0;
+  }
+
+  .product-card.luxury-card:nth-child(2n),
+  .product-card.luxury-card:nth-child(3n) {
+    border-right: none;
+  }
+
+  .product-info.luxury-info {
+    padding: 1.5rem 1rem;
+    min-height: 120px;
+  }
+
+  .product-name.luxury-name {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+}
+
+@media (max-width: 480px) {
+  .collection-title h2 {
+    font-size: 1.2rem;
+    letter-spacing: 1.5px;
+  }
+
+  .view-details-btn {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.65rem;
+  }
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection Color */
+::selection {
+  background-color: var(--luxury-black);
+  color: var(--luxury-white);
+}

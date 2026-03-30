@@ -1,0 +1,379 @@
+/**
+ * Admin CSS for Urumi WP Cloner
+ */
+
+/* Wizard Container */
+.urumi-cloner-wizard {
+    max-width: 900px;
+}
+
+/* Step Indicators */
+.urumi-steps {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0 40px;
+    position: relative;
+}
+
+.urumi-steps::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: #ddd;
+    z-index: 0;
+}
+
+.urumi-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.urumi-step .step-number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #ddd;
+    color: #666;
+    font-weight: bold;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+}
+
+.urumi-step .step-label {
+    display: block;
+    font-size: 13px;
+    color: #666;
+    font-weight: 500;
+}
+
+.urumi-step.active .step-number {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+}
+
+.urumi-step.active .step-label {
+    color: #2271b1;
+    font-weight: 600;
+}
+
+.urumi-step.completed .step-number {
+    background: #4caf50;
+    border-color: #4caf50;
+    color: #fff;
+}
+
+.urumi-step.completed .step-number::before {
+    content: '\f147';
+    font-family: dashicons;
+}
+
+/* Card Styling */
+.urumi-card {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+.urumi-card h2 {
+    margin-top: 0;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.urumi-card .description {
+    color: #646970;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* Action Cards */
+.urumi-action-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.urumi-action-card {
+    background: #f6f7f7;
+    border: 2px solid #dcdcde;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.urumi-action-card:hover {
+    border-color: #2271b1;
+    box-shadow: 0 4px 12px rgba(34, 113, 177, 0.15);
+    transform: translateY(-2px);
+}
+
+.urumi-action-card .action-icon {
+    margin-bottom: 20px;
+}
+
+.urumi-action-card .action-icon .dashicons {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    color: #2271b1;
+}
+
+.urumi-action-card h3 {
+    margin: 0 0 15px;
+    color: #1d2327;
+    font-size: 18px;
+}
+
+.urumi-action-card p {
+    color: #646970;
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.urumi-action-card button {
+    margin-top: 10px;
+}
+
+/* Form Styling */
+.urumi-card .form-table th {
+    padding: 20px 10px 20px 0;
+    width: 200px;
+    vertical-align: top;
+}
+
+.urumi-card .form-table td {
+    padding: 15px 10px;
+}
+
+.urumi-card .form-table input[type="text"],
+.urumi-card .form-table input[type="password"],
+.urumi-card .form-table textarea {
+    width: 100%;
+    max-width: 500px;
+}
+
+.urumi-card .required {
+    color: #d63638;
+}
+
+/* Actions */
+.urumi-actions {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f1;
+    text-align: right;
+}
+
+.urumi-actions .button {
+    margin-left: 10px;
+}
+
+.urumi-back-btn {
+    float: left;
+    margin-left: 0 !important;
+}
+
+/* Restore Preview */
+#restore-preview {
+    background: #f6f7f7;
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid #dcdcde;
+}
+
+#restore-preview h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+#restore-preview table {
+    background: #fff;
+}
+
+#restore-preview table th {
+    width: 180px;
+    text-align: left;
+    padding: 12px;
+    background: #f6f7f7;
+    font-weight: 600;
+}
+
+#restore-preview table td {
+    padding: 12px;
+}
+
+/* Progress Bar */
+.urumi-progress-container {
+    margin: 30px 0;
+}
+
+.urumi-progress-bar {
+    height: 30px;
+    background: #f0f0f1;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.urumi-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2271b1 0%, #3582c4 100%);
+    border-radius: 15px;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.urumi-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, .2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, .2) 50%,
+        rgba(255, 255, 255, .2) 75%,
+        transparent 75%,
+        transparent
+    );
+    z-index: 1;
+    background-size: 50px 50px;
+    animation: move 2s linear infinite;
+}
+
+@keyframes move {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 50px 50px;
+    }
+}
+
+.urumi-progress-text {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2271b1;
+    margin: 10px 0;
+}
+
+.urumi-progress-message {
+    text-align: center;
+    color: #646970;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+/* Results */
+#process-result {
+    margin-top: 30px;
+}
+
+#result-content .notice {
+    margin: 0 0 20px;
+}
+
+#result-content h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#result-content textarea {
+    font-family: Consolas, Monaco, monospace;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 782px) {
+    .urumi-action-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .urumi-steps {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .urumi-steps::before {
+        display: none;
+    }
+
+    .urumi-step {
+        display: flex;
+        align-items: center;
+        text-align: left;
+    }
+
+    .urumi-step .step-number {
+        margin-right: 15px;
+        margin-bottom: 0;
+    }
+
+    .urumi-card {
+        padding: 20px;
+    }
+
+    .urumi-card .form-table th {
+        display: block;
+        width: 100%;
+        padding-bottom: 5px;
+    }
+
+    .urumi-card .form-table td {
+        display: block;
+        padding-top: 0;
+    }
+
+    .urumi-actions {
+        text-align: center;
+    }
+
+    .urumi-back-btn {
+        float: none;
+        display: block;
+        width: 100%;
+        margin: 0 0 10px !important;
+    }
+
+    .urumi-actions .button {
+        margin: 5px 0;
+    }
+}
+
+/* Step Content Transitions */
+.urumi-step-content {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

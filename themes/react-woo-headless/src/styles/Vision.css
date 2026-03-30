@@ -1,0 +1,576 @@
+/**
+ * Vision Page Styles - Matching Urumi White/Pastel Theme
+ * @author Urumi.ai
+ */
+
+.vision-page {
+  background: #F8F9FB;
+  min-height: 100vh;
+}
+
+/* Hero Section - specific styles only */
+.vision-hero {
+  padding: 140px 24px 100px;
+  text-align: center;
+}
+
+.vision-hero-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.vision-hero-title {
+  font-family: 'Funnel Sans', -apple-system, sans-serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+.vision-gradient-text {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 50%, var(--primary-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+.vision-dark-text {
+  color: var(--text-headline);
+}
+
+.vision-hero-subtitle {
+  font-family: 'Funnel Sans', -apple-system, sans-serif;
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* CTA Buttons */
+.vision-hero-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  align-items: center;
+  margin-bottom: 80px;
+}
+
+.vision-hero-cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Vision buttons now use unified button system from index.css */
+
+/* Case Study Logo in Hero */
+.case-study-hero-link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.case-study-hero-logo {
+  height: 40px;
+  width: auto;
+  filter: grayscale(100%) brightness(0);
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.case-study-hero-link:hover .case-study-hero-logo {
+  filter: grayscale(0%) brightness(1);
+  transform: translateY(-4px);
+}
+
+.case-study-hero-pill {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: #8b7db8;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-family: 'Funnel Sans', -apple-system, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 6px rgba(139, 125, 184, 0.2);
+}
+
+.case-study-hero-pill::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #8b7db8;
+}
+
+.case-study-hero-link:hover .case-study-hero-pill {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.case-study-pill-arrow {
+  margin-left: 3px;
+  font-size: 0.75rem;
+  vertical-align: middle;
+}
+
+/* Video Wrapper with Glass Border - Matching Reference */
+.vision-video-wrapper {
+  max-width: 1100px;
+  margin: 45px auto 0;
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  animation: fadeInVideo 1s ease-out 0.3s backwards;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.vision-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+@keyframes fadeInVideo {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Content Sections */
+.vision-content {
+  background: #F8F9FB;
+  padding: 100px 24px;
+}
+
+.vision-content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.vision-section {
+  margin-bottom: 100px;
+}
+
+.vision-section:last-child {
+  margin-bottom: 0;
+}
+
+/* Scroll-triggered animations */
+.vision-scroll-section {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.vision-scroll-section.vision-section-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger animation for child elements */
+.vision-section-visible .vision-why-card,
+.vision-section-visible .vision-timeline-item,
+.vision-section-visible .founder-card,
+.vision-section-visible .vision-cta-buttons a {
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.vision-section-visible .vision-why-card:nth-child(1),
+.vision-section-visible .vision-timeline-item:nth-child(1),
+.vision-section-visible .founder-card:nth-child(1),
+.vision-section-visible .vision-cta-buttons a:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.vision-section-visible .vision-why-card:nth-child(2),
+.vision-section-visible .vision-timeline-item:nth-child(2),
+.vision-section-visible .founder-card:nth-child(2),
+.vision-section-visible .vision-cta-buttons a:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.vision-section-visible .vision-why-card:nth-child(3),
+.vision-section-visible .vision-timeline-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* Team section animations */
+.vision-section-visible .team-headline,
+.vision-section-visible .team-subheading {
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.vision-section-visible .team-headline {
+  animation-delay: 0.1s;
+}
+
+.vision-section-visible .team-subheading {
+  animation-delay: 0.2s;
+}
+
+/* CTA section animations */
+.vision-section-visible .vision-cta-title,
+.vision-section-visible .vision-cta-text {
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.vision-section-visible .vision-cta-title {
+  animation-delay: 0.1s;
+}
+
+.vision-section-visible .vision-cta-text {
+  animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vision-section-title {
+  font-family: 'Funnel Sans', -apple-system, sans-serif;
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: var(--text-headline);
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.vision-section-text {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--text-body);
+  margin-bottom: 24px;
+  text-align: center;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vision-section-text:last-child {
+  margin-bottom: 0;
+}
+
+/* Inline Link */
+.vision-inline-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.125rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.vision-inline-link:hover {
+  color: var(--primary-hover);
+  border-bottom-color: var(--primary-hover);
+  transform: translateX(4px);
+}
+
+/* Pillars Grid */
+.vision-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  margin-top: 60px;
+}
+
+.vision-pillar-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.3);
+  border-radius: 12px;
+  padding: 40px 32px;
+  transition: all 0.3s ease;
+}
+
+.vision-pillar-card:hover {
+  border-color: rgba(47, 42, 140, 0.4);
+  transform: translateY(-4px);
+}
+
+.vision-pillar-icon {
+  font-size: 3rem;
+  margin-bottom: 24px;
+}
+
+.vision-pillar-title {
+  font-family: 'Funnel Sans', -apple-system, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-headline);
+  margin-bottom: 16px;
+}
+
+.vision-pillar-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* Why Now Grid */
+.vision-why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  margin-top: 60px;
+}
+
+.vision-why-card {
+  background: linear-gradient(135deg, rgba(243, 232, 255, 0.6) 0%, rgba(255, 255, 255, 0.8) 100%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.3);
+  border-radius: 16px;
+  padding: 40px 32px;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.vision-why-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(47, 42, 140, 0.4);
+}
+
+.vision-why-heading {
+  font-family: 'Funnel Sans', -apple-system, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 16px;
+}
+
+.vision-why-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-body);
+}
+
+/* Timeline */
+.vision-timeline {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vision-timeline-item {
+  text-align: left;
+  padding-left: 80px;
+  position: relative;
+}
+
+.vision-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 40px;
+  bottom: -48px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--primary-color) 0%, transparent 100%);
+}
+
+.vision-timeline-item:last-child::before {
+  display: none;
+}
+
+.vision-timeline-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60px;
+  height: 32px;
+  background: var(--primary-color);
+  color: var(--background);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: 'Funnel Sans', -apple-system, sans-serif;
+}
+
+.vision-timeline-heading {
+  font-family: 'Funnel Sans', -apple-system, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-headline);
+  margin-bottom: 12px;
+}
+
+.vision-timeline-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-body);
+}
+
+/* CTA Section */
+.vision-cta {
+  background: #F8F9FB;
+  padding: 100px 24px;
+  text-align: center;
+}
+
+.vision-cta-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.vision-cta-title {
+  font-family: 'Funnel Sans', -apple-system, sans-serif;
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: var(--text-headline);
+  margin-bottom: 24px;
+}
+
+.vision-cta-text {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--text-body);
+  margin-bottom: 48px;
+}
+
+.vision-cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .vision-hero {
+    padding: 140px 16px 60px;
+  }
+
+  .vision-hero-title {
+    font-size: 2rem;
+  }
+
+  .vision-hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .vision-hero-cta {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  /* Responsive button widths handled by unified system */
+  .vision-hero-cta .btn,
+  .vision-cta-buttons .btn {
+    width: 100%;
+  }
+
+  .vision-video-wrapper {
+    border-radius: 12px;
+  }
+
+  .vision-section-title {
+    font-size: 1.875rem;
+  }
+
+  .vision-section-text {
+    font-size: 1rem;
+  }
+
+  .vision-pillars-grid,
+  .vision-why-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .vision-timeline-item {
+    padding-left: 60px;
+  }
+
+  .vision-timeline-label {
+    width: 50px;
+    font-size: 0.75rem;
+  }
+
+  .vision-cta-title {
+    font-size: 1.875rem;
+  }
+
+  .vision-cta-text {
+    font-size: 1rem;
+  }
+
+  .vision-cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .vision-cta-buttons .btn-lg {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .vision-hero {
+    padding: 60px 16px 40px;
+  }
+
+  .vision-hero-title {
+    font-size: 1.75rem;
+  }
+
+  .vision-section {
+    margin-bottom: 60px;
+  }
+
+  .vision-content {
+    padding: 60px 16px;
+  }
+
+  .vision-cta {
+    padding: 60px 16px;
+  }
+}

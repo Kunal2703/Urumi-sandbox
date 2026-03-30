@@ -1,0 +1,30 @@
+/*
+Theme Name: React WooCommerce Headless
+Theme URI: https://urumi.ai
+Author: Urumi.ai
+Author URI: https://urumi.ai
+Description: A modern React-based headless WooCommerce theme with Server-Side Rendering for SEO. Features JSON-LD structured data, Schema.org microdata, and optimized performance.
+Version: 1.8.9
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: react-woo-headless
+Tags: woocommerce, headless, react, e-commerce, modern, seo, ssr
+*/
+
+/* Base styles will be handled by React and Vite */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+    min-height: 100vh;
+}

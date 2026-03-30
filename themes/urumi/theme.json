@@ -1,0 +1,349 @@
+{
+	"settings": {
+		"appearanceTools": true,
+		"color": {
+			"defaultDuotone": false,
+			"defaultGradients": false,
+			"defaultPalette": false,
+			"gradients": [
+				{
+          "name": "Purple to Pink to Orange",
+          "slug": "purple-pink-orange",
+          "gradient": "linear-gradient(90deg, #c084fc 0%, #f472b6 50%, #fb923c 100%)"
+        },
+				{
+          "name": "Black to purple",
+          "slug": "black-purple",
+          "gradient": "linear-gradient(90deg, rgba(77, 77, 117, 1) 0%, rgba(104, 50, 240, 1) 50%, rgba(68, 70, 212, 1) 100%);"
+        }
+			],
+			"palette": [
+				{
+					"color": "#000",
+					"name": "Black",
+					"slug": "custom-black"
+				},
+				{
+					"color": "#f8fafc",
+					"name": "Ghost White",
+					"slug": "custom-ghost-white"
+				},
+				{
+					"color": "#94a3b8",
+					"name": "Cadet Grey",
+					"slug": "custom-cadet-grey"
+				},
+				{
+					"color": "#6832f0",
+					"name": "Han Purple",
+					"slug": "custom-han-purple"
+				},
+				{
+					"color": "#020817",
+					"name": "Rich Black",
+					"slug": "custom-rich-black"
+				},
+				{
+					"color": "#6366f1",
+					"name": "Light Purple",
+					"slug": "custom-light-purple"
+				},
+				{
+					"color": "#8b5cf6",
+					"name": "Violets",
+					"slug": "custom-violets"
+				},
+				{
+					"color": "#a855f7",
+					"name": "Lavender Indigo",
+					"slug": "custom-lavender-indigo"
+				},
+				{
+					"color": "#14b8a6",
+					"name": "Light Sea Green",
+					"slug": "custom-light-sea-green"
+				},
+				{
+					"color": "#10b981",
+					"name": "Green (Crayola)",
+					"slug": "custom-green-crayola"
+				},
+				{
+					"color": "#06b6d4",
+					"name": "Turquoise Surf",
+					"slug": "custom-turquoise-surf"
+				},
+				{
+					"color": "#4ade80",
+					"name": "Emerald",
+					"slug": "custom-emerald"
+				},
+				{
+					"color": "#0e141f",
+					"name": "Chinese Black",
+					"slug": "custom-chinese-black"
+				},
+				{
+					"color": "#0d0d0d",
+					"name": "Smoky Black",
+					"slug": "custom-smoky-black"
+				},
+				{
+					"color": "#1e293c",
+					"name": "Yankees Blue",
+					"slug": "custom-yankees-blue"
+				}
+			]
+		},
+		"layout": {
+			"contentSize": "1280px",
+			"wideSize": "1000px"
+		},
+		"spacing": {
+			"units": [
+				"%",
+				"px",
+				"em",
+				"rem",
+				"vh",
+				"vw",
+				"dvh"
+			]
+		},
+		"typography": {
+			"defaultFontSizes": false,
+			"fontFamilies": [
+				{
+					"fontFace": [
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "200",
+							"src": [
+								"file:./assets/fonts/inter/inter-200-normal.woff2"
+							],
+							"fontDisplay": "swap"
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "300",
+							"src": [
+								"file:./assets/fonts/inter/inter-300-normal.woff2"
+							],
+							"fontDisplay": "swap"
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "700",
+							"src": [
+								"file:./assets/fonts/inter/inter-700-normal.woff2"
+							],
+							"fontDisplay": "swap"
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "800",
+							"src": [
+								"file:./assets/fonts/inter/inter-800-normal.woff2"
+							],
+							"fontDisplay": "swap"
+						}
+					],
+					"fontFamily": "Inter, sans-serif",
+					"name": "Inter",
+					"slug": "inter"
+				}
+			],
+			"fontSizes": [
+				{
+					"fluid": {
+						"max": "4.5rem",
+						"min": "2.2rem"
+					},
+					"name": "Heading 1",
+					"size": "2.5rem",
+					"slug": "heading-1"
+				},
+				{
+					"fluid": {
+						"max": "3rem",
+						"min": "2rem"
+					},
+					"name": "Heading 2",
+					"size": "3rem",
+					"slug": "heading-2"
+				},
+				{
+					"fluid": {
+						"max": "2.25rem",
+						"min": "1.5rem"
+					},
+					"name": "Heading 3",
+					"size": "2.25rem",
+					"slug": "heading-3"
+				},
+				{
+					"fluid": {
+						"max": "1.875rem",
+						"min": "1.25rem"
+					},
+					"name": "Heading 4",
+					"size": "1.875rem",
+					"slug": "heading-4"
+				},
+				{
+					"fluid": {
+						"max": "1.5rem",
+						"min": "1.125rem"
+					},
+					"name": "Heading 5",
+					"size": "1.5rem",
+					"slug": "heading-5"
+				},
+				{
+					"fluid": {
+						"max": "1rem",
+						"min": "1rem"
+					},
+					"name": "Heading 6",
+					"size": "1rem",
+					"slug": "heading-6"
+				},
+				{
+					"fluid": {
+						"max": "1.25rem",
+						"min": "1.25rem"
+					},
+					"name": "xxl",
+					"size": "1.25rem",
+					"slug": "xxl"
+				},
+				{
+					"fluid": {
+						"max": "1.125rem",
+						"min": "1.125rem"
+					},
+					"name": "xl",
+					"size": "1.125rem",
+					"slug": "xl"
+				},
+				{
+					"fluid": {
+						"max": "1rem",
+						"min": "1rem"
+					},
+					"name": "lg",
+					"size": "1rem",
+					"slug": "lg"
+				},
+				{
+					"fluid": {
+						"max": "0.875rem",
+						"min": "0.875rem"
+					},
+					"name": "md",
+					"size": "0.875rem",
+					"slug": "md"
+				},
+				{
+					"fluid": {
+						"max": "0.75rem",
+						"min": "0.75rem"
+					},
+					"name": "sm",
+					"size": "1.25rem",
+					"slug": "sm"
+				}
+			]
+		},
+		"useRootPaddingAwareAlignments": true
+	},
+	"styles": {
+		"blocks": {
+			"core/heading": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--inter)"
+				}
+			},
+			"core/paragraph": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--inter)",
+					"fontSize": "var(--wp--preset--font-size--xl)",
+					"lineHeight": "1.6"
+				}
+			}
+		},
+		"elements": {
+			"button": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--inter)",
+					"fontSize": "var(--wp--preset--font-size--heading-6)"
+				}
+			},
+			"caption": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--inter)"
+				}
+			},
+			"h1": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--inter)",
+					"fontSize": "var(--wp--preset--font-size--heading-1)"
+				}
+			},
+			"h2": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--inter)",
+					"fontSize": "var(--wp--preset--font-size--heading-2)"
+				}
+			},
+			"h3": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--inter)",
+					"fontSize": "var(--wp--preset--font-size--heading-3)"
+				}
+			},
+			"h4": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--inter)",
+					"fontSize": "var(--wp--preset--font-size--heading-4)"
+				}
+			},
+			"h5": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--inter)",
+					"fontSize": "var(--wp--preset--font-size--heading-5)"
+				}
+			},
+			"h6": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--inter)",
+					"fontSize": "var(--wp--preset--font-size--heading-6)"
+				}
+			},
+			"heading": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--inter)"
+				}
+			}
+		},
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--inter)"
+		}
+	},
+	"templateParts": [
+		{
+			"area": "header",
+			"name": "header"
+		},
+		{
+			"area": "footer",
+			"name": "footer"
+		}
+	],
+	"version": 3,
+	"$schema": "https://schemas.wp.org/wp/6.8/theme.json"
+}

@@ -1,0 +1,1333 @@
+/* Hero Section - Enterprise WooCommerce */
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 25vh;
+}
+
+/* Video Background */
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  object-fit: cover;
+}
+
+/* No overlay - plain video background */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Interactive Mesh Gradient Effect */
+.hero-mesh {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.6;
+  background-image:
+    /* Mesh grid pattern - white/subtle */
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.15) 0px,
+      rgba(255, 255, 255, 0.15) 1px,
+      transparent 1px,
+      transparent 20px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.15) 0px,
+      rgba(255, 255, 255, 0.15) 1px,
+      transparent 1px,
+      transparent 20px
+    ),
+    /* Dynamic gradient that follows mouse - deep indigo/purple glow with soft edges */
+    radial-gradient(
+      circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(99, 102, 241, 0.4) 0%,
+      rgba(139, 92, 246, 0.3) 15%,
+      rgba(168, 85, 247, 0.2) 30%,
+      rgba(147, 51, 234, 0.15) 45%,
+      rgba(109, 40, 217, 0.1) 60%,
+      rgba(67, 56, 202, 0.05) 75%,
+      rgba(47, 42, 140, 0.02) 85%,
+      transparent 100%
+    );
+  transition: all 0.2s ease-out;
+  animation: meshPulse 8s ease-in-out infinite;
+}
+
+@keyframes meshPulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+/* Dedicated fade layer at bottom of hero - soft fade to white */
+.hero-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  background: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 30%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.8) 75%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Content Container - Left and Right Layout */
+.hero-content {
+  position: relative;
+  z-index: 4;
+  color: #1e293b;
+  max-width: 1400px;
+  width: 100%;
+  padding: 0 60px;
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  animation: fadeInUp 1.2s ease-out;
+}
+
+/* Left Side - Text */
+.hero-text {
+  flex: 0 0 600px;
+  text-align: left;
+}
+
+/* Right Side - Animation */
+.hero-animation {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 0;
+  position: relative;
+  overflow: visible;
+}
+
+/* Typography - Funnel Sans */
+.hero-title {
+  font-family: 'Funnel Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Dark text for main headline */
+.hero-title-dark {
+  color: var(--text-headline);
+}
+
+/* Highlighted text - solid primary color */
+.hero-title-light {
+  color: var(--primary-color);
+}
+
+.hero-subtitle {
+  font-family: 'Funnel Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0 0 2rem 0;
+  color: var(--text-muted);
+  text-shadow: none;
+}
+
+/* CTA Wrapper */
+.hero-cta-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 2rem;
+}
+
+/* CTA Buttons - Uses unified button system from index.css */
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Hero-specific button adjustments if needed */
+.hero-cta .btn {
+  border-radius: 6px;
+}
+
+/* Case Study Logo in Hero */
+.hero-case-study-link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  align-self: flex-start;
+}
+
+.hero-case-study-logo {
+  height: 40px;
+  width: auto;
+  filter: grayscale(100%) brightness(0);
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.hero-case-study-link:hover .hero-case-study-logo {
+  filter: grayscale(0%) brightness(1);
+  transform: translateY(-4px);
+}
+
+.hero-case-study-pill {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: #8b7db8;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-family: 'Funnel Sans', -apple-system, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 6px rgba(139, 125, 184, 0.2);
+}
+
+.hero-case-study-pill::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #8b7db8;
+}
+
+.hero-case-study-link:hover .hero-case-study-pill {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Rotating Word Animation */
+.rotating-word {
+  font-weight: 700;
+  color: #2d1b69;
+  background: #e9d5ff;
+  padding: 0.15em 0.5em;
+  border-radius: 6px;
+  display: inline-block;
+  transition: opacity 0.3s ease-in-out;
+  min-width: auto;
+  text-align: center;
+}
+
+.rotating-word.fade-in {
+  opacity: 1;
+}
+
+.rotating-word.fade-out {
+  opacity: 0;
+}
+
+/* Massive Globe on Right Side */
+.hero-svg-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 900px;
+  height: 900px;
+  position: absolute;
+  right: -200px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lottie-animation {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  animation: fadeInGlobe 1.5s ease-out 0.5s forwards;
+}
+
+@keyframes fadeInGlobe {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.svg-box {
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 16 / 9;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px dashed rgba(30, 41, 59, 0.3);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.svg-label {
+  font-family: 'Funnel Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(30, 41, 59, 0.5);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .hero-text {
+    flex: 0 0 450px;
+  }
+
+  .hero-svg-placeholder {
+    width: 600px;
+    height: 600px;
+    right: -100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: auto;
+    min-height: 500px;
+    padding-top: 120px;
+    padding-bottom: 5vh;
+  }
+
+  .hero-content {
+    flex-direction: column;
+    padding: 0 24px;
+    gap: 20px;
+  }
+
+  .hero-text {
+    text-align: center;
+    max-width: 100%;
+    flex: none;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .hero-cta-wrapper {
+    align-items: center;
+  }
+
+  .hero-case-study-link {
+    align-self: center;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    text-align: center;
+    padding: 1rem 1.5rem;
+  }
+
+  .hero-animation {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-svg-placeholder {
+    position: relative;
+    right: 0;
+    top: 0;
+    transform: none;
+    width: 300px;
+    height: 300px;
+  }
+
+  .svg-box,
+  .lottie-animation {
+    max-width: 100%;
+  }
+
+  .svg-label {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content {
+    padding: 0 20px;
+  }
+
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .rotating-word {
+    min-width: 80px;
+  }
+}
+
+/* Ensure smooth video playback on mobile */
+@media (prefers-reduced-motion: reduce) {
+  .hero-video {
+    animation: none;
+  }
+
+  .hero-content {
+    animation: none;
+    opacity: 1;
+  }
+
+  .rotating-word {
+    transition: none;
+  }
+}
+
+/* Hero Marquee Section - Lower Third */
+.hero-marquee-section {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background: transparent;
+  padding: 20px 0;
+  overflow: hidden;
+}
+
+.hero-marquee {
+  display: flex;
+  white-space: nowrap;
+  animation: marqueeScroll 18s linear infinite;
+  /* GPU-accelerated, avoids layout/paint on every frame */
+  will-change: transform;
+}
+
+.hero-marquee-content {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-right: 48px;
+  flex-shrink: 0;
+  /* Prevent content from collapsing */
+  min-width: max-content;
+}
+
+.marquee-logo {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  transition: filter 0.3s ease;
+  display: block;
+}
+
+.marquee-logo:hover {
+  filter: brightness(0) invert(1);
+}
+
+.marquee-text {
+  font-family: "Funnel Sans", -apple-system, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.marquee-separator {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 1);
+  font-weight: 300;
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    /* Shift exactly one copy (1/4 of 4 identical copies) for seamless loop */
+    transform: translate3d(-25%, 0, 0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-marquee-section {
+    bottom: 60px;
+    padding: 16px 0;
+  }
+
+  .marquee-logo {
+    height: 24px;
+  }
+
+  .marquee-text {
+    font-size: 15px;
+  }
+
+  .marquee-separator {
+    font-size: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-marquee {
+    animation: none;
+  }
+}
+
+/* Rocket Launch Hero - Pinned Scroll Effect */
+body.agency-page {
+  --launch-progress: 0;
+  background: #000000;
+  overflow-x: visible;
+}
+
+/* Make sure no parent containers break sticky */
+body.agency-page .app,
+body.agency-page .main-content,
+body.agency-page .home-page {
+  overflow: visible;
+}
+
+/* Launch wrapper - Creates scroll distance for the effect */
+.agency-hero-wrapper {
+  position: relative;
+  height: 400vh; /* Extended to allow rocket to drift completely out */
+  z-index: 10;
+}
+
+/* Pinned hero section - Stays fixed during scroll */
+.agency-hero-pinned {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* Remove the separate spacer - not needed with tall wrapper */
+.agency-launch-spacer {
+  display: none;
+}
+
+/* Launch background layer */
+.agency-launch-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: background-color 0.15s ease-out;
+  will-change: background-color;
+  contain: strict;
+}
+
+/* Star field overlay - Dense starfield with multiple layers for depth */
+.agency-star-field {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  transform: translateZ(0);
+  contain: layout style;
+  background: transparent;
+}
+
+.agency-star-field::before,
+.agency-star-field::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Bright stars layer */
+.agency-star-field::before {
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  box-shadow:
+    150px 180px 0 0 white,
+    850px 130px 0 0 white,
+    450px 480px 0 0 white,
+    750px 560px 0 0 white,
+    600px 220px 0 0 rgba(255,255,255,0.8),
+    900px 350px 0 0 rgba(255,255,255,0.8),
+    350px 480px 0 0 rgba(255,255,255,0.8),
+    700px 650px 0 0 rgba(255,255,255,0.8),
+    200px 390px 0 0 rgba(255,255,255,0.8),
+    500px 90px 0 0 rgba(255,255,255,0.8),
+    800px 740px 0 0 rgba(255,255,255,0.8),
+    100px 610px 0 0 rgba(255,255,255,0.8);
+}
+
+/* Dim stars layer */
+.agency-star-field::after {
+  width: 1px;
+  height: 1px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  box-shadow:
+    140px 210px 0 0 rgba(255,255,255,0.4),
+    860px 140px 0 0 rgba(255,255,255,0.5),
+    440px 440px 0 0 rgba(255,255,255,0.3),
+    760px 760px 0 0 rgba(255,255,255,0.4),
+    240px 860px 0 0 rgba(255,255,255,0.3),
+    540px 340px 0 0 rgba(255,255,255,0.5),
+    940px 540px 0 0 rgba(255,255,255,0.4),
+    40px 640px 0 0 rgba(255,255,255,0.3),
+    640px 40px 0 0 rgba(255,255,255,0.5),
+    340px 940px 0 0 rgba(255,255,255,0.4),
+    1100px 200px 0 0 rgba(255,255,255,0.3),
+    1000px 500px 0 0 rgba(255,255,255,0.4),
+    180px 50px 0 0 rgba(255,255,255,0.5),
+    720px 300px 0 0 rgba(255,255,255,0.3),
+    420px 700px 0 0 rgba(255,255,255,0.4),
+    80px 420px 0 0 rgba(255,255,255,0.3);
+}
+
+.agency-hero-sky {
+  background: transparent;
+}
+
+/* Hide the white fade overlay and hero overlay for agency page */
+.agency-hero-pinned .hero-fade,
+.agency-hero-pinned .hero-overlay {
+  display: none;
+}
+
+/* Ensure marquee is fully visible on agency page */
+.agency-hero-pinned .hero-marquee-section {
+  z-index: 100 !important;
+  opacity: 1 !important;
+}
+
+.agency-hero-pinned .marquee-logo,
+.agency-hero-pinned .marquee-text,
+.agency-hero-pinned .marquee-separator {
+  opacity: 1 !important;
+}
+
+/* Subtle cloud elements */
+.agency-clouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.agency-cloud {
+  position: absolute;
+  background: url('/wp-content/themes/react-woo-headless/public/cloud-v2.webp') center center / contain no-repeat;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  opacity: 0.85;
+  
+  transform: translateZ(0);
+  contain: layout style;
+}
+
+.agency-cloud-1 {
+  width: 400px;
+  height: 120px;
+  top: 15%;
+  left: -200px;
+  animation: cloudDrift1 60s linear infinite;
+}
+
+.agency-cloud-2 {
+  width: 500px;
+  height: 150px;
+  top: 45%;
+  left: -250px;
+  animation: cloudDrift2 80s linear infinite;
+  animation-delay: -20s;
+}
+
+.agency-cloud-3 {
+  width: 350px;
+  height: 100px;
+  top: 70%;
+  left: -175px;
+  animation: cloudDrift3 70s linear infinite;
+  animation-delay: -40s;
+}
+
+@keyframes cloudDrift1 {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(calc(100vw + 400px), 0, 0);
+  }
+}
+
+@keyframes cloudDrift2 {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(calc(100vw + 500px), 0, 0);
+  }
+}
+
+@keyframes cloudDrift3 {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(calc(100vw + 350px), 0, 0);
+  }
+}
+
+/* Cloud Layer - Scroll-driven rocket going up illusion */
+.cloud-layer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1400px;
+  height: 100%;
+  z-index: 50;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.launch-cloud {
+  position: absolute;
+  top: 0;
+  transform-origin: center center;
+  
+  pointer-events: none;
+  width: 650px;
+  height: 370px;
+  background-image: url('/wp-content/themes/react-woo-headless/public/cloud-v2.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  contain: layout style;
+}
+
+/* Cloud text - crisp and readable */
+.cloud-text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 20px 70px;
+  max-width: 360px;
+  font-family: "Space Grotesk", "Funnel Sans", -apple-system, sans-serif;
+  text-align: center;
+  z-index: 10;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.cloud-headline {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
+}
+
+.cloud-metric {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e3a8a;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-shadow:
+    0 2px 8px rgba(255, 255, 255, 0.9),
+    0 1px 3px rgba(135, 206, 235, 0.3);
+}
+
+/* Static layout for reduced motion */
+.cloud-layer-static {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.launch-cloud-static {
+  position: relative;
+  transform: none !important;
+  opacity: 1 !important;
+  margin: 10px 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .launch-cloud {
+    width: 520px;
+    height: 300px;
+  }
+
+  .cloud-text {
+    font-size: 15px;
+    max-width: 300px;
+    padding: 12px 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .launch-cloud {
+    width: 420px;
+    height: 240px;
+  }
+
+  .cloud-text {
+    font-size: 13px;
+    max-width: 250px;
+    padding: 10px 30px;
+  }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .launch-cloud {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Update text colors for better contrast on sky background */
+.agency-hero-sky .hero-title-dark {
+  color: rgb(30, 58, 138);
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.agency-hero-sky .hero-subtitle {
+  color: rgb(55, 65, 81);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Update marquee for sky background */
+/* Keep marquee white and visible throughout the launch sequence */
+.agency-hero-sky .marquee-text {
+  color: rgba(255, 255, 255, 1);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.agency-hero-sky .marquee-separator {
+  color: rgba(255, 255, 255, 1);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+}
+
+.agency-hero-sky .marquee-logo {
+  filter: brightness(0) invert(1) drop-shadow(0 2px 12px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+}
+
+/* Agency Page Header Styling - Dynamic Background with Launch Effect */
+body.agency-page .site-header {
+  /* Background is dynamically set via inline style from React */
+  /* Default fallback: light sky blue */
+  background: rgba(167, 216, 245, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Light theme text colors (default - when progress is low) */
+body.agency-page .site-header .nav-link,
+body.agency-page .site-header .logo-text {
+  color: rgb(30, 58, 138);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+body.agency-page .site-header .nav-link:hover {
+  color: rgb(23, 37, 84);
+}
+
+body.agency-page .site-header .nav-link-cta {
+  background: rgba(255, 255, 255, 0.9);
+  color: rgb(30, 58, 138);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+body.agency-page .site-header .nav-link-cta:hover {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.15);
+}
+
+/* Dark theme text colors - applied via inline styles when progress > 0.4 */
+/* These are CSS-based fallbacks for older browsers */
+@media (prefers-reduced-motion: no-preference) {
+  body.agency-page .site-header[data-dark-mode="true"] .nav-link,
+  body.agency-page .site-header[data-dark-mode="true"] .logo-text {
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  body.agency-page .site-header[data-dark-mode="true"] .nav-link:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  body.agency-page .site-header[data-dark-mode="true"] .nav-link-cta {
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  body.agency-page .site-header[data-dark-mode="true"] .nav-link-cta:hover {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Agency Rocket Animation - Pre-Launch Vibration */
+.agency-rocket-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  contain: layout style;
+}
+
+/* CSS-only vibration — zero JS overhead, GPU-composited */
+.agency-rocket-container.rocket-thrusting .rocket-wrap {
+  animation: rocketVibrate 0.12s linear infinite;
+}
+
+@keyframes rocketVibrate {
+  0%   { transform: translate3d(0, 0, 0); }
+  25%  { transform: translate3d(0.5px, -0.5px, 0); }
+  50%  { transform: translate3d(-0.5px, 0.5px, 0); }
+  75%  { transform: translate3d(0.5px, 0.3px, 0); }
+  100% { transform: translate3d(-0.3px, -0.5px, 0); }
+}
+
+/* Rocket wrapper - contains rocket image and flame together */
+.rocket-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* Rocket image */
+.rocket-img {
+  width: 280px;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+/* Rocket Flame Image - animated webp */
+.rocket-flame-img {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 80px;
+  height: auto;
+  z-index: 1; /* Behind rocket */
+  pointer-events: none;
+  transition: opacity 0.3s ease-out, transform 0.1s ease-out;
+  transform-origin: center top; /* Scale from nozzle attachment point */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .agency-cloud {
+    animation: none;
+  }
+
+  .agency-rocket {
+    animation: none;
+  }
+
+
+  /* Simplified launch effect for reduced motion */
+  .agency-hero-wrapper {
+    height: auto;
+  }
+
+  .agency-hero-pinned {
+    position: relative;
+  }
+
+  .agency-launch-spacer {
+    display: none;
+  }
+
+  .agency-launch-background {
+    background-color: #4A90E2 !important; /* Mid-blue, skip animation */
+  }
+
+  .agency-star-field {
+    opacity: 0.3 !important; /* Show subtle stars */
+  }
+}
+
+/* =================================================================
+   SPACE TESTIMONIAL SCENE - Vizcom-style Parallax
+   ================================================================= */
+
+/* Space dust layer - mid-layer parallax particles */
+.space-dust-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease-out, transform 0.3s ease-out;
+  background-image:
+    /* Small dust particles */
+    radial-gradient(circle, rgba(135, 206, 235, 0.4) 0%, rgba(135, 206, 235, 0.2) 1px, transparent 2px),
+    radial-gradient(circle, rgba(135, 206, 235, 0.3) 0%, rgba(135, 206, 235, 0.15) 1px, transparent 2px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 0.8px, transparent 1.5px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.08) 0.8px, transparent 1.5px);
+  background-size:
+    800px 600px,
+    600px 800px,
+    500px 700px,
+    700px 500px;
+  background-position:
+    10% 20%,
+    80% 40%,
+    30% 70%,
+    60% 15%;
+  background-repeat: no-repeat;
+}
+
+/* Moon focus shift scene - appears after engine cutoff */
+.space-moon-scene {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Moon wrapper with testimonial */
+.moon-wrap {
+  position: relative;
+  width: 700px;
+  height: 700px;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Moon image */
+.space-moon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 0 80px rgba(255, 255, 255, 0.5));
+}
+
+/* Testimonial overlay - integrated onto moon surface */
+.moon-testimonial-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  max-width: 480px;
+  padding: 0;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+
+  /* Strong vignette for text readability */
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.5) 35%,
+    rgba(0, 0, 0, 0.25) 55%,
+    transparent 75%
+  );
+  border-radius: 50%;
+}
+
+/* Testimonial text on moon */
+.moon-testimonial-text {
+  font-size: 22px;
+  line-height: 1.4;
+  color: #ffffff;
+  text-align: center;
+  margin: 0;
+  padding: 60px 50px;
+  font-weight: 600;
+  text-shadow:
+    0 2px 6px rgba(0, 0, 0, 1),
+    0 0 40px rgba(0, 0, 0, 0.7),
+    0 0 12px rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+  .moon-wrap {
+    width: 450px;
+    height: 450px;
+  }
+
+  .moon-testimonial-text {
+    font-size: 18px;
+    padding: 45px 35px;
+  }
+}
+
+/* Stars rating label */
+.testimonial-label {
+  font-size: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 2px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Quote text */
+.testimonial-quote {
+  font-family: "Funnel Sans", -apple-system, sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #ffffff;
+  margin: 0 0 32px 0;
+  quotes: """ """ "'" "'";
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.testimonial-quote::before {
+  content: open-quote;
+}
+
+.testimonial-quote::after {
+  content: close-quote;
+}
+
+/* Attribution area */
+.testimonial-attribution {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.testimonial-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.testimonial-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0) invert(1) opacity(0.9);
+}
+
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.author-name {
+  font-family: "Funnel Sans", -apple-system, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.author-title {
+  font-family: "Funnel Sans", -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .space-testimonial-scene {
+    padding: 0 40px;
+  }
+
+  .testimonial-card {
+    max-width: 460px;
+    padding: 32px 36px;
+  }
+
+  .testimonial-quote {
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 768px) {
+  .space-testimonial-scene {
+    padding: 0 24px;
+    justify-content: center;
+  }
+
+  .testimonial-card {
+    max-width: 100%;
+    padding: 28px 32px;
+  }
+
+  .testimonial-quote {
+    font-size: 19px;
+  }
+
+  .orbit-ring {
+    display: none; /* Hide orbit ring on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .testimonial-card {
+    padding: 24px;
+  }
+
+  .testimonial-quote {
+    font-size: 17px;
+  }
+
+  .testimonial-label {
+    font-size: 10px;
+  }
+}
+
+/* Reduced motion support for testimonial */
+@media (prefers-reduced-motion: reduce) {
+  .space-testimonial-scene *,
+  .testimonial-card,
+  .orbit-ring,
+  .space-dust-layer {
+    transition: opacity 0.3s ease-out !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .testimonial-label::before {
+    animation: none !important;
+  }
+}
