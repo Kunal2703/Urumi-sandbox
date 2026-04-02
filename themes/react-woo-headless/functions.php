@@ -155,9 +155,53 @@ function react_woo_headless_enqueue_scripts() {
         'siteUrl' => get_site_url(),
         'themePath' => $theme_uri,
         'isSSR' => true, // Flag to indicate SSR is enabled
+        'envVars' => array(
+            'VAR1' => defined( 'VAR1' ) ? VAR1 : null,
+            'VAR2' => defined( 'VAR2' ) ? VAR2 : null,
+            'VAR3' => defined( 'VAR3' ) ? VAR3 : null,
+        ),
     ));
 }
 add_action('wp_enqueue_scripts', 'react_woo_headless_enqueue_scripts');
+
+/**
+ * Register custom REST API routes for environment variables
+ */
+function urumi_register_var_routes() {
+    register_rest_route( 'urumi/v1', '/var1', array(
+        'methods'             => 'GET',
+        'callback'            => function () {
+            return new WP_REST_Response( array(
+                'variable' => 'VAR1',
+                'value'    => defined( 'VAR1' ) ? VAR1 : null,
+            ) );
+        },
+        'permission_callback' => '__return_true',
+    ) );
+
+    register_rest_route( 'urumi/v1', '/var2', array(
+        'methods'             => 'GET',
+        'callback'            => function () {
+            return new WP_REST_Response( array(
+                'variable' => 'VAR2',
+                'value'    => defined( 'VAR2' ) ? VAR2 : null,
+            ) );
+        },
+        'permission_callback' => '__return_true',
+    ) );
+
+    register_rest_route( 'urumi/v1', '/var3', array(
+        'methods'             => 'GET',
+        'callback'            => function () {
+            return new WP_REST_Response( array(
+                'variable' => 'VAR3',
+                'value'    => defined( 'VAR3' ) ? VAR3 : null,
+            ) );
+        },
+        'permission_callback' => '__return_true',
+    ) );
+}
+add_action( 'rest_api_init', 'urumi_register_var_routes' );
 
 /**
  * Enable CORS for WooCommerce REST API (if needed)

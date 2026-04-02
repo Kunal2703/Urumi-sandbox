@@ -35,3 +35,8 @@ function urumi_define_from_env( $constant, $env_var, $severity = 'notice' ) {
 
 // Testing
 urumi_define_from_env( 'TESTING_VAR', 'UC_TESTING_VAR', 'silent' );
+
+// Custom variables
+urumi_define_from_env( 'VAR1', 'UC_VAR1', 'silent' );
+urumi_define_from_env( 'VAR2', 'UC_VAR2', 'silent' );
+urumi_define_from_env( 'VAR3', 'UC_VAR3', 'silent' );

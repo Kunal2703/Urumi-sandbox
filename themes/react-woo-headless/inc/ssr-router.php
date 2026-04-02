@@ -43,6 +43,9 @@ class React_SSR_Router {
         // Detect route type
         if (empty($path) || $path === 'home') {
             $this->route_type = 'vision'; // Vision is now the homepage
+        } elseif (in_array($path, array('var1', 'var2', 'var3'))) {
+            $this->route_type = 'envvar';
+            $this->route_data['name'] = strtoupper($path);
         } elseif ($path === 'urumi-for-woocommerce') {
             $this->route_type = 'urumi-for-woocommerce';
         } elseif ($path === 'woocommerce-agency-page') {

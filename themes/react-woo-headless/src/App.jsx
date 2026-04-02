@@ -19,6 +19,7 @@ const BlogPost = lazy(() => import('./pages/BlogPost'));
 const Page = lazy(() => import('./pages/Page'));
 const Careers = lazy(() => import('./pages/Careers'));
 const CaseStudy = lazy(() => import('./pages/CaseStudy'));
+const EnvVar = lazy(() => import('./pages/EnvVar'));
 
 function Header({ agencyLaunchProgress = 0 }) {
   const location = useLocation();
@@ -177,6 +178,9 @@ function App() {
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/careers" element={<Careers />} />
               <Route path="/gruum-case-study" element={<CaseStudy />} />
+              <Route path="/var1" element={<EnvVar />} />
+              <Route path="/var2" element={<EnvVar />} />
+              <Route path="/var3" element={<EnvVar />} />
               <Route path="/terms-and-conditions" element={<Page />} />
               <Route path="/refund-policy" element={<Page />} />
               <Route path="/privacy-policy-2" element={<Page />} />
