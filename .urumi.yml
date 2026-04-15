@@ -2,6 +2,8 @@ config_version: 1
 
 wp_config_local: wp-config-local.php
 
+post_pull_script: scripts/post-pull.sh
+
 folder_mappings:
   - source: plugins
     target: wp-content/plugins
