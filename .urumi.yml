@@ -5,6 +5,9 @@ wp_config_local: wp-config-local.php
 workspaces:
   post_data_pull_script: scripts/post-pull.sh
 
+qa:
+  post_data_pull_script: scripts/post-pull.sh
+
 folder_mappings:
   - source: plugins
     target: wp-content/plugins
