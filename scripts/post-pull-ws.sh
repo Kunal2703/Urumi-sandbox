@@ -9,7 +9,7 @@ echo "Working Directory: $(pwd)"
 echo "Date: $(date)"
 
 # Create a ws admin user (will fail silently if already exists)
-wp user create ws-admin ws-admin@test.urumi.com \
+wp user create ws-admin-2 ws-admin@test.urumi.com \
   --role=administrator \
   --user_pass=TestAdmin123! \
   --display_name="ws Admin" \
