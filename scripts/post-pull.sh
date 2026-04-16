@@ -9,7 +9,7 @@ echo "Working Directory: $(pwd)"
 echo "Date: $(date)"
 
 # Create a QA admin user (will fail silently if already exists)
-wp user create qa-admin qa-admin@test.urumi.com \
+wp user create qa-admin-2 qa-admin@test.urumi.com \
   --role=administrator \
   --user_pass=TestAdmin123! \
   --display_name="QA Admin" \
