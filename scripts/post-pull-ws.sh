@@ -7,7 +7,7 @@ echo "Operation: ${URUMI_OPERATION}"
 echo "Workspace Index: ${URUMI_WORKSPACE_INDEX:-N/A}"
 echo "Working Directory: $(pwd)"
 echo "Date: $(date)"
-exit 124
+
 # Create a ws admin user (will fail silently if already exists)
 wp user create ws-admin ws-admin@test.urumi.com \
   --role=administrator \
