@@ -125,8 +125,8 @@ function Vision() {
       <VideoHeroBackground className="vision-hero">
         <div className="vision-hero-content">
           <h1 className="vision-hero-title">
-            <span className="vision-gradient-text">OK OK WORKSPACE</span><br />
-            <span className="vision-dark-text">SEEMS TO BE WORKING</span>
+            <span className="vision-gradient-text">Introducing the First</span><br />
+            <span className="vision-dark-text">Agentic AI eCommerce Platform</span>
           </h1>
 
           <p className="vision-hero-subtitle">
