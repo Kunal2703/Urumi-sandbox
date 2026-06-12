@@ -1,0 +1,205 @@
+/* Fontshare type loader (Switzer + Gambarino + JetBrains Mono) is linked
+ * directly from the HTML <head> in themes/react-woo-headless/index.php as
+ * <link rel="stylesheet" href="https://api.fontshare.com/v2/css?...">.
+ * Linking in HTML instead of @import-ing here lets the Fontshare CSS
+ * download in parallel with the main theme CSS — @import would chain
+ * the requests (main CSS must parse first to discover the @import),
+ * delaying font display by one round trip. */
+
+/* ============================================================================
+ * Urumi Design System — Tokens v2 (premium · urumi.ai theme)
+ *
+ * Palette + type upgrade per the "Urumi Design System" bundle. The variable
+ * names are unchanged — every component that reads var(--color-bg),
+ * var(--font-sans), etc. inherits the upgraded foundation for free, no
+ * per-component edits.
+ *
+ * What's new vs v1:
+ *   - Canvas warmed (paper cream → warm paper)
+ *   - Ink shifted from near-black to warm graphite
+ *   - Accent moved from Urumi orange to muted burnt-sienna (more sophisticated)
+ *   - NEW --color-deep (deep teal) added as a co-equal accent for large
+ *     surfaces (e.g. metric strip on a dark band)
+ *   - Switzer + Gambarino replace Inter as the display/editorial families
+ *   - Warmer shadow tones to match the new ink temperature
+ *
+ * LIGHT is still the default; DARK overrides via [data-theme="dark"].
+ *
+ * Mirrors the canonical tokens at urumi-admin/src/design-system/tokens.css
+ * with one deliberate inversion: LIGHT is the default theme on urumi.ai
+ * (vs DARK on get.urumi.ai / report viewer / impact). Theme toggle persists
+ * under the shared `urumi-theme` localStorage key.
+ * ============================================================================ */
+
+:root {
+    /* ── Color · LIGHT (default for urumi.ai) ───────────────────────────── */
+
+    /* Surfaces — warmer paper register, not bright cream */
+    --color-bg:              #F4EEE2;   /* warm paper */
+    --color-surface:         rgba(28, 24, 20, 0.04);
+    --color-surface-2:       #EFE8DA;   /* tinted card */
+    --color-surface-3:       #EBE3D2;   /* deeper card / pre / blockquote */
+    --color-surface-4:       #E6DCC7;   /* deepest panel */
+
+    /* Foreground — warm graphite, not pure black */
+    --color-fg:              #1C1814;
+    --color-fg-muted:        rgba(28, 24, 20, 0.62);
+    --color-fg-dim:          rgba(28, 24, 20, 0.42);
+
+    /* Brand accent — muted burnt-sienna (the editorial Urumi orange) */
+    --color-accent:          #C85A2E;
+    --color-accent-hover:    #A8431F;
+    --color-accent-soft:     rgba(200, 90, 46, 0.10);
+    --color-accent-fg:       #FFEDD7;   /* cream text on accent */
+
+    /* Co-equal tonal: deep teal — used for tonal-pair sections + solid-pill
+       hover. Orange becomes "the moment of energy inside sophistication" when
+       it pops against this. */
+    --color-deep:            #0F3D3E;
+    --color-deep-hover:      #0A2D2E;
+
+    /* Borders — warm tan, not cool gray */
+    --color-border:          #D9CDB3;
+    --color-border-strong:   #B5A380;
+
+    /* Ambient glow — keeps the accent's hue */
+    --color-glow:            rgba(200, 90, 46, 0.08);
+
+    /* Status — warmer family */
+    --color-success:         #4A7C59;
+    --color-warning:         #B8732B;
+    --color-danger:          #A8392E;
+
+    /* Score (data, not chrome — theme-invariant) */
+    --color-score-red:       #EF4444;
+    --color-score-amber:     #F59E0B;
+    --color-score-green:     #10B981;
+
+    /* ── Typography ─────────────────────────────────────────────────────── */
+
+    /* Switzer is the everyday sans (Söhne-adjacent at zero cost via Fontshare).
+       Gambarino is the editorial italic, used by .ds-accent for the
+       "italic moment" inside headlines. */
+    --font-sans:    'Switzer', 'Söhne', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-display: 'Switzer', 'Söhne', -apple-system, sans-serif;
+    --font-edit:    'Gambarino', Georgia, 'Times New Roman', serif;
+    --font-mono:    'JetBrains Mono', 'Geist Mono', ui-monospace, monospace;
+
+    /* ── Radius ─────────────────────────────────────────────────────────── */
+
+    --radius-sm:    8px;
+    --radius-md:   14px;
+    --radius-lg:   20px;
+    --radius-pill: 999px;
+
+    /* ── Spacing (4-pt grid) ────────────────────────────────────────────── */
+
+    --space-1:    4px;
+    --space-2:    8px;
+    --space-3:   12px;
+    --space-4:   16px;
+    --space-5:   20px;
+    --space-6:   24px;
+    --space-8:   32px;
+    --space-10:  40px;
+    --space-12:  48px;
+    --space-16:  64px;
+    --space-20:  80px;
+    --space-24:  96px;
+    --space-32: 128px;
+
+    /* ── Shadow · LIGHT (warmer drop tones, layered for embossed feel) ──── */
+
+    --shadow-sm: 0  1px  2px rgba(28, 20, 12, 0.05),
+                 0  1px  1px rgba(28, 20, 12, 0.03);
+    --shadow-md: 0  4px 14px rgba(28, 20, 12, 0.08),
+                 0  1px  3px rgba(28, 20, 12, 0.04);
+    --shadow-lg: 0 24px 60px rgba(28, 20, 12, 0.14),
+                 0  6px 18px rgba(28, 20, 12, 0.06),
+                 0  1px  1px rgba(28, 20, 12, 0.04);
+
+    /* ── Motion ─────────────────────────────────────────────────────────── */
+
+    --duration-fast:  120ms;
+    --duration-base:  150ms;
+    --duration-slow:  300ms;
+
+    --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+    /* ── Layout ─────────────────────────────────────────────────────────── */
+
+    --max-w: 1180px;
+}
+
+/* ── Legacy token aliases ──────────────────────────────────────────────────
+ *
+ * Maps the old indigo/slate token names from src/index.css to the new
+ * design-system tokens. Lets pre-existing pages (Vision body sections,
+ * UrumiForWooCommerce, etc.) inherit the new palette without per-file
+ * edits.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+    --primary-color:    var(--color-accent);
+    --primary-hover:    var(--color-accent-hover);
+    --primary-subtle:   var(--color-accent-soft);
+    --secondary-color:  var(--color-accent-hover);
+
+    --text-headline:    var(--color-fg);
+    --text-body:        var(--color-fg-muted);
+    --text-muted:       var(--color-fg-dim);
+    --text-color:       var(--color-fg-muted);
+
+    --background:        var(--color-bg);
+    --background-subtle: var(--color-surface-2);
+
+    --border-color:  var(--color-border);
+    --border-hover:  var(--color-border-strong);
+
+    --success-color: var(--color-success);
+    --info-color:    var(--color-accent);
+}
+
+/* ── Color · DARK ───────────────────────────────────────────────────────── */
+
+[data-theme="dark"] {
+    /* Surfaces */
+    --color-bg:              #14110D;
+    --color-surface:         rgba(255, 237, 214, 0.04);
+    --color-surface-2:       #1B1712;
+    --color-surface-3:       #221C16;
+    --color-surface-4:       #2A2218;
+
+    /* Foreground */
+    --color-fg:              #FFEDD7;
+    --color-fg-muted:        rgba(255, 237, 214, 0.62);
+    --color-fg-dim:          rgba(255, 237, 214, 0.42);
+
+    /* Brand accent (accent stays the same; hover lightens instead of darkens) */
+    --color-accent:          #C85A2E;
+    --color-accent-hover:    #DC6F3A;
+    --color-accent-soft:     rgba(200, 90, 46, 0.14);
+    --color-accent-fg:       #FFEDD7;
+
+    /* Co-equal tonal — slightly brighter on dark for sufficient contrast */
+    --color-deep:            #1A5E60;
+    --color-deep-hover:      #267072;
+
+    /* Borders */
+    --color-border:          rgba(255, 237, 214, 0.12);
+    --color-border-strong:   rgba(255, 237, 214, 0.22);
+
+    /* Ambient glow */
+    --color-glow:            rgba(200, 90, 46, 0.10);
+
+    /* Status — kept saturated on dark */
+    --color-success:         #5FA079;
+    --color-warning:         #D88A3A;
+    --color-danger:          #D14E40;
+
+    /* Shadow · DARK (subtle / mostly invisible — layered surfaces do depth) */
+    --shadow-sm: 0  1px  2px rgba(0, 0, 0, 0.20);
+    --shadow-md: 0  4px 12px rgba(0, 0, 0, 0.30);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.40);
+}

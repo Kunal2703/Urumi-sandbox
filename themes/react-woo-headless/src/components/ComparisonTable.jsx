@@ -46,7 +46,7 @@ const ComparisonTable = () => {
       urumi: 'check'
     },
     {
-      category: 'Datadog APM + monitoring',
+      category: 'APM + monitoring',
       typical: 'paid',
       urumi: 'check'
     }

@@ -1,0 +1,141 @@
+/* ── Final CTA section ─────────────────────────────────────────────────────
+ * Full-viewport closing section. Used by Vision and the four aligned pages.
+ * Default variant has scroll-tied glow + title scale; --hire variant skips
+ * those for the internal Careers funnel.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+.ds-final-cta {
+    min-height: 100vh;
+    min-height: 100svh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-24) var(--space-6);
+    overflow: hidden;
+    background: var(--color-bg);
+}
+
+.ds-final-cta-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        var(--color-glow) 0%,
+        transparent 60%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+.ds-final-cta-inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.ds-final-cta-title {
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-2);
+    transform-origin: center;
+}
+
+.ds-final-cta-sub {
+    max-width: 560px;
+    margin-bottom: var(--space-6);
+}
+
+.ds-final-cta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    background: var(--color-accent);
+    color: #FFEDD7;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    padding: 14px 24px;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+        background var(--duration-base) var(--ease-out),
+        transform var(--duration-fast) var(--ease-out);
+}
+.ds-final-cta-pill:hover {
+    background: var(--color-accent-hover);
+}
+.ds-final-cta-pill-arrow {
+    transition: transform var(--duration-base) var(--ease-out);
+}
+.ds-final-cta-pill:hover .ds-final-cta-pill-arrow {
+    transform: translateX(4px);
+}
+
+.ds-final-cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    color: var(--color-fg-muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color var(--duration-base) var(--ease-out);
+}
+.ds-final-cta-secondary:hover { color: var(--color-fg); }
+.ds-final-cta-secondary .ds-arrow {
+    transition: transform var(--duration-base) var(--ease-out);
+}
+.ds-final-cta-secondary:hover .ds-arrow {
+    transform: translateX(3px);
+}
+
+.ds-final-cta-status {
+    margin-top: var(--space-8);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-fg-muted);
+    letter-spacing: 0.04em;
+}
+
+.ds-final-cta-status-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.ds-final-cta-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-pill);
+    background: var(--color-success);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-success) 16%, transparent);
+    animation: ds-final-cta-pulse 2s ease-in-out infinite;
+}
+
+.ds-final-cta-status .sep {
+    color: var(--color-fg-dim);
+}
+
+@keyframes ds-final-cta-pulse {
+    0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-success) 16%, transparent); }
+    50%      { box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-success) 8%, transparent); }
+}
+
+/* Hire variant — internal funnel, no theatrics. */
+.ds-final-cta--hire .ds-final-cta-glow { display: none; }
+
+@media (max-width: 768px) {
+    .ds-final-cta { padding: var(--space-16) var(--space-4); }
+    .ds-final-cta-pill { padding: 12px 18px; font-size: 14px; }
+    .ds-final-cta-status { font-size: 11px; }
+    .ds-final-cta-status-dot { animation: none; }
+}

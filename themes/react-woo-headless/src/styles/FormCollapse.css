@@ -1,142 +1,126 @@
 /**
- * FormCollapse Styles
+ * FormCollapse — embedded demo form sheet.
  *
- * Styling for collapsible form section with smooth animations
- * @author Urumi.ai
+ * Editorial register: cream surface, hairline border, no Bootstrap card
+ * shadows, no indigo gradient text. Sits cleanly inside the page rhythm
+ * when expanded.
  */
 
 .form-collapse {
-  width: 100%;
-  max-width: 1200px;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.3s ease;
-  opacity: 0;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  border-radius: 16px;
-  margin: 0 auto;
-  padding: 0 24px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 1200px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+    box-shadow: var(--shadow-sm);
+    transition:
+        max-height 0.5s var(--ease-out),
+        opacity 0.3s var(--ease-out),
+        margin 0.3s var(--ease-out),
+        border-color 0.3s var(--ease-out);
 }
 
 .form-collapse-open {
-  max-height: 1600px;
-  opacity: 1;
-  margin: 3rem auto;
-  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease 0.1s, margin 0.3s ease;
+    max-height: 1600px;
+    opacity: 1;
+    margin: var(--space-12) auto;
+    transition:
+        max-height 0.6s var(--ease-out),
+        opacity 0.4s var(--ease-out) 0.1s,
+        margin 0.3s var(--ease-out);
 }
 
 .form-collapse-content {
-  padding: 2rem;
-  animation: fadeIn 0.4s ease-in-out;
+    padding: var(--space-8);
+    animation: form-collapse-fade-in 0.4s var(--ease-out);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes form-collapse-fade-in {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 .form-collapse-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid rgba(47, 42, 140, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .form-collapse-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0;
-  background: linear-gradient(135deg, #2f2a8c 0%, #4a42c8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+    font-family: var(--font-sans);
+    font-size: clamp(20px, 2vw, 26px);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--color-fg);
+    margin: 0;
+    /* Gradient indigo text-fill removed — solid fg in the design system. */
 }
 
 .form-collapse-close {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #666;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  border-radius: 8px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    color: var(--color-fg-muted);
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        background var(--duration-base) var(--ease-out),
+        color var(--duration-base) var(--ease-out),
+        border-color var(--duration-base) var(--ease-out),
+        transform var(--duration-base) var(--ease-out);
+    border-radius: var(--radius-pill);
+    width: 32px;
+    height: 32px;
 }
 
 .form-collapse-close:hover {
-  background: rgba(47, 42, 140, 0.1);
-  color: #2f2a8c;
-  transform: rotate(90deg);
+    background: var(--color-surface);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    transform: rotate(90deg);
 }
 
 .form-collapse-close:active {
-  transform: rotate(90deg) scale(0.95);
+    transform: rotate(90deg) scale(0.95);
+}
+
+.form-collapse-close:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
 }
 
 .form-collapse-body {
-  width: 100%;
-  max-width: 640px;
-  margin: 0 auto;
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
 }
 
 .form-collapse-body iframe {
-  border-radius: 8px;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
-  .form-collapse-content {
-    padding: 1.5rem 1rem;
-  }
-
-  .form-collapse-title {
-    font-size: 1.5rem;
-  }
-
-  .form-collapse-body {
-    max-width: 100%;
-  }
-
-  .form-collapse-body iframe {
-    height: 1400px;
-  }
+    .form-collapse-content { padding: var(--space-5) var(--space-4); }
+    .form-collapse-title   { font-size: clamp(18px, 2vw, 22px); }
+    .form-collapse-body    { max-width: 100%; }
+    .form-collapse-body iframe { height: 1400px; }
 }
 
 @media (max-width: 480px) {
-  .form-collapse {
-    margin: 2rem auto;
-  }
-
-  .form-collapse-title {
-    font-size: 1.25rem;
-  }
-
-  .form-collapse-body iframe {
-    height: 1350px;
-  }
-}
-
-/* Smooth scroll behavior for anchor links */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Add focus styles for accessibility */
-.form-collapse-close:focus {
-  outline: 2px solid #2f2a8c;
-  outline-offset: 2px;
+    .form-collapse           { margin: var(--space-8) auto; }
+    .form-collapse-title     { font-size: 18px; }
+    .form-collapse-body iframe { height: 1350px; }
 }

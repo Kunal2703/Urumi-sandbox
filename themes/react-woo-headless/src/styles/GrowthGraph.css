@@ -77,3 +77,24 @@
   85%   { opacity: 0; }
   100%  { opacity: 0; }
 }
+
+/* Reduced-motion: lock the graph in its final frame instead of looping.
+   The width-on-rect-in-clipPath isn't a layout cost (SVG defs don't
+   reflow the document) but the constant re-rasterization still wastes
+   CPU and burns battery on devices that opted out of motion. */
+@media (prefers-reduced-motion: reduce) {
+  .growth-graph-line,
+  .growth-graph-reveal,
+  .growth-graph-dot,
+  .growth-graph-svg {
+    animation: none !important;
+  }
+  .growth-graph-reveal {
+    width: 250px;
+  }
+  .growth-graph-dot {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+  }
+}

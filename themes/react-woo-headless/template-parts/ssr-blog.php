@@ -16,8 +16,8 @@ $posts = React_SSR_Data::get_blog_posts();
 ?>
 
 <div class="ssr-section">
-    <h1>Urumi Blog</h1>
-    <p>Deep dives into WooCommerce performance optimization, infrastructure scaling, and e-commerce best practices from the Urumi engineering team.</p>
+    <h1>Scaling WooCommerce without compromise.</h1>
+    <p>Deep dives into WooCommerce performance, infrastructure, and scaling insights from the Urumi team.</p>
 </div>
 
 <?php if (!empty($posts)): ?>
@@ -38,10 +38,22 @@ $posts = React_SSR_Data::get_blog_posts();
     <p>No blog posts found.</p>
 <?php endif; ?>
 
+<!-- Final CTA -->
+<div class="ssr-section">
+    <h2>Run your store on Urumi.</h2>
+    <p>Production-ready today. Built for high-traffic WooCommerce stores where downtime moves revenue.</p>
+    <p>
+        <a href="<?php echo esc_url(home_url('/woocommerce')); ?>">See the WooCommerce platform</a>
+        &nbsp;·&nbsp;
+        <a href="<?php echo esc_url(home_url('/woocommerce')); ?>#demo-form-section">Talk to founders</a>
+    </p>
+    <p>Agent live · 99.99% uptime · shipping today.</p>
+</div>
+
 <!-- Team Credentials -->
 <div class="ssr-section">
-    <h2>Built by ex-WooCommerce core developers</h2>
-    <p>We're ex-WooCommerce core developers and ex-Google/Meta engineers who've scaled systems handling millions of requests per minute. We built the parts of WooCommerce that matter in production: performance, payments, and reliability. That's why we can operate your store end-to-end, not just host it.</p>
+    <h2>Built by ex-Automattic WooCommerce core engineers</h2>
+    <p>We built WooCommerce core at Automattic — the parts that matter in production: performance, payments, reliability. Earlier we were founding-era engineers at HackerRank (Y Combinator), where the team scaled the company from $2M to $30M ARR. That's why we can operate your store end-to-end, not just host it.</p>
     <ul>
         <li><strong>Naman Malhotra</strong> - <a href="https://www.linkedin.com/in/naman03malhotra" rel="noopener">LinkedIn</a></li>
         <li><strong>Vedanshu Jain</strong> - <a href="https://www.linkedin.com/in/vedanshuj/" rel="noopener">LinkedIn</a></li>
@@ -52,7 +64,7 @@ $posts = React_SSR_Data::get_blog_posts();
 <div class="ssr-section">
     <h3>Product</h3>
     <ul>
-        <li><a href="<?php echo esc_url(home_url('/urumi-for-woocommerce')); ?>">For WooCommerce</a></li>
+        <li><a href="<?php echo esc_url(home_url('/woocommerce')); ?>">For WooCommerce</a></li>
         <li><a href="https://docs.urumi.ai/" rel="noopener">Docs</a></li>
         <li><a href="<?php echo esc_url(home_url('/blog')); ?>">Blog</a></li>
     </ul>
@@ -69,6 +81,13 @@ $posts = React_SSR_Data::get_blog_posts();
 
     <p><a href="<?php echo esc_url(home_url('/privacy-policy-2')); ?>">Privacy Policy</a> | <a href="<?php echo esc_url(home_url('/terms-and-conditions')); ?>">Terms of Service</a></p>
     <p>&copy; <?php echo date('Y'); ?> Urumi. All Rights Reserved</p>
+</div>
+
+<!-- Built by a dentist -->
+<div class="ssr-section">
+    <p class="faqcta-dentist-credit">
+        <span class="faqcta-dentist-credit__tooth">🦷</span> Can you believe it? This page was built by a dentist using <a href="<?php echo esc_url( 'https://urumi.ai' ); ?>" class="faqcta-dentist-credit__link" rel="noopener noreferrer" target="_blank">urumi.ai</a>
+    </p>
 </div>
 
 <!-- Last Updated (for LLMs) -->

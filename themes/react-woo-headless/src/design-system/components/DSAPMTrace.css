@@ -1,0 +1,96 @@
+/* DSAPMTrace — flame-graph-ish APM trace + PR-ready pill. */
+
+.ds-apm {
+    width: 100%;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md), 0 0 0 1px color-mix(in srgb, var(--color-accent) 4%, transparent);
+    padding: var(--space-4) var(--space-5);
+    font-family: var(--font-mono);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.ds-apm__head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+}
+.ds-apm__title { color: var(--color-fg); font-weight: 500; }
+.ds-apm__p99 { color: var(--color-fg-muted); font-weight: 500; }
+
+.ds-apm__frames {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ds-apm__frame {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 8px;
+    background: color-mix(in srgb, var(--color-fg) 4%, transparent);
+    border-radius: 3px;
+    font-size: 11px;
+    color: var(--color-fg);
+}
+.ds-apm__frame--slow {
+    background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-accent) 45%, transparent);
+}
+.ds-apm__frame-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.ds-apm__frame-ms {
+    font-variant-numeric: tabular-nums;
+    color: var(--color-fg-muted);
+    flex-shrink: 0;
+    margin-left: var(--space-2);
+}
+.ds-apm__frame--slow .ds-apm__frame-ms { color: var(--color-accent); }
+
+.ds-apm__foot {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: var(--space-3);
+    border-top: 1px dashed color-mix(in srgb, var(--color-border) 70%, transparent);
+    gap: var(--space-3);
+    flex-wrap: wrap;
+}
+.ds-apm__root {
+    display: inline-flex; align-items: baseline; gap: var(--space-2);
+    font-size: 11px;
+    overflow: hidden;
+}
+.ds-apm__root-label {
+    color: var(--color-fg-muted);
+    letter-spacing: 0.04em;
+}
+.ds-apm__root-name {
+    color: var(--color-fg);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.ds-apm__pr {
+    display: inline-flex; align-items: center;
+    font-size: 9.5px;
+    padding: 3px 8px;
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    color: var(--color-accent);
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+@media (max-width: 540px) {
+    .ds-apm__frame-name { font-size: 10px; }
+}

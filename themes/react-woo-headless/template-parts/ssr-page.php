@@ -24,6 +24,13 @@ if ($page):
     <?php echo wp_kses_post($page['content']['rendered']); ?>
 </div>
 
+<!-- Built by a dentist -->
+<div class="ssr-section">
+    <p class="faqcta-dentist-credit">
+        <span class="faqcta-dentist-credit__tooth">🦷</span> Can you believe it? This page was built by a dentist using <a href="<?php echo esc_url( 'https://urumi.ai' ); ?>" class="faqcta-dentist-credit__link" rel="noopener noreferrer" target="_blank">urumi.ai</a>
+    </p>
+</div>
+
 <?php else: ?>
 <div class="ssr-section">
     <h1>Page Not Found</h1>

@@ -211,6 +211,11 @@ class React_SSR_Data {
         $featured_image = get_the_post_thumbnail_url($post->ID, 'full');
         $author = get_the_author_meta('display_name', $post->post_author);
 
+        // Inject heading ids and extract the TOC in a single DOMDocument
+        // pass so PHP SSR and React see byte-identical anchor strings.
+        $rendered = apply_filters('the_content', $post->post_content);
+        $processed = React_SSR_Toc::process($rendered);
+
         return array(
             'id' => $post->ID,
             'title' => array(
@@ -220,8 +225,9 @@ class React_SSR_Data {
             'date' => $post->post_date,
             'modified' => $post->post_modified,
             'content' => array(
-                'rendered' => apply_filters('the_content', $post->post_content)
+                'rendered' => $processed['html']
             ),
+            'toc' => $processed['toc'],
             'excerpt' => array(
                 'rendered' => has_excerpt($post->ID) ? apply_filters('the_excerpt', get_the_excerpt($post->ID)) : ''
             ),

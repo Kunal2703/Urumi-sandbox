@@ -52,7 +52,7 @@ function Cart() {
             return (
               <div key={item.id} className="cart-item">
                 <div className="cart-item-image">
-                  <img src={imageUrl} alt={item.name} loading="lazy" />
+                  <img src={imageUrl} alt={item.name} loading="lazy" decoding="async" />
                 </div>
 
                 <div className="cart-item-details">

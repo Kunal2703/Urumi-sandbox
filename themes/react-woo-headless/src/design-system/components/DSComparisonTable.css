@@ -1,0 +1,69 @@
+/* DSComparisonTable — Typical Host vs Urumi, restyled. */
+
+.ds-cmp-table-wrap {
+    width: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-bg);
+    box-shadow: var(--shadow-sm);
+}
+
+.ds-cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-sans);
+    font-size: 14px;
+}
+
+.ds-cmp-table thead th {
+    background: var(--color-surface-2);
+    color: var(--color-fg);
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.ds-cmp-table tbody th {
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    font-weight: 500;
+    color: var(--color-fg);
+    width: 50%;
+    border-bottom: 1px solid var(--color-border);
+}
+.ds-cmp-table tbody tr:last-child th,
+.ds-cmp-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.ds-cmp-table__cell {
+    padding: var(--space-3) var(--space-4);
+    color: var(--color-fg-muted);
+    border-bottom: 1px solid var(--color-border);
+    font-variant-numeric: tabular-nums;
+}
+.ds-cmp-table__cell--ok    { color: var(--color-success); font-weight: 500; }
+.ds-cmp-table__cell--paid  { color: var(--color-fg-muted); }
+.ds-cmp-table__cell--neg   { color: var(--color-fg-dim); }
+
+.ds-cmp-table__col-urumi {
+    background: color-mix(in srgb, var(--color-accent) 6%, transparent);
+}
+.ds-cmp-table tbody td:last-child {
+    background: color-mix(in srgb, var(--color-accent) 4%, transparent);
+}
+
+@media (max-width: 640px) {
+    .ds-cmp-table { font-size: 13px; }
+    .ds-cmp-table thead th,
+    .ds-cmp-table tbody th,
+    .ds-cmp-table__cell {
+        padding: var(--space-2) var(--space-3);
+    }
+}
