@@ -4,11 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>React WooCommerce Headless</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/index-CdEffvcI.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/style-ownlCHVc.css">
+    <!-- No Google Fonts here. The active type system (Switzer, Gambarino,
+         JetBrains Mono via Fontshare) is linked from index.php's <head>.
+         This file is the Vite source template; production routes are
+         served by WP through index.php, but dev (`vite dev`) and any
+         static fallback that serves dist/index.html should NOT pull in
+         a legacy Funnel Sans link that no current page uses. -->
+    <script type="module" crossorigin src="/wp-content/themes/react-woo-headless/dist/assets/index-DC9gMUzz.js"></script>
+    <link rel="modulepreload" crossorigin href="/wp-content/themes/react-woo-headless/dist/assets/vendor-react-BCkkM6JC.js">
+    <link rel="modulepreload" crossorigin href="/wp-content/themes/react-woo-headless/dist/assets/vendor-router-BRsTuASr.js">
+    <link rel="stylesheet" crossorigin href="/wp-content/themes/react-woo-headless/dist/assets/index-CeY5g1Ey.css">
   </head>
   <body>
     <div id="root"></div>

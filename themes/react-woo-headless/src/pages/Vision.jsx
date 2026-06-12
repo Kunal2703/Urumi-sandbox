@@ -3,23 +3,107 @@
  *
  * Showcases Urumi's vision for Agentic AI eCommerce
  *
- * ⚠️ PAIRED WITH: template-parts/ssr-vision.php
- * When updating content, BOTH files must be kept in sync!
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ * ⚠️ COPY-SYNC RULE — read before editing customer-facing copy
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ * Numbers, quotes, taglines, product claims, and capability statements on
+ * this page must match what we say everywhere else they appear, or the
+ * site contradicts itself across audiences. Every edit needs FOUR sweeps:
+ *
+ *   1. THIS FILE — hydrated React app (what humans see post-takeover)
+ *   2. template-parts/ssr-vision.php — SSR HTML (crawlers, no-JS users)
+ *   3. llms.txt (repo root) — AEO answer file (ChatGPT, Claude, Perplexity,
+ *                              Google AI Overviews cite this verbatim)
+ *   4. SEO/schema layer — inc/ssr-schema.php (JSON-LD: Organization,
+ *      Service, Review, FAQPage, HowTo) + functions.php brand functions
+ *      (urumi_brand_description, urumi_organization_schema, founder bios)
+ *
+ * Before editing a number or quote, grep the repo for it so you catch
+ * every surface. PR #22 (req/day standardization) and PR #23 (llms.txt
+ * follow-up) are reference precedents for what a four-surface sweep
+ * looks like in practice.
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  *
  * @author Urumi.ai
  */
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import VideoHeroBackground from '../components/VideoHeroBackground';
+import { motion, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import FormCollapse from '../components/FormCollapse';
 import TeamCredentials from '../components/TeamCredentials';
+import VisionThreeAIs from '../components/VisionThreeAIs.jsx';
+import DSReveal from '../design-system/components/DSReveal.jsx';
+import DSOpsConsole from '../design-system/components/DSOpsConsole.jsx';
+import DSFinalCTA from '../design-system/components/DSFinalCTA.jsx';
+import VisionPanel1Hero from '../components/VisionPanel1Hero.jsx';
+import VisionPanel2Scale from '../components/VisionPanel2Scale.jsx';
+import VisionPanel7Bridge from '../components/VisionPanel7Bridge.jsx';
+import VisionPanelByoAI from '../components/VisionPanelByoAI.jsx';
+import VisionPanel8FinalCTA from '../components/VisionPanel8FinalCTA.jsx';
+import { useSectionScroll } from '../design-system/hooks/useSectionScroll.js';
 import '../styles/Vision.css';
+import '../styles/Vision-v2.css';
+import '../styles/FaqCta.css';
 
 function Vision() {
   const sectionsRef = useRef([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const formRef = useRef(null);
+
+  // Scroll-tied choreography refs + transforms.
+  // Hero: text drifts up with parallax velocity, artifact has breathing
+  // scale + counter-parallax.
+  // Offset note: hero is the first section, so we use ['start start',
+  // 'end start'] — progress=0 at page load (hero top at viewport top),
+  // progress=1 when hero has fully exited viewport top. The default
+  // ['start end', 'end start'] would put us partway through progress
+  // at page load (because the hero is already visible) which would
+  // push the eyebrow off-screen under the fixed navbar.
+  const heroRef = useRef(null);
+  const heroProgress = useSectionScroll(heroRef, {
+    offset: ['start start', 'end start'],
+  });
+  const heroTextY    = useTransform(heroProgress, [0, 1], [0, -120]);
+  const heroArtY     = useTransform(heroProgress, [0, 1], [0, -60]);
+  const heroArtScale = useTransform(heroProgress, [0, 0.5, 1], [1.0, 1.04, 0.94]);
+
+  // BYO-AI section scroll-tied parallax (mirrors VisionThreeAIs's
+  // AISection pattern — copy drifts slightly so it breathes through
+  // the viewport, artifact gets a counter-parallax with a small scale
+  // bump near the section's centre).
+  const byoaiRef     = useRef(null);
+  const byoaiProg    = useSectionScroll(byoaiRef);
+  const byoaiCopyY   = useTransform(byoaiProg, [0, 1], [32, -32]);
+  const byoaiArtY    = useTransform(byoaiProg, [0, 1], [80, -80]);
+  const byoaiArtScale= useTransform(byoaiProg, [0, 0.5, 1], [0.92, 1.04, 0.92]);
+  const byoaiArtOpac = useTransform(byoaiProg, [0, 0.35, 0.65, 1], [0.35, 1, 1, 0.35]);
+
+  // Hero cursor spotlight — a single warm glow follows the cursor with
+  // spring physics. The cursor IS the visible source of motion. Initial
+  // position offset to top-right so it's visible before any mouse input.
+  // Paired with the static .vision-v2-hero-corner gradient.
+  const SPOT_SIZE = 700; // px diameter
+  const mouseX = useMotionValue(800);  // initial: top-right area
+  const mouseY = useMotionValue(280);
+  const sx = useSpring(mouseX, { stiffness: 80, damping: 22, mass: 0.6 });
+  const sy = useSpring(mouseY, { stiffness: 80, damping: 22, mass: 0.6 });
+  const spotX = useTransform(sx, (v) => v - SPOT_SIZE / 2);
+  const spotY = useTransform(sy, (v) => v - SPOT_SIZE / 2);
+  // Cursor spotlight — skip on touch-only devices (no cursor exists,
+  // any synthetic mouse events from hybrid input would just waste a
+  // getBoundingClientRect + spring update on every move).
+  const isCoarsePointerRef = useRef(false);
+  useEffect(() => {
+    isCoarsePointerRef.current = window.matchMedia('(pointer: coarse)').matches;
+  }, []);
+  const handleHeroMouseMove = (e) => {
+    if (isCoarsePointerRef.current) return;
+    const rect = heroRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+  };
 
   // Function to handle form toggle and scroll
   const handleDemoClick = (e) => {
@@ -39,7 +123,7 @@ function Vision() {
   };
 
   useEffect(() => {
-    document.title = 'Urumi - Agentic AI eCommerce Platform | Intelligent WooCommerce Infrastructure';
+    document.title = 'Urumi — Agentic AI for WooCommerce';
     window.scrollTo(0, 0);
 
     // Listen for custom event from header
@@ -81,30 +165,17 @@ function Vision() {
     // Cleanup
     const currentSections = sectionsRef.current;
 
-    // Preload WooCommerce page assets in the background
+    // Preload the WooCommerce route document so the WC page click is fast.
+    // Asset prefetches removed — they pointed at hardcoded WP paths that
+    // didn't resolve in dev; the WC page bundle pulls them in any case.
     const preloadWooCommercePage = () => {
-      // Preload the route
       const link = document.createElement('link');
       link.rel = 'prefetch';
-      link.href = '/urumi-for-woocommerce';
+      link.href = '/woocommerce';
       link.as = 'document';
       document.head.appendChild(link);
-
-      // Preload critical images from WooCommerce page
-      const images = [
-        '/wp-content/themes/react-woo-headless/public/urumi-logo.webp',
-        '/wp-content/themes/react-woo-headless/dist/hero-background.mp4'
-      ];
-
-      images.forEach(src => {
-        const imgLink = document.createElement('link');
-        imgLink.rel = 'prefetch';
-        imgLink.href = src;
-        document.head.appendChild(imgLink);
-      });
     };
 
-    // Start preloading after a short delay to prioritize current page
     const preloadTimer = setTimeout(preloadWooCommercePage, 2000);
 
     return () => {
@@ -120,235 +191,302 @@ function Vision() {
 
 
   return (
-    <div className="vision-page">
-      {/* Hero Section with Video */}
-      <VideoHeroBackground className="vision-hero">
-        <div className="vision-hero-content">
-          <h1 className="vision-hero-title">
-            <span className="vision-gradient-text">Introducing the First</span><br />
-            <span className="vision-dark-text">Agentic AI eCommerce Platform</span>
-          </h1>
+    <div className="vision-page vision-v2">
+      {/* ============== HERO (clean modern, design-system v1) ============== */}
+      <header
+        className="vision-v2-hero"
+        ref={heroRef}
+        onMouseMove={handleHeroMouseMove}
+        data-snap-section
+      >
+        {/* Background:
+            - .vision-v2-hero-shop  = hand-drawn line illustration of a
+              small storefront with a tiny figure at the door — the
+              "real shop, real person" image. Sits bottom-left at low
+              opacity like a chapter ornament.
+            - .vision-v2-hero-corner = small static warm gradient
+              top-right (sets the mood).
+            - .vision-v2-hero-spotlight = cursor-tracked warm glow. */}
+        <VisionPanel1Hero />
 
-          <p className="vision-hero-subtitle">
-            eCommerce re-imagined and re-built for the AI era.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="vision-hero-cta">
-            <div className="vision-hero-cta-buttons">
-              <Link
-                to="/urumi-for-woocommerce"
-                className="btn btn-primary"
-              >
-                For WooCommerce
-              </Link>
-              <a
-                href="https://app.urumi.ai"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline"
-              >
-                Sign In
-              </a>
-            </div>
-
-            {/* Case Study Logo CTA */}
-            <Link to="/gruum-case-study" className="case-study-hero-link">
-              <span className="case-study-hero-pill">
-                READ THEIR STORY
-                <span className="case-study-pill-arrow">↗</span>
+        <div className="vision-v2-hero-corner" aria-hidden="true" />
+        <motion.div
+          className="vision-v2-hero-spotlight"
+          aria-hidden="true"
+          style={{
+            x: spotX,
+            y: spotY,
+            width:  SPOT_SIZE,
+            height: SPOT_SIZE,
+          }}
+        />
+        <div className="ds-wrap vision-v2-hero-grid">
+          <motion.div
+            className="vision-v2-hero-left"
+            style={{ y: heroTextY }}
+          >
+            <DSReveal>
+              <span className="ds-eyebrow vision-v2-hero-eyebrow">
+                <span className="ds-eyebrow-dot" />
+                The operations layer for modern commerce
               </span>
-              <img
-                src={`${window.wpData?.themePath || '/wp-content/themes/react-woo-headless'}/public/gruum-logo.svg`}
-                alt="grüum"
-                className="case-study-hero-logo"
-              />
-            </Link>
-          </div>
-
-          {/* Video Container with Glass Effect */}
-          <div className="vision-video-wrapper">
-            <video
-              className="vision-video"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
-            >
-              <source src="/wp-content/uploads/Demovideo-2.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </div>
-      </VideoHeroBackground>
-
-      {/* Vision Content Sections */}
-      <section className="vision-content">
-        <div className="vision-content-wrapper">
-
-          {/* Section 1: Our Vision */}
-          <div className="vision-section vision-scroll-section" ref={el => sectionsRef.current[0] = el}>
-            <h2 className="vision-section-title">Our Vision</h2>
-            <p className="vision-section-text">
-              We believe eCommerce should be effortless. Today, launching and growing an online store
-              takes weeks of your time, requires coordinating dozens of agencies and freelancers,
-              and costs thousands of dollars before you even make your first sale.
-            </p>
-            <p className="vision-section-text">
-              This shouldn't be the reality. Merchants should focus on what matters: growing their business
-              and executing their ideas. Our deeply integrated AI platform handles the rest: infrastructure,
-              optimization, scaling, technical decisions, and all the complexity that currently holds
-              merchants back.
-            </p>
-            <p className="vision-section-text">
-              That's the future we're building. Effortless eCommerce where AI takes care of the technical
-              burden, so you can focus entirely on your customers and growth.
-            </p>
-            <p className="vision-section-text" style={{ marginTop: '2rem' }}>
-              <Link to="/urumi-for-woocommerce" className="vision-inline-link">
-                Check out how we are transforming WooCommerce →
+            </DSReveal>
+            <DSReveal delay={0.06}>
+              <h1 className="ds-h1 vision-v2-hero-title">
+                eCommerce, on <span className="ds-accent">autopilot.</span>
+              </h1>
+            </DSReveal>
+            <DSReveal delay={0.12}>
+              <p className="ds-sub vision-v2-hero-sub">
+                We run the operations layer of your store &mdash; performance, infrastructure,
+                analytics, and the engineering work that used to require a team. Built by the
+                people who built WooCommerce.
+              </p>
+            </DSReveal>
+            <DSReveal delay={0.18}>
+              <div className="vision-v2-hero-ctas">
+                <Link to="/woocommerce" className="ds-pill ds-pill-solid">
+                  See the WooCommerce platform <span className="ds-arrow">→</span>
+                </Link>
+              </div>
+            </DSReveal>
+            <DSReveal delay={0.24}>
+              <Link to="/gruum-case-study" className="vision-v2-hero-proof">
+                <span className="ds-accent">grüum</span> scaled <strong>14×</strong> with Urumi <span className="ds-arrow">→</span>
               </Link>
+            </DSReveal>
+          </motion.div>
+
+          <motion.div
+            className="vision-v2-hero-right"
+            style={{ y: heroArtY, scale: heroArtScale }}
+          >
+            <DSReveal delay={0.24}>
+              <DSOpsConsole />
+            </DSReveal>
+          </motion.div>
+        </div>
+      </header>
+
+      {/* ============== SECTION 2 — Already shipping (case-study teaser) ============== */}
+      <section className="ds-section vision-v2-shipping" data-snap-section>
+        {/* Hand-drawn vignette: same shop as hero, but now scaled —
+            three service windows side by side with customers queued in
+            front of each. Visual metaphor for "your store goes viral, we
+            take care of the scale." Same loose pen-line style as the
+            hero storefront. Sits bottom-left, low opacity. */}
+        <VisionPanel2Scale />
+
+        <div className="ds-wrap">
+          <DSReveal>
+            <span className="ds-num-label">01 / Already shipping</span>
+          </DSReveal>
+          <DSReveal delay={0.06}>
+            <h2 className="ds-h2 vision-v2-shipping-title">
+              When your store goes viral, our platform takes care of the
+              <span className="ds-accent"> scale.</span>
+            </h2>
+          </DSReveal>
+          <DSReveal delay={0.12}>
+            <p className="ds-sub vision-v2-shipping-lede">
+              How we kept gr&uuml;um fast and shipping orders through their busiest weeks.
             </p>
-          </div>
+          </DSReveal>
 
-          {/* Section 2: Three Pillars - COMMENTED OUT FOR NOW */}
-          {/* <div className="vision-section">
-            <h2 className="vision-section-title">Built on Three Pillars</h2>
+          <DSReveal delay={0.18}>
+            <blockquote className="vision-v2-shipping-quote">
+              <p className="vision-v2-shipping-quote-text">
+                &ldquo;The biggest performance improvements we&rsquo;ve seen is from you guys.&rdquo;
+              </p>
+              <footer className="vision-v2-shipping-quote-who">
+                <strong>George Lagonikas</strong>, Founder &amp; CTO, gr&uuml;um
+              </footer>
+            </blockquote>
+          </DSReveal>
 
-            <div className="vision-pillars-grid">
-              <div className="vision-pillar-card">
-                <div className="vision-pillar-icon">🤖</div>
-                <h3 className="vision-pillar-title">Agentic Intelligence</h3>
-                <p className="vision-pillar-text">
-                  AI that doesn't just assist—it acts. Our agents manage deployments,
-                  optimize performance, and scale infrastructure autonomously while you focus on growth.
-                </p>
-              </div>
-
-              <div className="vision-pillar-card">
-                <div className="vision-pillar-icon">⚡</div>
-                <h3 className="vision-pillar-title">Zero-Compromise Performance</h3>
-                <p className="vision-pillar-text">
-                  Sub-100ms response times, instant autoscaling, and 99.99% uptime aren't
-                  aspirations—they're guarantees. Built on enterprise-grade infrastructure.
-                </p>
-              </div>
-
-              <div className="vision-pillar-card">
-                <div className="vision-pillar-icon">🚀</div>
-                <h3 className="vision-pillar-title">Developer Experience</h3>
-                <p className="vision-pillar-text">
-                  Generate plugins in natural language. Deploy with git push. Monitor with
-                  AI-powered insights. Like having a senior dev team on call 24/7.
-                </p>
-              </div>
+          <DSReveal delay={0.24}>
+            <div className="vision-v2-shipping-stats">
+              <span><strong>&minus;93%</strong> mobile load</span>
+              <span className="sep">&middot;</span>
+              <span><strong>99.99%</strong> uptime</span>
+              <span className="sep">&middot;</span>
+              <span><strong>16&times;</strong> baseline load absorbed</span>
+              <span className="sep">&middot;</span>
+              <span><strong>0 incidents</strong> through peak weeks</span>
             </div>
-          </div> */}
+          </DSReveal>
 
-          {/* Section 3: Why Now */}
-          <div className="vision-section vision-scroll-section" ref={el => sectionsRef.current[1] = el}>
-            <h2 className="vision-section-title">Why Now?</h2>
-
-            <div className="vision-why-grid">
-              <div className="vision-why-card">
-                <h4 className="vision-why-heading">eCommerce is too complex</h4>
-                <p className="vision-why-text">
-                  Building and running an online store requires juggling multiple agencies, freelancers,
-                  and platforms. Technical complexity takes time away from what matters: growing your business
-                  and serving your customers.
-                </p>
-              </div>
-
-              <div className="vision-why-card">
-                <h4 className="vision-why-heading">AI is finally ready</h4>
-                <p className="vision-why-text">
-                  Breakthroughs in LLMs and autonomous agents mean AI can understand
-                  complex systems, make nuanced decisions, and act with minimal supervision.
-                  The technology to make eCommerce effortless finally exists.
-                </p>
-              </div>
-
-              <div className="vision-why-card">
-                <h4 className="vision-why-heading">Commerce platforms need evolution</h4>
-                <p className="vision-why-text">
-                  Modern commerce platforms deserve more than just hosting. They need intelligent systems
-                  that understand your business, anticipate your needs, and handle the technical burden
-                  so merchants can focus on growth.
-                </p>
-              </div>
+          <DSReveal delay={0.30}>
+            <div className="vision-v2-shipping-ctas">
+              <Link to="/woocommerce" className="ds-pill ds-pill-solid">
+                See the WooCommerce platform <span className="ds-arrow">&rarr;</span>
+              </Link>
+              <Link to="/gruum-case-study" className="vision-v2-shipping-cta">
+                Read the gr&uuml;um case study <span className="ds-arrow">&rarr;</span>
+              </Link>
             </div>
-          </div>
-
-          {/* Section 4: What We're Building */}
-          <div className="vision-section vision-scroll-section" ref={el => sectionsRef.current[2] = el}>
-            <h2 className="vision-section-title">What We're Building</h2>
-
-            <div className="vision-timeline">
-              <div className="vision-timeline-item">
-                <div className="vision-timeline-label">Today</div>
-                <h4 className="vision-timeline-heading">Transforming WooCommerce</h4>
-                <p className="vision-timeline-text">
-                  An intelligent platform that never slows down, combined with an AI Co-pilot that
-                  increases your team's efficiency. Create themes, build plugins, and make changes in
-                  minutes what used to take days.
-                </p>
-              </div>
-
-              <div className="vision-timeline-item">
-                <div className="vision-timeline-label">Next</div>
-                <h4 className="vision-timeline-heading">Shop Assistant Agent</h4>
-                <p className="vision-timeline-text">
-                  The future of shopping is going to be: "I want badminton shoes delivered today."
-                  Urumi will help power natural search, making it effortless for customers to find
-                  exactly what they need.
-                </p>
-              </div>
-
-              <div className="vision-timeline-item">
-                <div className="vision-timeline-label">Future</div>
-                <h4 className="vision-timeline-heading">Marketing Copilot</h4>
-                <p className="vision-timeline-text">
-                  Boost your creative team's productivity. Our system will tell you which kinds of ads
-                  are working and help create assets, turning marketing insights into action automatically.
-                </p>
-              </div>
-            </div>
-          </div>
-
+          </DSReveal>
         </div>
       </section>
 
-      {/* CTA Section - Moved before Team */}
-      <section className="vision-cta vision-scroll-section" ref={el => sectionsRef.current[3] = el}>
-        <div className="vision-cta-content">
-          <h2 className="vision-cta-title">Ready for Effortless eCommerce?</h2>
-          <p className="vision-cta-text">
-            Join merchants who are tired of juggling agencies, fighting technical complexity,
-            and wasting time on infrastructure. Focus on growing your business while our AI platform
-            handles everything else.
-          </p>
-          <div className="vision-cta-buttons">
-            <a
-              href="/urumi-for-woocommerce"
-              className="btn btn-primary btn-lg"
-            >
-              For WooCommerce
-            </a>
-            <a
-              href="#demo-form-section"
-              onClick={handleDemoClick}
-              className="btn btn-outline btn-lg"
-            >
-              Demo with Founders
-            </a>
-          </div>
+      {/* ============== Section 3 — Three AIs running your store ============== */}
+      <VisionThreeAIs />
+
+      {/* ============== Section 04 — Your AI (BYO via MCP) ==============
+          Reframes Urumi as the platform layer: the merchant brings their
+          existing Claude / ChatGPT / Gemini subscription and plugs it
+          into Urumi over MCP. Same hand-drawn ambient vignette in the
+          background; foreground holds a small "MCP connection" artifact
+          mirroring the AI-section pattern. */}
+      <section
+        className="ds-section vision-v2-byoai"
+        ref={byoaiRef}
+        data-snap-section
+      >
+        <VisionPanelByoAI />
+        <div className="ds-wrap vision-v2-byoai-grid">
+          <motion.div
+            className="vision-v2-byoai-copy"
+            style={{ y: byoaiCopyY }}
+          >
+            <DSReveal>
+              <span className="ds-num-label">04 / Your AI</span>
+            </DSReveal>
+            <DSReveal delay={0.06}>
+              <h2 className="ds-h2 vision-v2-byoai-title">
+                Bring your Claude.{' '}
+                <span className="ds-accent">Plug it in.</span>
+              </h2>
+            </DSReveal>
+            <DSReveal delay={0.12}>
+              <p className="ds-sub vision-v2-byoai-tagline">
+                Connect your Claude, ChatGPT, or Gemini subscription to
+                Urumi over the Model Context Protocol (MCP). Your
+                contract, your spend, our platform &mdash; zero AI
+                markup, no lock-in.
+              </p>
+            </DSReveal>
+            <DSReveal delay={0.18}>
+              <ul className="vision-v2-byoai-bullets">
+                <li>Your subscription. Your contract. Your spend.</li>
+                <li>Open via MCP &mdash; no proprietary lock-in.</li>
+                <li>Drop-in with Claude, ChatGPT, Gemini, your-own-LLM.</li>
+              </ul>
+            </DSReveal>
+            <DSReveal delay={0.24}>
+              <p className="vision-v2-byoai-proof">
+                <span className="vision-v2-byoai-proof-mark">$</span>
+                Save <strong>~$400/mo</strong> vs platforms that resell
+                AI usage at 2&ndash;3&times; markup.
+              </p>
+            </DSReveal>
+          </motion.div>
+
+          <motion.div
+            className="vision-v2-byoai-art-wrap"
+            style={{
+              y: byoaiArtY,
+              scale: byoaiArtScale,
+              opacity: byoaiArtOpac,
+            }}
+          >
+            <DSReveal delay={0.18}>
+              <div className="vision-v2-byoai-mcp-card">
+                <div className="vision-v2-byoai-mcp-head">
+                  <span className="vision-v2-byoai-mcp-head-title">
+                    &rarr; urumi &middot; mcp
+                  </span>
+                  <span className="vision-v2-byoai-mcp-head-live">
+                    <span className="vision-v2-byoai-mcp-dot" />
+                    live
+                  </span>
+                </div>
+
+                <div className="vision-v2-byoai-mcp-section-label">
+                  YOUR SUBSCRIPTIONS
+                </div>
+
+                <ul className="vision-v2-byoai-mcp-rows">
+                  <li className="vision-v2-byoai-mcp-row is-connected">
+                    <span className="mark">&#9679;</span>
+                    <span className="name">claude</span>
+                    <span className="state">connected</span>
+                  </li>
+                  <li className="vision-v2-byoai-mcp-row">
+                    <span className="mark">&#9675;</span>
+                    <span className="name">chatgpt</span>
+                    <span className="state">available</span>
+                  </li>
+                  <li className="vision-v2-byoai-mcp-row">
+                    <span className="mark">&#9675;</span>
+                    <span className="name">gemini</span>
+                    <span className="state">available</span>
+                  </li>
+                  <li className="vision-v2-byoai-mcp-row vision-v2-byoai-mcp-row-byo">
+                    <span className="mark">+</span>
+                    <span className="name">bring-your-own-llm</span>
+                    <span className="state">open spec</span>
+                  </li>
+                </ul>
+
+                <div className="vision-v2-byoai-mcp-foot">
+                  <span>0 markup</span>
+                  <span className="sep">&middot;</span>
+                  <span>your contract</span>
+                  <span className="sep">&middot;</span>
+                  <span>MCP open spec</span>
+                </div>
+              </div>
+            </DSReveal>
+          </motion.div>
         </div>
       </section>
+
+      {/* ============== Section 4 — Our Vision (single paragraph bridge) ============== */}
+      <section className="ds-section vision-v2-vision-bridge" data-snap-section>
+        {/* Panorama Panel 7 — bustling autonomous shop vignette. */}
+        <VisionPanel7Bridge />
+        <div className="ds-wrap">
+          <DSReveal>
+            <span className="ds-num-label">Our vision</span>
+          </DSReveal>
+          <DSReveal delay={0.06}>
+            <h3 className="ds-h3 vision-v2-vision-bridge-text">
+              We believe stores should run themselves. These three AIs are
+              the start.
+            </h3>
+          </DSReveal>
+        </div>
+      </section>
+
+      {/* ============== Final CTA — push to /woocommerce ============== */}
+      {/* Panorama Panel 8 — thriving close vignette. Wrapped in a div so
+          the SVG can absolute-position inside the same visual region as
+          the DSFinalCTA composition. DSFinalCTA itself owns the section
+          element. */}
+      <div className="vision-v2-final-cta-wrap">
+        <VisionPanel8FinalCTA />
+        <DSFinalCTA
+          title={<>Run your store on <span className="ds-accent">Urumi.</span></>}
+          subtitle={<>Production-ready today. Built for high-traffic WooCommerce stores where downtime moves revenue.</>}
+          primary={{ to: '/woocommerce', label: 'See the WooCommerce platform' }}
+          status={[
+              { dot: true, text: 'agent · live' },
+              '99.99% uptime',
+              'shipping today',
+          ]}
+        />
+      </div>
 
       {/* Footer Section with Pearl Gradient */}
-      <div className="footer-section">
+      <div className="footer-section" data-snap-section>
         <TeamCredentials />
+        {/* Subtle dentist credit line */}
+        <p className="faqcta-dentist-credit">
+          <span className="faqcta-dentist-credit__tooth">🦷</span>
+          {' '}Can you believe it? This page was built by a dentist using{' '}
+          <a href="https://urumi.ai" className="faqcta-dentist-credit__link" target="_blank" rel="noopener noreferrer">urumi.ai</a>
+        </p>
       </div>
 
       {/* Demo Form Collapse Section */}

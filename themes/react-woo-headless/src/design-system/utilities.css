@@ -1,0 +1,468 @@
+/* ============================================================================
+ * Urumi Design System — Utilities
+ *
+ * The complete class layer of the design system. Depends on tokens.css for
+ * the :root variables (palette, type families, spacing, shadows, motion).
+ *
+ * Together these two files ARE the design system:
+ *   tokens.css      → :root variables (the vocabulary)
+ *   utilities.css   → class rules + global treatments (the grammar)
+ *
+ * Anything that reads var(--color-*), var(--font-*), or uses a .ds-* class
+ * inherits the editorial-premium foundation automatically.
+ * ============================================================================ */
+
+/* ── Body chrome ──────────────────────────────────────────────────────────
+ * OpenType polish (stylistic alternates + lining/tabular nums) site-wide.
+ * Paper-grain SVG noise overlays the canvas at low opacity — invisible
+ * singly, "designed" collectively. */
+
+body {
+    font-feature-settings: "ss01", "ss02", "cv11";
+    font-variant-numeric: lining-nums tabular-nums;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.78;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' seed='9' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0.16 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 220px 220px;
+}
+
+/* Grain sits at z-index 1 (fixed); everything else stacks above. */
+body > * { position: relative; z-index: 2; }
+
+::selection {
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+}
+
+/* ── Page wrapper ─────────────────────────────────────────────────────────
+ * Bounds page content to --max-w with consistent side padding. */
+
+.ds-wrap {
+    width: 100%;
+    max-width: var(--max-w);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+}
+
+/* Base class for any page that opts into the design system. */
+.ds-page {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+}
+
+/* ── Section ─────────────────────────────────────────────────────────── */
+
+.ds-section {
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .ds-section {
+        padding-top: var(--space-16);
+        padding-bottom: var(--space-16);
+    }
+}
+
+/* ── Eyebrow pill ────────────────────────────────────────────────────────
+ * Small uppercase mono chip with a leading accent dot. Tight padding +
+ * no-wrap keep it crisp at any width. */
+
+.ds-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--color-fg-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-border-strong);
+    background: color-mix(in srgb, var(--color-bg) 50%, transparent);
+    padding: 5px 11px 5px 9px;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+}
+.ds-eyebrow .ds-eyebrow-dot {
+    width: 6px; height: 6px; border-radius: var(--radius-pill);
+    background: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+/* ── Display typography ──────────────────────────────────────────────────
+ * Editorial display register: Switzer at weight 500 (not 700 — "heavy =
+ * cheap"), tighter letter-spacing, larger sizes. Premium = less weight,
+ * more size. */
+
+.ds-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5.4vw, 72px);
+    font-weight: 500;
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+    color: var(--color-fg);
+    margin: 0;
+}
+.ds-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4.2vw, 56px);
+    font-weight: 500;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    color: var(--color-fg);
+    margin: 0;
+}
+.ds-h3 {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 2vw, 24px);
+    font-weight: 500;
+    line-height: 1.18;
+    letter-spacing: -0.025em;
+    color: var(--color-fg);
+    margin: 0;
+}
+.ds-sub {
+    font-family: var(--font-sans);
+    font-size: clamp(14px, 1.3vw, 16px);
+    font-weight: 400;
+    line-height: 1.65;
+    letter-spacing: -0.003em;
+    color: var(--color-fg-muted);
+    margin: 0;
+}
+.ds-body {
+    font-family: var(--font-sans);
+    font-size: clamp(15px, 1.4vw, 17px);
+    font-weight: 400;
+    line-height: 1.65;
+    letter-spacing: -0.003em;
+    color: var(--color-fg-muted);
+    margin: 0;
+}
+.ds-mono {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--color-fg-muted);
+}
+.ds-num-label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+/* ── Editorial accent ────────────────────────────────────────────────────
+ * .ds-accent is the brand-color span inside headlines:
+ *   <h1 className="ds-h1">eCommerce, on <span className="ds-accent">autopilot.</span></h1>
+ * Renders as italic Gambarino — the headline gets one editorial italic
+ * word instead of a saturated accent jump. The kind of detail that
+ * costs nothing and signals "designed" instead of "templated". */
+
+.ds-accent {
+    font-family: var(--font-edit);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    color: var(--color-accent);
+}
+
+/* ── Pill / button ───────────────────────────────────────────────────────
+ * Outline pill is the default. Solid pill is ink-on-paper (fg bg, paper
+ * text); hover swaps to deep teal with a soft radial accent halo behind
+ * the cursor. */
+
+.ds-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-fg);
+    background: color-mix(in srgb, var(--color-bg) 50%, transparent);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-pill);
+    padding: 11px 18px;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out),
+      color var(--duration-base) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+}
+.ds-pill:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+.ds-pill .ds-arrow { transition: transform var(--duration-base) var(--ease-out); }
+.ds-pill:hover .ds-arrow { transform: translateX(3px); }
+
+.ds-pill-solid {
+    background: var(--color-fg);
+    border-color: var(--color-fg);
+    color: var(--color-bg);
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    transition:
+      background var(--duration-base) cubic-bezier(.2,.7,.2,1),
+      border-color var(--duration-base) cubic-bezier(.2,.7,.2,1),
+      transform var(--duration-base) cubic-bezier(.2,.7,.2,1);
+}
+.ds-pill-solid:hover {
+    background: var(--color-deep);
+    border-color: var(--color-deep);
+    color: var(--color-bg);
+    transform: translateY(-1px);
+}
+/* Soft accent halo behind the hover state. */
+.ds-pill-solid::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120px 60px at 50% 50%,
+                rgba(200, 90, 46, 0.45),
+                transparent 70%);
+    opacity: 0;
+    transition: opacity var(--duration-base) ease;
+    pointer-events: none;
+}
+.ds-pill-solid:hover::after { opacity: 1; }
+
+/* ── Surfaces ────────────────────────────────────────────────────────────
+ * Embossed card chrome — inset top highlight catches the warm canvas;
+ * the soft long shadow drops the card from the page. Premium = layered,
+ * not flat. */
+
+.ds-card {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 250, 240, 0.6),
+      inset 0 -1px 0 rgba(28, 24, 20, 0.04),
+      0 1px 2px rgba(28, 20, 12, 0.05),
+      0 12px 32px -16px rgba(28, 20, 12, 0.18);
+    transition:
+      transform var(--duration-slow) cubic-bezier(.2,.7,.2,1),
+      box-shadow var(--duration-slow) cubic-bezier(.2,.7,.2,1);
+}
+.ds-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 250, 240, 0.6),
+      inset 0 -1px 0 rgba(28, 24, 20, 0.04),
+      0 2px 4px rgba(28, 20, 12, 0.06),
+      0 28px 56px -20px rgba(28, 20, 12, 0.22);
+}
+
+/* ── Prose ───────────────────────────────────────────────────────────────
+ * Reading typography for HTML body content (post content, editorial
+ * sections that mix headings + paragraphs + lists + quotes). Wrap the
+ * HTML in <div className="ds-prose">…</div> and descendants pick up
+ * token-driven type automatically. Don't combine with .ds-h1/.ds-h2
+ * inside the same scope — those are display headings, .ds-prose is
+ * reading typography. */
+
+.ds-prose {
+    font-family: var(--font-sans);
+    font-size: clamp(15px, 1.25vw, 17px);
+    line-height: 1.7;
+    color: var(--color-fg);
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.ds-prose > * + * { margin-top: var(--space-4); }
+
+.ds-prose h2 {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2.4vw, 28px);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-4);
+    color: var(--color-fg);
+}
+.ds-prose h3 {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.8vw, 22px);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+    color: var(--color-fg);
+}
+
+.ds-prose p { color: var(--color-fg); }
+.ds-prose strong { font-weight: 600; color: var(--color-fg); }
+.ds-prose em { font-style: italic; }
+
+.ds-prose a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color var(--duration-base) var(--ease-out);
+}
+.ds-prose a:hover { color: var(--color-accent-hover); }
+
+.ds-prose ul,
+.ds-prose ol {
+    padding-left: var(--space-6);
+}
+.ds-prose ul { list-style: disc; }
+.ds-prose ol { list-style: decimal; }
+.ds-prose li + li { margin-top: var(--space-2); }
+.ds-prose li::marker { color: var(--color-fg-muted); }
+
+.ds-prose blockquote {
+    border-left: 3px solid var(--color-accent);
+    padding-left: var(--space-5);
+    margin-left: 0;
+    color: var(--color-fg-muted);
+    font-style: italic;
+}
+
+.ds-prose code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-surface-3);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+}
+
+.ds-prose pre {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--color-surface-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    overflow-x: auto;
+    line-height: 1.6;
+}
+.ds-prose pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+}
+
+.ds-prose img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.ds-prose hr {
+    border: none;
+    height: 1px;
+    background: var(--color-border);
+    margin: var(--space-12) 0;
+}
+
+/* ── Stat callout / pull-quote ───────────────────────────────────────── */
+
+.ds-stat-callout {
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-surface-3);
+    border-radius: var(--radius-md);
+    padding: var(--space-6) var(--space-8);
+    margin: var(--space-8) 0;
+    font-family: var(--font-sans);
+}
+
+.ds-stat-callout-quote {
+    font-family: var(--font-edit);
+    font-size: clamp(20px, 1.9vw, 26px);
+    font-weight: 400;
+    line-height: 1.45;
+    font-style: italic;
+    color: var(--color-fg);
+    margin: 0;
+}
+
+.ds-stat-callout-attr {
+    margin-top: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-fg-muted);
+}
+
+/* ── Premium mark ────────────────────────────────────────────────────────
+ * Opt-in fixed letterpress-style serial in the bottom-right corner.
+ * Consumers add this to a page:
+ *   <span className="premium-mark">no. 0001 · run of one</span>
+ * The kind of detail that costs nothing and signals everything. */
+
+.premium-mark {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 100;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.20em;
+    color: var(--color-fg-dim);
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0.7;
+    transition: opacity var(--duration-base) ease;
+}
+.premium-mark::before {
+    content: "";
+    width: 6px; height: 6px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+.premium-mark:hover { opacity: 1; }
+
+/* ── Reduced-motion safety ──────────────────────────────────────────────
+ * Every continuous transition / animation collapses to a near-zero
+ * duration so prefers-reduced-motion users get static end-states. */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+    body::before { opacity: 0.5; }
+}

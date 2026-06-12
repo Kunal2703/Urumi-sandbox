@@ -1,0 +1,1048 @@
+/* ============================================================================
+ * /woocommerce page v2 — full restyle aligned with the Vision page.
+ *
+ * Layered with the design-system tokens (tokens.css) and utilities
+ * (utilities.css). This file owns the page-specific composition:
+ *
+ *   .woo-v2                  — page wrapper
+ *   .woo-v2-hero             — hero composition (2-col grid)
+ *   .woo-v2-spike            — section 01 (benchmarks strip)
+ *   .woo-caps / .woo-cap     — section 02 (capabilities, alt L/R)
+ *   .woo-v2-included         — section 03 (everything operated)
+ *   .woo-v2-compared         — section 04 (table + competitor cards)
+ *   .woo-v2-shipping         — section 05 (grüum proof)
+ *   .woo-v2-faq              — section 06
+ *   .woo-v2-team             — section 07
+ *   .woo-v2-final-cta        — final CTA (mirrors Vision)
+ *
+ * Reuses the same scroll-tied motion patterns as Vision (DSReveal +
+ * useSectionScroll). Reduced-motion-safe by construction.
+ * ============================================================================ */
+
+.woo-v2 {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+}
+
+/* Snap sections — full viewport, mirrors Vision's pattern. Each listed
+ * section is a single cinematic beat and fits inside one viewport.
+ *
+ * Notable exclusions:
+ *   - .woo-v2-final-cta — owned by DSFinalCTA which sets its own
+ *     min-height; the .woo-v2-final-cta-wrap below just anchors the
+ *     Operations Panorama panel against it.
+ *   - .woo-v2-compared — reference content (table + per-competitor
+ *     breakouts) that's honest about being denser than a single beat;
+ *     forcing 100vh just creates uneven scroll rhythm. */
+.woo-v2-hero,
+.woo-caps-intro,
+.woo-cap,
+.woo-v2-shipping,
+.woo-v2-different,
+.woo-v2-migration,
+.woo-v2-commitments,
+.woo-v2-faq,
+.woo-v2-team {
+    min-height: 100vh;
+    min-height: 100svh;
+}
+
+/* ── HERO ──────────────────────────────────────────────────────────────── */
+
+.woo-v2-hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(var(--space-16), 12vh, var(--space-24)) 0 var(--space-12);
+    display: flex;
+    align-items: center;
+}
+
+/* Static warm corner gradient — sets the mood. Same DNA as Vision hero. */
+.woo-v2-hero-corner {
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 480px; height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        var(--color-glow) 0%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+.woo-v2-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: var(--space-12);
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.woo-v2-hero-eyebrow {
+    margin-bottom: var(--space-5);
+}
+.woo-v2-hero-title {
+    margin: 0 0 var(--space-5);
+    line-height: 1.0;
+    max-width: 520px;
+}
+.woo-v2-accent { color: var(--color-accent); }
+
+.woo-v2-hero-sub {
+    margin: 0 0 var(--space-8);
+    max-width: 520px;
+    font-size: clamp(15px, 1.4vw, 17px);
+    line-height: 1.6;
+}
+
+.woo-v2-hero-ctas {
+    display: flex; flex-wrap: wrap;
+    gap: var(--space-3);
+}
+/* Case-study proof line — same pattern as .vision-v2-hero-proof on the
+ * Vision hero. Quiet sans link under the primary CTA that opens the
+ * grüum case study. "grüum" wears the .ds-accent italic Gambarino
+ * treatment; "14×" is bolded so the metric reads at a glance. Arrow
+ * nudges +3px on hover. Replaces the prior .woo-v2-hero-credit trust
+ * line — concrete + clickable beats generic social proof. */
+.woo-v2-hero-proof {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-fg-muted);
+    text-decoration: none;
+    transition: color var(--duration-base) var(--ease-out);
+}
+.woo-v2-hero-proof:hover,
+.woo-v2-hero-proof:focus-visible { color: var(--color-fg); }
+.woo-v2-hero-proof strong { font-weight: 600; color: var(--color-fg); }
+.woo-v2-hero-proof .ds-arrow { transition: transform var(--duration-base) var(--ease-out); }
+.woo-v2-hero-proof:hover .ds-arrow,
+.woo-v2-hero-proof:focus-visible .ds-arrow { transform: translateX(3px); }
+
+.woo-v2-hero-art {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+}
+
+.woo-cap-art-wrap {
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+}
+
+@media (max-width: 960px) {
+    .woo-v2-hero-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-10);
+    }
+    .woo-v2-hero-art { margin: 0 auto; max-width: 540px; }
+    .woo-v2-hero-corner { width: 320px; height: 320px; top: -60px; right: -60px; }
+}
+
+/* ── SECTION 01 — THE SPIKE ───────────────────────────────────────────── */
+
+.woo-v2-spike {
+    padding: var(--space-20) 0;
+    border-top: 1px solid var(--color-border);
+    display: flex; flex-direction: column; justify-content: center;
+}
+.woo-v2-spike-title {
+    margin: var(--space-3) 0 var(--space-4);
+    line-height: 1.08;
+    max-width: 720px;
+}
+.woo-v2-spike-lede {
+    margin: 0 0 var(--space-10);
+    max-width: 600px;
+}
+.woo-v2-spike-foot {
+    margin-top: var(--space-6);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-fg-dim);
+    letter-spacing: 0.04em;
+    max-width: 720px;
+}
+
+/* ── SECTION 02 — CAPABILITIES (mirrors VisionThreeAIs) ──────────────── */
+
+.woo-caps {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+}
+
+.woo-caps-intro {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-20) 0;
+    display: flex; flex-direction: column; justify-content: center;
+}
+.woo-caps-intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+}
+.woo-caps-intro-copy { max-width: 460px; }
+.woo-caps-intro-title {
+    margin: var(--space-3) 0 var(--space-5);
+    line-height: 1.05;
+}
+.woo-caps-intro-sub {
+    margin: 0;
+    max-width: 460px;
+}
+.woo-caps-intro-art {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 520px;
+    margin: 0 auto;
+}
+@media (max-width: 960px) {
+    .woo-caps-intro-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-12);
+        text-align: center;
+    }
+    .woo-caps-intro-copy { margin: 0 auto; max-width: 600px; }
+    .woo-caps-intro-sub  { margin: 0 auto; }
+    .woo-caps-intro-art  { max-width: 380px; }
+}
+
+/* ── OpsConstellation centerpiece ─────────────────────────────────────
+ * Pure-SVG visual metaphor for the four operational pillars. Same DNA
+ * as Vision's TriadConstellation — slow rotation on outer geometry,
+ * pulsing node halos, breathing core, HTML labels positioned over the
+ * SVG's square aspect ratio. */
+
+.woo-quad {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.woo-quad svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+}
+
+.woo-quad-spin {
+    animation: woo-quad-rotate 60s linear infinite;
+    transform-origin: 200px 200px;
+}
+@keyframes woo-quad-rotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+.woo-quad-node circle:first-child {
+    animation: woo-quad-halo 3.6s ease-in-out infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+.woo-quad-node--top    circle:first-child { animation-delay:  0s;    }
+.woo-quad-node--right  circle:first-child { animation-delay: -0.9s;  }
+.woo-quad-node--bottom circle:first-child { animation-delay: -1.8s;  }
+.woo-quad-node--left   circle:first-child { animation-delay: -2.7s;  }
+@keyframes woo-quad-halo {
+    0%, 100% { opacity: 0.5; transform: scale(1);    }
+    50%      { opacity: 1;   transform: scale(1.15); }
+}
+
+.woo-quad-core circle:nth-child(1) {
+    animation: woo-quad-core-outer 5s ease-in-out infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+.woo-quad-core circle:nth-child(2) {
+    animation: woo-quad-core-mid 5s ease-in-out infinite;
+    animation-delay: -1s;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+@keyframes woo-quad-core-outer {
+    0%, 100% { opacity: 0.6; transform: scale(1);    }
+    50%      { opacity: 1;   transform: scale(1.10); }
+}
+@keyframes woo-quad-core-mid {
+    0%, 100% { opacity: 0.7; transform: scale(1);    }
+    50%      { opacity: 1;   transform: scale(1.08); }
+}
+
+.woo-quad-label {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-fg);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    padding: 4px 10px;
+    backdrop-filter: blur(6px);
+    pointer-events: none;
+    white-space: nowrap;
+}
+.woo-quad-label .ds-num-label {
+    font-size: 9px;
+    color: var(--color-accent);
+    letter-spacing: 0.10em;
+}
+.woo-quad-label--top    { top:  -2%;    left: 50%;       transform: translateX(-50%); }
+.woo-quad-label--right  { top:  50%;    right: -4%;      transform: translateY(-50%); }
+.woo-quad-label--bottom { bottom: -2%;  left: 50%;       transform: translateX(-50%); }
+.woo-quad-label--left   { top:  50%;    left: -4%;       transform: translateY(-50%); }
+.woo-quad-label--core   {
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: transparent;
+    border: 0;
+    color: #FFEDD7;
+    font-size: 9px;
+    padding: 0;
+    backdrop-filter: none;
+}
+
+@media (max-width: 540px) {
+    .woo-quad-label--right { right: 0; }
+    .woo-quad-label--left  { left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .woo-quad-spin,
+    .woo-quad-node circle:first-child,
+    .woo-quad-core circle:nth-child(1),
+    .woo-quad-core circle:nth-child(2) {
+        animation: none;
+    }
+}
+
+.woo-cap {
+    padding: var(--space-16) 0;
+    border-top: 1px solid var(--color-border);
+    display: flex; flex-direction: column; justify-content: center;
+}
+.woo-cap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-12);
+    align-items: center;
+}
+.woo-cap--flip .woo-cap-grid { grid-template-columns: 1.1fr 1fr; }
+.woo-cap--flip .woo-cap-copy     { order: 2; }
+.woo-cap--flip .woo-cap-art-wrap { order: 1; }
+
+@media (max-width: 960px) {
+    .woo-cap-grid,
+    .woo-cap--flip .woo-cap-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-10);
+    }
+    .woo-cap--flip .woo-cap-copy     { order: 1; }
+    .woo-cap--flip .woo-cap-art-wrap { order: 2; }
+}
+
+.woo-cap-copy { max-width: 480px; }
+.woo-cap-eyebrow-sep { color: var(--color-fg-dim); margin: 0 4px; }
+.woo-cap-title {
+    margin: var(--space-3) 0 var(--space-3);
+    line-height: 1.05;
+}
+.woo-cap-accent { color: var(--color-accent); }
+.woo-cap-tagline {
+    margin: 0 0 var(--space-6);
+    max-width: 460px;
+}
+
+.woo-cap-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-6);
+}
+.woo-cap-bullets li {
+    position: relative;
+    padding: var(--space-2) 0 var(--space-2) 22px;
+    border-top: 1px dashed var(--color-border);
+    font-size: 14px;
+    color: var(--color-fg);
+    line-height: 1.55;
+}
+.woo-cap-bullets li:first-child { border-top: 0; padding-top: 0; }
+.woo-cap-bullets li::before {
+    content: '+';
+    position: absolute;
+    left: 0;
+    top: var(--space-2);
+    color: var(--color-accent);
+    font-weight: 600;
+    font-size: 14px;
+}
+.woo-cap-bullets li:first-child::before { top: 0; }
+
+.woo-cap-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+    padding-bottom: 2px;
+    transition: border-color var(--duration-base) var(--ease-out);
+}
+.woo-cap-cta .ds-arrow { transition: transform var(--duration-base) var(--ease-out); }
+.woo-cap-cta:hover { border-bottom-color: var(--color-accent); }
+.woo-cap-cta:hover .ds-arrow { transform: translateX(3px); }
+
+/* ── SECTION 03 — OPERATED END-TO-END ────────────────────────────────── */
+
+.woo-v2-included {
+    padding: var(--space-20) 0;
+    border-top: 1px solid var(--color-border);
+    display: flex; flex-direction: column; justify-content: center;
+}
+.woo-v2-included-title {
+    margin: var(--space-3) 0 var(--space-4);
+    max-width: 760px;
+    line-height: 1.08;
+}
+.woo-v2-included-lede {
+    margin: 0 0 var(--space-10);
+    max-width: 600px;
+}
+.woo-v2-included-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-5);
+}
+.woo-v2-included-card {
+    background: var(--color-surface-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-sm);
+    transition:
+      border-color var(--duration-base) var(--ease-out),
+      box-shadow   var(--duration-base) var(--ease-out),
+      transform    var(--duration-base) var(--ease-out);
+}
+.woo-v2-included-card:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+.woo-v2-included-card-title {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-fg);
+    margin: 0 0 var(--space-3);
+    letter-spacing: -0.01em;
+}
+.woo-v2-included-card-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+.woo-v2-included-card-list li {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--color-fg-muted);
+    position: relative;
+    padding-left: 16px;
+}
+.woo-v2-included-card-list li::before {
+    content: '•';
+    color: var(--color-accent);
+    position: absolute;
+    left: 0;
+}
+
+@media (max-width: 960px) {
+    .woo-v2-included-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 540px) {
+    .woo-v2-included-grid { grid-template-columns: 1fr; }
+}
+
+/* ── SECTION 04 — COMPARED ───────────────────────────────────────────── */
+
+.woo-v2-compared {
+    padding: var(--space-20) 0;
+    border-top: 1px solid var(--color-border);
+    display: flex; flex-direction: column; justify-content: center;
+}
+.woo-v2-compared-title {
+    margin: var(--space-3) 0 var(--space-10);
+    max-width: 760px;
+    line-height: 1.08;
+}
+.woo-v2-compared-table-wrap {
+    margin-bottom: var(--space-16);
+}
+.woo-v2-compared-subhead {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-accent);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    margin: 0 0 var(--space-4);
+}
+.woo-v2-compared-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+    margin-bottom: var(--space-16);
+}
+@media (min-width: 1100px) {
+    .woo-v2-compared-cards { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 640px) {
+    .woo-v2-compared-cards { grid-template-columns: 1fr; }
+}
+
+.woo-v2-difference {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+}
+.woo-v2-difference-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+}
+.woo-v2-difference-card h4 {
+    margin: 0 0 var(--space-2);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-fg);
+}
+.woo-v2-difference-card p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--color-fg-muted);
+}
+@media (max-width: 960px) {
+    .woo-v2-difference { grid-template-columns: 1fr; }
+}
+
+/* ── SECTION 05 — WHAT GRÜUM SAW ────────────────────────────────────── */
+
+.woo-v2-shipping {
+    padding: var(--space-20) 0;
+    border-top: 1px solid var(--color-border);
+    display: flex; flex-direction: column; justify-content: center;
+}
+.woo-v2-shipping-title {
+    margin: var(--space-3) 0 var(--space-4);
+    max-width: 760px;
+    line-height: 1.08;
+}
+.woo-v2-shipping-lede {
+    margin: 0 0 var(--space-8);
+    max-width: 600px;
+}
+.woo-v2-shipping-quote {
+    margin: 0 0 var(--space-6);
+    padding: var(--space-5) var(--space-6);
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-surface);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.woo-v2-shipping-quote-text {
+    font-family: var(--font-sans);
+    font-size: clamp(18px, 1.8vw, 22px);
+    font-weight: 500;
+    color: var(--color-fg);
+    line-height: 1.4;
+    margin: 0 0 var(--space-3);
+    letter-spacing: -0.01em;
+}
+.woo-v2-shipping-quote-who {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-fg-muted);
+    letter-spacing: 0.04em;
+}
+
+.woo-v2-shipping-stats {
+    display: flex; gap: var(--space-3); align-items: baseline; flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-fg-muted);
+    margin-bottom: var(--space-8);
+    font-variant-numeric: tabular-nums;
+}
+.woo-v2-shipping-stats strong {
+    color: var(--color-fg);
+    font-weight: 600;
+}
+.woo-v2-shipping-stats .sep { color: var(--color-fg-dim); }
+
+.woo-v2-shipping-ctas {
+    display: flex; flex-wrap: wrap; gap: var(--space-4);
+}
+.woo-v2-shipping-cta {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+    padding-bottom: 2px;
+    transition: border-color var(--duration-base) var(--ease-out);
+}
+.woo-v2-shipping-cta:hover { border-bottom-color: var(--color-accent); }
+.woo-v2-shipping-cta .ds-arrow { transition: transform var(--duration-base) var(--ease-out); }
+.woo-v2-shipping-cta:hover .ds-arrow { transform: translateX(3px); }
+
+/* ── SECTION 06 — FAQ ───────────────────────────────────────────────── */
+
+.woo-v2-faq {
+    padding: var(--space-20) 0;
+    border-top: 1px solid var(--color-border);
+    display: flex; flex-direction: column; justify-content: center;
+}
+.woo-v2-faq-title {
+    margin: var(--space-3) 0 var(--space-4);
+    max-width: 760px;
+    line-height: 1.08;
+}
+.woo-v2-faq-lede {
+    margin: 0 0 var(--space-10);
+    max-width: 600px;
+}
+
+/* ── SECTION 07 — TEAM ──────────────────────────────────────────────── */
+
+.woo-v2-team {
+    padding: var(--space-20) 0 var(--space-16);
+    border-top: 1px solid var(--color-border);
+    display: flex; flex-direction: column; justify-content: center;
+}
+
+/* Team component renders its own internal heading; we just need the
+   numbered eyebrow + spacing wrapper. */
+.woo-v2-team .ds-num-label {
+    display: block;
+    margin: 0 0 var(--space-6);
+}
+
+/* ── FINAL CTA WRAPPER ──────────────────────────────────────────────
+ * The final CTA itself is rendered by <DSFinalCTA /> (shared with Vision,
+ * Blog, BlogPost, CaseStudy, Careers) — it owns its own min-height, glow,
+ * title scaling, and section semantics. The wrap div exists only to anchor
+ * the Operations Panorama panel (WooPanel5FinalCTA) at the bottom-left of
+ * the same visual region. */
+
+.woo-v2-final-cta-wrap {
+    position: relative;
+    overflow: hidden;
+}
+
+/* ================================================================
+ * Operations Panorama — hand-drawn pen-line vignettes per section.
+ * Same low-opacity ink-on-paper convention as Vision's Storefront
+ * Panorama. Each section anchors its own vignette in the bottom-left.
+ * ================================================================ */
+
+/* Hero gets the cursor-tracked spotlight + the panorama vignette in
+   addition to the static corner gradient. */
+.woo-v2-hero-spotlight {
+    position: absolute;
+    top: 0; left: 0;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        var(--color-glow) 0%,
+        color-mix(in srgb, var(--color-glow) 35%, transparent) 35%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+}
+
+/* All ops vignettes share these positioning conventions. */
+.woo-v2-hero-vignette,
+.woo-v2-spike-vignette,
+.woo-v2-operated-vignette,
+.woo-v2-gruum-vignette,
+.woo-v2-finalcta-vignette {
+    position: absolute;
+    bottom: 6%;
+    left: 4%;
+    width: clamp(260px, 26vw, 380px);
+    height: auto;
+    pointer-events: none;
+    z-index: 0;
+    color: color-mix(in srgb, var(--color-fg) 22%, transparent);
+}
+@media (max-width: 1024px) {
+    .woo-v2-hero-vignette,
+    .woo-v2-spike-vignette,
+    .woo-v2-operated-vignette,
+    .woo-v2-gruum-vignette,
+    .woo-v2-finalcta-vignette {
+        bottom: 3%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: clamp(220px, 38vw, 320px);
+        opacity: 0.7;
+    }
+}
+@media (max-width: 640px) {
+    .woo-v2-hero-vignette,
+    .woo-v2-spike-vignette,
+    .woo-v2-operated-vignette,
+    .woo-v2-gruum-vignette,
+    .woo-v2-finalcta-vignette {
+        width: clamp(200px, 60vw, 280px);
+        bottom: 2%;
+    }
+}
+
+/* Hero vignette runs a notch smaller than the rest of the ops
+   panorama. Rationale: the hero composition is already loud — corner
+   gradient + cursor spotlight + DSViralChart artifact on the right —
+   so the bottom-left vignette should read as a quiet ornament, not
+   compete with the chart for attention. The other ops panels sit on
+   simpler backgrounds and carry the standard width. Mobile sizing
+   (clamp(200px, 60vw, 280px) from the ≤640px shared rule) still wins
+   at narrow viewports because that media query has higher specificity
+   than this base declaration. */
+.woo-v2-hero-vignette {
+    width: clamp(200px, 20vw, 300px);
+}
+
+/* "What grüum saw" vignette anchors to the bottom-right instead of the
+   shared bottom-left convention. Visual rhythm rationale: every other
+   ops panorama panel sits bottom-left; flipping this one mirrors the
+   case-study section's copy weight (title + quote + stats stack on the
+   left) and keeps the eye moving instead of stacking copy + art on the
+   same edge. The mobile center-translate at ≤1024px stays as-is. */
+.woo-v2-gruum-vignette {
+    left: auto;
+    right: 4%;
+}
+@media (max-width: 1024px) {
+    /* Re-apply the shared mobile centering (the right: 4% above would
+       otherwise survive into the centered media query because it has
+       higher specificity than the multi-selector shared rule). */
+    .woo-v2-gruum-vignette {
+        left: 50%;
+        right: auto;
+    }
+}
+
+/* Each anchor section needs position:relative + overflow:hidden so
+   its vignette stays clipped + correctly anchored. The .woo-v2-hero
+   already declares overflow:hidden + position:relative above; the
+   final CTA's panel is anchored by .woo-v2-final-cta-wrap (declared
+   in the FINAL CTA WRAPPER block above). */
+.woo-v2-spike,
+.woo-v2-included,
+.woo-v2-compared,
+.woo-v2-shipping,
+.woo-v2-faq {
+    position: relative;
+    overflow: hidden;
+}
+
+/* The .woo-v2-included section's existing card grid had bullet-wall
+   energy. Replaced by a richer composition (.woo-v2-included-pillars)
+   with a poetic line + supporting facts. */
+.woo-v2-included-pillars {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8) var(--space-12);
+    margin-top: var(--space-10);
+}
+@media (max-width: 760px) {
+    .woo-v2-included-pillars { grid-template-columns: 1fr; }
+}
+.woo-v2-included-pillar {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-6) 0 0;
+}
+.woo-v2-included-pillar-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-fg-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.woo-v2-included-pillar-title {
+    margin: var(--space-3) 0 var(--space-3);
+    font-family: var(--font-sans);
+    font-size: clamp(20px, 1.8vw, 24px);
+    line-height: 1.18;
+    color: var(--color-fg);
+}
+.woo-v2-included-pillar-line {
+    margin: 0 0 var(--space-3);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-fg);
+    max-width: 42ch;
+}
+.woo-v2-included-pillar-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-fg-dim);
+    letter-spacing: 0.04em;
+}
+.woo-v2-included-pillar-meta-dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--color-success);
+}
+
+/* ============================================================================
+ * Buyer-perspective additions (2026-05-11):
+ *   .woo-v2-different    — 03 / "What's different under the hood" (3 cards)
+ *   .woo-v2-migration    — 05 / Migration timeline (4 steps)
+ *   .woo-v2-commitments  — 06 / Our commitments (SLA + contract guarantees)
+ * ============================================================================ */
+
+/* ── 03 / WHAT'S DIFFERENT UNDER THE HOOD ───────────────────────────── */
+
+.woo-v2-different {
+    padding: var(--space-20) 0;
+    border-top: 1px solid var(--color-border);
+    display: flex; flex-direction: column; justify-content: center;
+}
+.woo-v2-different-title {
+    margin: var(--space-3) 0 var(--space-4);
+    max-width: 800px;
+    line-height: 1.08;
+}
+.woo-v2-different-lede {
+    margin: 0 0 var(--space-10);
+    max-width: 600px;
+}
+.woo-v2-different-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+}
+@media (max-width: 960px) {
+    .woo-v2-different-grid { grid-template-columns: 1fr; }
+}
+.woo-v2-different-card {
+    background: var(--color-surface-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    transition:
+      border-color var(--duration-base) var(--ease-out),
+      box-shadow   var(--duration-base) var(--ease-out),
+      transform    var(--duration-base) var(--ease-out);
+}
+.woo-v2-different-card:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+.woo-v2-different-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-accent);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+}
+.woo-v2-different-num .sep { color: var(--color-fg-dim); margin: 0 4px; }
+.woo-v2-different-card-title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: clamp(18px, 1.7vw, 22px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--color-fg);
+}
+.woo-v2-different-card-body {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--color-fg-muted);
+}
+.woo-v2-different-card-meta {
+    margin-top: auto;
+    padding-top: var(--space-3);
+    border-top: 1px dashed var(--color-border);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--color-fg-dim);
+    letter-spacing: 0.04em;
+}
+.woo-v2-different-card-meta-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--color-success);
+    flex-shrink: 0;
+}
+
+/* ── 05 / MIGRATION ─────────────────────────────────────────────────── */
+
+.woo-v2-migration {
+    padding: var(--space-20) 0;
+    border-top: 1px solid var(--color-border);
+    display: flex; flex-direction: column; justify-content: center;
+}
+.woo-v2-migration-title {
+    margin: var(--space-3) 0 var(--space-4);
+    max-width: 760px;
+    line-height: 1.08;
+}
+.woo-v2-migration-lede {
+    margin: 0 0 var(--space-10);
+    max-width: 600px;
+}
+.woo-v2-migration-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-5);
+    counter-reset: woo-step;
+}
+@media (max-width: 1024px) {
+    .woo-v2-migration-steps { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 540px) {
+    .woo-v2-migration-steps { grid-template-columns: 1fr; }
+}
+.woo-v2-migration-step {
+    counter-increment: woo-step;
+    position: relative;
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-accent);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+.woo-v2-migration-step::before {
+    content: counter(woo-step, decimal-leading-zero);
+    position: absolute;
+    top: -14px;
+    left: 0;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--color-accent);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: var(--color-bg);
+    padding-right: var(--space-3);
+}
+.woo-v2-migration-step-day {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-fg-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.woo-v2-migration-step-title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--color-fg);
+}
+.woo-v2-migration-step-body {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--color-fg-muted);
+}
+
+/* ── 06 / OUR COMMITMENTS ───────────────────────────────────────────── */
+
+.woo-v2-commitments {
+    padding: var(--space-20) 0;
+    border-top: 1px solid var(--color-border);
+    display: flex; flex-direction: column; justify-content: center;
+}
+.woo-v2-commitments-title {
+    margin: var(--space-3) 0 var(--space-4);
+    max-width: 760px;
+    line-height: 1.08;
+}
+.woo-v2-commitments-lede {
+    margin: 0 0 var(--space-10);
+    max-width: 600px;
+}
+.woo-v2-commitments-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8) var(--space-12);
+}
+@media (max-width: 760px) {
+    .woo-v2-commitments-list { grid-template-columns: 1fr; }
+}
+.woo-v2-commitments-item {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+.woo-v2-commitments-item-title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: clamp(17px, 1.5vw, 20px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--color-fg);
+}
+.woo-v2-commitments-item-body {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--color-fg-muted);
+    max-width: 48ch;
+}

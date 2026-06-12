@@ -104,7 +104,7 @@ function ProductDetail() {
       <div className="product-detail-container">
         <div className="product-image-section">
           <div className="main-image-wrapper">
-            <img src={currentImage} alt={product.name} className="main-product-image" loading="lazy" />
+            <img src={currentImage} alt={product.name} className="main-product-image" loading="lazy" decoding="async" />
           </div>
 
           {images.length > 1 && (
@@ -115,7 +115,7 @@ function ProductDetail() {
                   className={`thumbnail ${index === selectedImageIndex ? 'active' : ''}`}
                   onClick={() => setSelectedImageIndex(index)}
                 >
-                  <img src={image.src} alt={`${product.name} - View ${index + 1}`} loading="lazy" />
+                  <img src={image.src} alt={`${product.name} - View ${index + 1}`} loading="lazy" decoding="async" />
                 </button>
               ))}
             </div>

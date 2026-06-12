@@ -1,0 +1,273 @@
+/* DSOpsConsole — full operations-console artifact for the Vision hero. */
+
+.ds-ops {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    max-height: 600px;
+    /* Crisp cream bg (not the muddy surface-3 beige) — reads as a clean
+       app surface, not a brown tint. Border + soft shadow + faint accent
+       outline give the lift. */
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow:
+      var(--shadow-md),
+      0 0 0 1px color-mix(in srgb, var(--color-accent) 4%, transparent);
+    padding: var(--space-4) var(--space-5) var(--space-3);
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    overflow: hidden;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────── */
+
+.ds-ops__header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+}
+.ds-ops__brand {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    font-size: 11px; font-weight: 500;
+    color: var(--color-fg);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+}
+.ds-ops__brand-mark {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
+}
+.ds-ops__live {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    font-size: 9.5px; font-weight: 500;
+    color: var(--color-accent);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+}
+.ds-ops__live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    animation: ds-ops-pulse 2.4s ease-in-out infinite;
+}
+@keyframes ds-ops-pulse {
+    0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent); }
+    50%      { box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-accent) 10%, transparent); }
+}
+
+/* ── Throughput panel ───────────────────────────────────────────────── */
+
+.ds-ops__throughput {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--space-4);
+    align-items: center;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+}
+.ds-ops__throughput-meta { display: flex; flex-direction: column; gap: 2px; }
+
+.ds-ops__label {
+    font-size: 10px;
+    color: var(--color-fg-muted);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.ds-ops__throughput-value {
+    font-family: var(--font-sans);
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    color: var(--color-fg);
+    margin-top: 4px;
+}
+.ds-ops__unit {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-fg-muted);
+    margin-left: 4px;
+}
+.ds-ops__throughput-sub {
+    font-size: 10px;
+    color: var(--color-fg-muted);
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+}
+
+.ds-ops__sparkline {
+    height: 70px;
+    width: 100%;
+}
+.ds-ops__sparkline svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.ds-ops__cursor {
+    animation: ds-ops-cursor-pulse 1.6s ease-in-out infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+.ds-ops__cursor-halo {
+    animation: ds-ops-cursor-halo 1.6s ease-out infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+@keyframes ds-ops-cursor-pulse {
+    0%, 100% { transform: scale(1);   }
+    50%      { transform: scale(1.3); }
+}
+@keyframes ds-ops-cursor-halo {
+    0%   { opacity: 0.5; transform: scale(1);   }
+    100% { opacity: 0;   transform: scale(2.5); }
+}
+
+/* ── Status row ─────────────────────────────────────────────────────── */
+
+.ds-ops__status {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+}
+.ds-ops__status-cell {
+    display: flex; align-items: center; gap: var(--space-3);
+    padding: var(--space-3) var(--space-3);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+}
+.ds-ops__status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.ds-ops__status-dot--ok {
+    background: var(--color-success);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-success) 18%, transparent);
+    animation: ds-ops-status-pulse 3.2s ease-in-out infinite;
+}
+.ds-ops__status-cell:nth-child(2) .ds-ops__status-dot { animation-delay: -1.6s; }
+@keyframes ds-ops-status-pulse {
+    0%, 100% { opacity: 0.7; }
+    50%      { opacity: 1; }
+}
+.ds-ops__status-body { display: flex; flex-direction: column; gap: 2px; }
+.ds-ops__status-val {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-fg);
+    letter-spacing: -0.01em;
+    line-height: 1;
+}
+.ds-ops__status-key {
+    font-size: 9.5px;
+    color: var(--color-fg-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* ── Agent activity ticker ──────────────────────────────────────────── */
+
+.ds-ops__activity {
+    display: flex; flex-direction: column;
+    min-height: 0;
+}
+.ds-ops__activity-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: var(--space-2);
+}
+.ds-ops__activity-meta {
+    font-size: 10px;
+    color: var(--color-fg-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.ds-ops__activity-list {
+    list-style: none; padding: 0; margin: 0;
+    flex: 1;
+    min-height: 0;
+    display: flex; flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+    /* Soft fade at the bottom so old items dissolve before exiting. */
+    mask-image: linear-gradient(180deg, black 0%, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, black 0%, black 70%, transparent 100%);
+}
+
+.ds-ops__row {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    align-items: baseline;
+    gap: var(--space-2);
+    padding: 7px 0;
+    font-size: 11.5px;
+    line-height: 1.3;
+    color: var(--color-fg-muted);
+    border-bottom: 1px solid var(--color-border);
+}
+.ds-ops__row:last-child { border-bottom: 0; }
+
+.ds-ops__row-icon {
+    color: var(--color-accent);
+    font-size: 10px;
+    width: 10px;
+}
+.ds-ops__row--alert .ds-ops__row-icon { color: #C04500; }
+
+.ds-ops__row-ai {
+    color: var(--color-fg);
+    font-weight: 500;
+    flex-shrink: 0;
+}
+.ds-ops__row-action {
+    color: var(--color-fg-muted);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    min-width: 0;
+}
+.ds-ops__row-time {
+    color: var(--color-fg-muted);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────── */
+
+.ds-ops__footer {
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--color-border);
+}
+.ds-ops__footer-mark {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    font-size: 10px;
+    color: var(--color-fg-muted);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+}
+.ds-ops__footer-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--color-accent);
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    .ds-ops__live-dot,
+    .ds-ops__cursor,
+    .ds-ops__cursor-halo,
+    .ds-ops__status-dot--ok {
+        animation: none;
+    }
+}

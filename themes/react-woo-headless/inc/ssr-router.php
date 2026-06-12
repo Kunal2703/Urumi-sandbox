@@ -43,13 +43,12 @@ class React_SSR_Router {
         // Detect route type
         if (empty($path) || $path === 'home') {
             $this->route_type = 'vision'; // Vision is now the homepage
-        } elseif (in_array($path, array('var1', 'var2', 'var3'))) {
-            $this->route_type = 'envvar';
-            $this->route_data['name'] = strtoupper($path);
-        } elseif ($path === 'urumi-for-woocommerce') {
-            $this->route_type = 'urumi-for-woocommerce';
-        } elseif ($path === 'woocommerce-agency-page') {
-            $this->route_type = 'woocommerce-agency'; // WooCommerce agency page
+        } elseif ($path === 'woocommerce' || $path === 'urumi-for-woocommerce') {
+            // /woocommerce is the canonical slug; /urumi-for-woocommerce is a
+            // backward-compat alias. Both render template-parts/ssr-woocommerce.php;
+            // canonical_url in functions.php always points to /woocommerce so
+            // search engines consolidate signals on the new URL.
+            $this->route_type = 'woocommerce';
         } elseif ($path === 'blog') {
             $this->route_type = 'blog';
         } elseif (preg_match('#^blog/([^/]+)/?$#', $path, $matches)) {
@@ -107,11 +106,14 @@ class React_SSR_Router {
     public function render() {
         $template_file = get_template_directory() . '/template-parts/ssr-' . $this->route_type . '.php';
 
-        echo '<article id="ssr-content" role="main">';
+        // Use semantic <main> landmark — exactly one per page is the
+        // accessibility expectation. React's own App.jsx wraps in <main>
+        // too, but only after this SSR <main> is removed by main.jsx.
+        echo '<main id="ssr-content">';
         if (file_exists($template_file)) {
             include $template_file;
         }
-        echo '</article>';
+        echo '</main>';
         echo '<div id="root"></div>';
     }
 }

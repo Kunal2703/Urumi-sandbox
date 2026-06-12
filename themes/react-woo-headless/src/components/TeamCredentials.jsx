@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import { assetUrl } from '../lib/assetUrl';
 import '../styles/TeamCredentials.css';
 
-const TeamCredentials = () => {
-  const themeUrl = window.wpData?.themePath || '/wp-content/themes/react-woo-headless';
+// Founders list is stable — hoist to module scope so it's not
+// recreated on every render and so future shallow-compare optimizations
+// see identical references.
+const FOUNDERS = [
+  {
+    name: 'Naman Malhotra',
+    photo: assetUrl('naman-team.webp'),
+    linkedin: 'https://www.linkedin.com/in/naman03malhotra'
+  },
+  {
+    name: 'Vedanshu Jain',
+    photo: assetUrl('vedanshu-team.webp'),
+    linkedin: 'https://www.linkedin.com/in/vedanshuj/'
+  }
+];
+
+const TeamCredentials = memo(function TeamCredentials() {
   const location = useLocation();
   const isVisionPage = location.pathname === '/';
-
-  const founders = [
-    {
-      name: 'Naman Malhotra',
-      photo: `${themeUrl}/public/naman-team.webp`,
-      linkedin: 'https://www.linkedin.com/in/naman03malhotra'
-    },
-    {
-      name: 'Vedanshu Jain',
-      photo: `${themeUrl}/public/vedanshu-team.webp`,
-      linkedin: 'https://www.linkedin.com/in/vedanshuj/'
-    }
-  ];
+  const founders = FOUNDERS;
 
   return (
     <section className="team-credentials-section">
@@ -29,13 +33,13 @@ const TeamCredentials = () => {
             <h2 className="team-headline">
               {isVisionPage
                 ? "The Founders' Vision"
-                : "Built by ex-WooCommerce core developers"
+                : "Built by ex-Automattic WooCommerce core engineers"
               }
             </h2>
             <p className="team-subheading">
               {isVisionPage
-                ? "We're ex-WooCommerce core developers and ex-Google/Meta engineers who've scaled systems handling millions of requests per minute. Together, we're using that experience to reimagine eCommerce from the ground up, making it effortless through AI. Our vision is simple: merchants should focus on their customers and growth, while intelligent systems handle everything else."
-                : "We're ex-WooCommerce core developers and ex-Google/Meta engineers who've scaled systems handling millions of requests per minute. We built the parts of WooCommerce that matter in production: performance, payments, and reliability. That's why we can operate your store end-to-end, not just host it."
+                ? "We built WooCommerce core at Automattic — the parts that matter in production: performance, payments, reliability. Earlier we were founding-era engineers at HackerRank (Y Combinator), where the team scaled the company from $2M to $30M ARR. Together, we're using that experience to reimagine eCommerce from the ground up, making it effortless through AI. Our vision is simple: merchants should focus on their customers and growth, while intelligent systems handle everything else."
+                : "We built WooCommerce core at Automattic — the parts that matter in production: performance, payments, reliability. Earlier we were founding-era engineers at HackerRank (Y Combinator), where the team scaled the company from $2M to $30M ARR. That's why we can operate your store end-to-end, not just host it."
               }
             </p>
           </div>
@@ -45,7 +49,7 @@ const TeamCredentials = () => {
               {founders.map((founder, index) => (
                 <div key={index} className="founder-card">
                   <div className="founder-photo-wrapper">
-                    <img src={founder.photo} alt={founder.name} className="founder-photo" loading="lazy" />
+                    <img src={founder.photo} alt={founder.name} className="founder-photo" loading="lazy" decoding="async" width="640" height="780" />
                   </div>
                   <div className="founder-info">
                     <h3 className="founder-name">{founder.name}</h3>
@@ -68,7 +72,7 @@ const TeamCredentials = () => {
             <div className="footer-column">
               <h3 className="footer-column-title">PRODUCT</h3>
               <nav className="footer-nav">
-                <Link to="/urumi-for-woocommerce">For WooCommerce</Link>
+                <Link to="/woocommerce">For WooCommerce</Link>
                 <a href="https://docs.urumi.ai/" target="_blank" rel="noopener noreferrer">Docs</a>
                 <Link to="/blog">Blog</Link>
               </nav>
@@ -101,6 +105,6 @@ const TeamCredentials = () => {
       </div>
     </section>
   );
-};
+});
 
 export default TeamCredentials;

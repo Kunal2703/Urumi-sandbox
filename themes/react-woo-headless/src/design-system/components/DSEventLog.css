@@ -1,0 +1,102 @@
+/* DSEventLog — auto-scaling event timeline. */
+
+.ds-evlog {
+    width: 100%;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md), 0 0 0 1px color-mix(in srgb, var(--color-accent) 4%, transparent);
+    padding: var(--space-4) var(--space-5);
+    font-family: var(--font-mono);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+/* ── Header ────────────────────────────────────────────────────────── */
+
+.ds-evlog__head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+}
+.ds-evlog__title {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-fg);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+}
+.ds-evlog__status {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    font-size: 9.5px;
+    font-weight: 500;
+    color: var(--color-accent);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+}
+.ds-evlog__status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    animation: ds-evlog-pulse 2.4s ease-in-out infinite;
+}
+@keyframes ds-evlog-pulse {
+    0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent); }
+    50%      { box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-accent) 10%, transparent); }
+}
+
+/* ── Rows ──────────────────────────────────────────────────────────── */
+
+.ds-evlog__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+.ds-evlog__row {
+    display: grid;
+    grid-template-columns: 64px 16px 1fr;
+    gap: var(--space-2);
+    align-items: baseline;
+    padding: var(--space-2) 0;
+    font-size: 12px;
+    line-height: 1.4;
+    border-bottom: 1px dashed color-mix(in srgb, var(--color-border) 70%, transparent);
+}
+.ds-evlog__row:last-child { border-bottom: 0; }
+
+.ds-evlog__ts {
+    font-size: 10.5px;
+    color: var(--color-fg-dim);
+    font-variant-numeric: tabular-nums;
+}
+.ds-evlog__glyph {
+    text-align: center;
+    font-size: 12px;
+    line-height: 1;
+}
+.ds-evlog__text {
+    color: var(--color-fg);
+}
+
+.ds-evlog__row--info .ds-evlog__glyph { color: var(--color-accent); }
+.ds-evlog__row--ok .ds-evlog__glyph,
+.ds-evlog__row--ok .ds-evlog__text { color: var(--color-success); }
+.ds-evlog__row--live .ds-evlog__glyph {
+    color: var(--color-accent);
+    animation: ds-evlog-pulse 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ds-evlog__status-dot,
+    .ds-evlog__row--live .ds-evlog__glyph { animation: none; }
+}
+
+@media (max-width: 540px) {
+    .ds-evlog__row {
+        grid-template-columns: 56px 14px 1fr;
+        font-size: 11px;
+    }
+}

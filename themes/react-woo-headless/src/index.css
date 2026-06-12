@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Indie+Flower&family=Bubblegum+Sans&display=swap');
-
 /**
  * Global Styles - Professional Deep Indigo + Slate Theme
  *
@@ -68,46 +66,37 @@ body {
   flex-direction: column;
 }
 
-/* Footer Section with Pearl Gradient Background */
+/* Smooth scroll for any programmatic jumps (anchor links, demo form
+ * scrollIntoView). No CSS scroll-snap — the browser's native snap
+ * animation is too short to feel premium, and 100vh sections already
+ * give natural one-at-a-time visual rhythm without forcing the user.
+ * Pattern: Vercel, Anthropic, Lovable, Stripe.
+ *
+ * scroll-padding-top accounts for the fixed translucent navbar. */
+html {
+  scroll-padding-top: 64px;
+  scroll-behavior: smooth;
+}
+
+/* Footer Section
+ * The old "Pearl Gradient" 200px slate-gray fade was a 2020 pattern
+ * that clashed with the warm cream palette. Removed — sections now
+ * separate via the design-system hairline border instead. */
 .footer-section {
   position: relative;
-  overflow: hidden;
-  padding: 120px 40px;
+  padding: var(--space-24) var(--space-10);
   margin-top: auto;
-}
-
-/* Fade effect at top of footer section */
-.footer-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 200px;
-  background: linear-gradient(180deg,
-    #F8F9FB 0%,
-    rgba(248, 249, 251, 0.8) 25%,
-    rgba(248, 249, 251, 0.4) 50%,
-    rgba(248, 249, 251, 0) 100%
-  );
-  z-index: 2;
-  pointer-events: none;
-}
-
-.footer-section > * {
-  position: relative;
-  z-index: 3;
 }
 
 @media (max-width: 768px) {
   .footer-section {
-    padding: 80px 20px;
+    padding: var(--space-20) var(--space-5);
   }
 }
 
 @media (max-width: 480px) {
   .footer-section {
-    padding: 60px 16px;
+    padding: var(--space-16) var(--space-4);
   }
 }
 

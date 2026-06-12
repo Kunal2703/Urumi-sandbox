@@ -1,0 +1,61 @@
+/* DSFaqAccordion — native <details>/<summary> accordion. */
+
+.ds-faq {
+    border-top: 1px solid var(--color-border);
+}
+
+.ds-faq__item {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.ds-faq__q {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5) 0;
+    cursor: pointer;
+    list-style: none;
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: clamp(15px, 1.4vw, 17px);
+    font-weight: 600;
+    line-height: 1.4;
+    transition: color var(--duration-base) var(--ease-out);
+}
+.ds-faq__q::-webkit-details-marker { display: none; }
+.ds-faq__q:hover { color: var(--color-accent); }
+.ds-faq__q:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+.ds-faq__q-text { flex: 1; }
+.ds-faq__q-arrow {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--color-fg-muted);
+    flex-shrink: 0;
+    transition:
+      transform   var(--duration-base) var(--ease-out),
+      background  var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out),
+      color       var(--duration-base) var(--ease-out);
+}
+.ds-faq__item[open] .ds-faq__q-arrow {
+    transform: rotate(180deg);
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+    color: var(--color-accent);
+}
+
+.ds-faq__a {
+    color: var(--color-fg-muted);
+    font-family: var(--font-sans);
+    font-size: clamp(14px, 1.3vw, 16px);
+    line-height: 1.7;
+    padding: 0 0 var(--space-5) 0;
+    max-width: 80ch;
+}

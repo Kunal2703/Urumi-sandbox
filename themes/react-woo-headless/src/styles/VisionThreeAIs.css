@@ -1,0 +1,588 @@
+/* ============================================================================
+ * Vision · Three AIs section.
+ * ============================================================================ */
+
+.vthree {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+}
+
+/* ── Intro section — highlight moment with constellation ───────────────── */
+
+.vthree-intro {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-20) 0;
+    /* Full viewport — matches the other major sections. */
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Anchor for the absolutely-positioned Panel 3 vignette. */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Panorama Panel 3 — animated robot-arrival vignette in bottom-left.
+   Same low-opacity ink-on-paper convention as Panels 1 + 2. */
+.vision-v2-helpers-sketch {
+    position: absolute;
+    bottom: 6%;
+    left: 4%;
+    width: clamp(260px, 26vw, 380px);
+    height: auto;
+    pointer-events: none;
+    z-index: 0;
+    color: color-mix(in srgb, var(--color-fg) 22%, transparent);
+}
+@media (max-width: 1024px) {
+    .vision-v2-helpers-sketch {
+        bottom: 3%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: clamp(220px, 38vw, 320px);
+        opacity: 0.7;
+    }
+}
+@media (max-width: 640px) {
+    .vision-v2-helpers-sketch {
+        width: clamp(200px, 60vw, 280px);
+        bottom: 2%;
+    }
+}
+
+.vthree-intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+}
+
+.vthree-intro-copy { max-width: 460px; }
+.vthree-intro-title {
+    margin: var(--space-3) 0 var(--space-5);
+    color: var(--color-fg);
+    line-height: 1.05;
+}
+.vthree-intro-sub {
+    color: var(--color-fg-muted);
+    margin: 0;
+    max-width: 460px;
+}
+
+.vthree-intro-art {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+@media (max-width: 960px) {
+    .vthree-intro-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-12);
+        text-align: center;
+    }
+    .vthree-intro-copy { margin: 0 auto; max-width: 600px; }
+    .vthree-intro-sub  { margin: 0 auto; }
+    .vthree-intro-art  { max-width: 380px; }
+}
+
+/* ── Triad constellation artifact ──────────────────────────────────────── */
+
+.vthree-triad {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.vthree-triad svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+}
+
+/* Slow rotation on the spokes + outer triangle + outer nodes. */
+.vthree-triad-spin {
+    animation: vthree-triad-rotate 60s linear infinite;
+    transform-origin: 200px 200px;
+}
+@keyframes vthree-triad-rotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* Outer node halos pulse independently — counter-rotate so the labels
+   stay readable as the triangle spins. */
+.vthree-triad-node circle:first-child {
+    animation: vthree-triad-halo 3.6s ease-in-out infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+.vthree-triad-node--top    circle:first-child { animation-delay: 0s;    }
+.vthree-triad-node--left   circle:first-child { animation-delay: -1.2s; }
+.vthree-triad-node--right  circle:first-child { animation-delay: -2.4s; }
+@keyframes vthree-triad-halo {
+    0%, 100% { opacity: 0.5; transform: scale(1);    }
+    50%      { opacity: 1;   transform: scale(1.15); }
+}
+
+/* Central core — slow breathing pulse so the anchor feels alive. */
+.vthree-triad-core circle:nth-child(1) {
+    animation: vthree-triad-core-outer 5s ease-in-out infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+.vthree-triad-core circle:nth-child(2) {
+    animation: vthree-triad-core-mid 5s ease-in-out infinite;
+    animation-delay: -1s;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+@keyframes vthree-triad-core-outer {
+    0%, 100% { opacity: 0.6; transform: scale(1);    }
+    50%      { opacity: 1;   transform: scale(1.10); }
+}
+@keyframes vthree-triad-core-mid {
+    0%, 100% { opacity: 0.7; transform: scale(1);    }
+    50%      { opacity: 1;   transform: scale(1.08); }
+}
+
+/* ── Constellation labels (HTML, not SVG text) ─────────────────────────── */
+
+.vthree-triad-label {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-fg);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    padding: 4px 10px;
+    backdrop-filter: blur(6px);
+    pointer-events: none;
+}
+.vthree-triad-label .ds-num-label {
+    font-size: 9px;
+    color: var(--color-accent);
+    letter-spacing: 0.10em;
+}
+
+/* Position labels relative to .vthree-intro-art (square aspect ratio). */
+.vthree-triad-label--top {
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    margin-top: -6px;
+}
+.vthree-triad-label--left {
+    bottom: 18%;
+    left: -8%;
+}
+.vthree-triad-label--right {
+    bottom: 18%;
+    right: -8%;
+}
+.vthree-triad-label--core {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, calc(50% + 28px));
+    font-size: 9px;
+    color: var(--color-fg-dim);
+    background: transparent;
+    border: 0;
+    padding: 0;
+    backdrop-filter: none;
+}
+
+@media (max-width: 960px) {
+    .vthree-triad-label--left  { bottom: 18%; left: -2%; }
+    .vthree-triad-label--right { bottom: 18%; right: -2%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vthree-triad-spin,
+    .vthree-triad-node circle:first-child,
+    .vthree-triad-core circle:nth-child(1),
+    .vthree-triad-core circle:nth-child(2) {
+        animation: none;
+    }
+}
+
+/* ── Per-AI section ─────────────────────────────────────────────────────── */
+
+.vthree-ai {
+    padding: var(--space-16) 0;
+    border-top: 1px solid var(--color-border);
+    /* 100vh + centered: snap section. min-height set in Vision-v2.css
+       (.vthree-ai is in the cross-cutting snap selector). */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Anchor for the optional Storefront-Panorama vignette inside. */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Storefront Panorama vignettes inside per-AI sections.
+   All share the same bottom-left positioning + ink-on-paper color. */
+.vision-v2-builder-sketch,
+.vision-v2-revenue-sketch,
+.vision-v2-analytics-sketch {
+    position: absolute;
+    bottom: 6%;
+    left: 4%;
+    width: clamp(260px, 26vw, 380px);
+    height: auto;
+    pointer-events: none;
+    z-index: 0;
+    color: color-mix(in srgb, var(--color-fg) 22%, transparent);
+}
+@media (max-width: 1024px) {
+    .vision-v2-builder-sketch,
+    .vision-v2-revenue-sketch,
+    .vision-v2-analytics-sketch {
+        bottom: 3%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: clamp(220px, 38vw, 320px);
+        opacity: 0.7;
+    }
+}
+@media (max-width: 640px) {
+    .vision-v2-builder-sketch,
+    .vision-v2-revenue-sketch,
+    .vision-v2-analytics-sketch {
+        width: clamp(200px, 60vw, 280px);
+        bottom: 2%;
+    }
+}
+
+.vthree-ai-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-12);
+    align-items: center;
+}
+.vthree-ai--flip .vthree-ai-grid {
+    grid-template-columns: 1.1fr 1fr;
+}
+.vthree-ai--flip .vthree-ai-copy { order: 2; }
+.vthree-ai--flip .vthree-ai-art-wrap { order: 1; }
+
+@media (max-width: 960px) {
+    .vthree-ai-grid,
+    .vthree-ai--flip .vthree-ai-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-10);
+    }
+    .vthree-ai--flip .vthree-ai-copy { order: 1; }
+    .vthree-ai--flip .vthree-ai-art-wrap { order: 2; }
+}
+
+.vthree-ai-copy { max-width: 480px; }
+
+.vthree-ai-title {
+    margin: var(--space-3) 0 var(--space-3);
+    line-height: 1.05;
+}
+.vthree-accent { color: var(--color-accent); }
+
+.vthree-ai-tagline {
+    margin: 0 0 var(--space-6);
+    max-width: 460px;
+}
+
+.vthree-ai-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-6);
+}
+.vthree-ai-bullets li {
+    position: relative;
+    padding: var(--space-2) 0 var(--space-2) 22px;
+    border-top: 1px dashed var(--color-border);
+    font-size: 14px;
+    color: var(--color-fg);
+    line-height: 1.55;
+}
+.vthree-ai-bullets li:first-child { border-top: 0; padding-top: 0; }
+.vthree-ai-bullets li::before {
+    content: '+';
+    position: absolute;
+    left: 0;
+    top: var(--space-2);
+    color: var(--color-accent);
+    font-weight: 600;
+    font-size: 14px;
+}
+.vthree-ai-bullets li:first-child::before { top: 0; }
+
+/* ── Artifact shell ─────────────────────────────────────────────────────── */
+
+.vthree-art {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: var(--color-surface-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+}
+.vthree-art-label {
+    position: absolute;
+    bottom: var(--space-4);
+    left: var(--space-5);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-fg-muted);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+}
+.vthree-art-label .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
+}
+
+/* ── Builder AI artifact (terminal/chat) ────────────────────────────────── */
+
+.vthree-builder-window {
+    background: var(--color-fg);
+    color: rgba(255, 237, 214, 0.9);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(16, 9, 4, 0.18);
+    font-family: var(--font-mono);
+    margin-bottom: var(--space-8);
+    flex: 1;
+    min-height: 0;
+}
+.vthree-builder-chrome {
+    background: rgba(255, 237, 214, 0.06);
+    border-bottom: 1px solid rgba(255, 237, 214, 0.10);
+    padding: var(--space-2) var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+.vthree-builder-chrome .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255, 237, 214, 0.20);
+}
+.vthree-builder-url {
+    margin-left: var(--space-2);
+    font-size: 10px;
+    color: rgba(255, 237, 214, 0.45);
+    letter-spacing: 0.05em;
+}
+.vthree-builder-stage {
+    padding: var(--space-4);
+    font-size: 12px;
+    line-height: 1.7;
+}
+.vthree-builder-prompt {
+    display: flex;
+    gap: var(--space-2);
+    margin: var(--space-2) 0;
+}
+.vthree-builder-prompt .prompt {
+    color: var(--color-accent);
+    flex-shrink: 0;
+}
+.vthree-builder-prompt .you {
+    color: rgba(255, 237, 214, 0.95);
+}
+.vthree-builder-prompt .you.typing::after {
+    content: '▋';
+    margin-left: 2px;
+    color: var(--color-accent);
+    animation: vthree-blink 1.2s steps(2, end) infinite;
+}
+@keyframes vthree-blink {
+    0%, 49%   { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+.vthree-builder-output {
+    color: rgba(255, 237, 214, 0.55);
+    margin: var(--space-2) 0 var(--space-3);
+    padding-left: var(--space-3);
+    border-left: 1px solid rgba(255, 237, 214, 0.10);
+}
+.vthree-builder-output .kw { color: var(--color-accent); margin-right: 4px; }
+.vthree-builder-output .file {
+    color: rgba(255, 237, 214, 0.95);
+    background: rgba(220, 80, 0, 0.12);
+    padding: 0 4px;
+    border-radius: 3px;
+}
+.vthree-builder-output .ok { color: #8fd9b5; }
+
+/* ── Revenue AI artifact (report card) ──────────────────────────────────── */
+
+.vthree-report {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    flex: 1;
+    margin-bottom: var(--space-8);
+    display: flex;
+    flex-direction: column;
+}
+.vthree-report-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface-2);
+}
+.vthree-report-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-fg);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.vthree-report-stamp {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--color-accent);
+    letter-spacing: 0.10em;
+    background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+}
+
+.vthree-report-row {
+    display: flex; align-items: flex-start; gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--color-border);
+    font-size: 12px;
+    line-height: 1.45;
+}
+.vthree-report-row:first-of-type { border-top: 0; }
+.vthree-report-row-icon {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+.vthree-report-row.alert .vthree-report-row-icon { color: var(--color-accent); }
+.vthree-report-row.ok .vthree-report-row-icon    { color: var(--color-success); }
+.vthree-report-row-body { flex: 1; min-width: 0; }
+.vthree-report-row-title {
+    color: var(--color-fg);
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+.vthree-report-row-meta {
+    color: var(--color-fg-muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+}
+.vthree-report-row-meta strong {
+    color: var(--color-accent);
+    font-weight: 600;
+}
+.vthree-report-row-tag {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-fg-muted);
+    background: var(--color-surface-2);
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border);
+    align-self: flex-start;
+}
+.vthree-report-foot {
+    margin-top: auto;
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface-2);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-fg-muted);
+}
+.vthree-report-foot .kw { color: var(--color-accent); }
+
+/* ── Analytics AI artifact (chart + share) ──────────────────────────────── */
+
+.vthree-analytics {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+    flex: 1;
+    margin-bottom: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+.vthree-analytics-prompt {
+    display: flex;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.5;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+}
+.vthree-analytics-prompt .prompt {
+    color: var(--color-accent);
+    flex-shrink: 0;
+}
+.vthree-analytics-prompt .you { color: var(--color-fg); }
+
+.vthree-analytics-chart {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+.vthree-analytics-chart svg {
+    width: 100%;
+    flex: 1;
+    min-height: 100px;
+}
+.vthree-analytics-axis {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    padding-left: 30px;
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--color-fg-dim);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.vthree-analytics-share {
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-fg-muted);
+}
+.vthree-analytics-share .link {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+    letter-spacing: 0.02em;
+}

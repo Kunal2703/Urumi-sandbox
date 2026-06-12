@@ -1,334 +1,238 @@
-/**
- * Case Study Page Styles
- * Inspired by Sundial.ai case study design
+/* Case study page — only page-specific layout. Body uses .ds-prose,
+ * pull-quotes use .ds-stat-callout, all other typography from utilities.
  *
- * @author Urumi.ai
- */
+ * The hero mirrors Vision/WC (corner gradient + cursor spotlight + eyebrow
+ * pill + h1 + sub + dual CTAs) so the case study reads as the same brand
+ * register the rest of the site uses. */
 
-/* IBM Plex Serif loaded via non-blocking link in index.php */
+/* ── Hero ──────────────────────────────────────────────────────────── */
 
-/* Case Study Page Container */
-.case-study-page {
-  width: 100%;
-  min-height: 100vh;
-  background: #F8F9FB;
+.ds-page-case-study .case-study-hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: clamp(var(--space-16), 12vh, var(--space-24)) 0 var(--space-12);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--color-border);
 }
 
-/* Article Container */
-.case-study-article {
-  width: 100%;
-  padding: 140px 0 80px;
+.ds-page-case-study .case-study-hero-corner {
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 480px; height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        var(--color-glow) 0%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
 }
 
-/* Cover Image Section - Below Headline */
-.case-study-hero {
-  width: 100%;
-  margin-bottom: 3rem;
-  overflow: hidden;
-  background: #000;
-  border-radius: 12px;
+.ds-page-case-study .case-study-hero-spotlight {
+    position: absolute;
+    top: 0; left: 0;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        var(--color-glow) 0%,
+        color-mix(in srgb, var(--color-glow) 35%, transparent) 35%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
 }
 
-.case-study-hero-image {
-  width: 100%;
-  height: 350px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.ds-page-case-study .case-study-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 920px;
 }
 
-.case-study-hero-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+.ds-page-case-study .case-study-hero-eyebrow {
+    margin-bottom: var(--space-5);
 }
 
-.case-study-container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 0 40px;
+.ds-page-case-study .case-study-hero-title {
+    margin: 0 0 var(--space-5);
+    line-height: 1.0;
+    max-width: 880px;
 }
 
-/* Header */
-.case-study-header {
-  margin-bottom: 2.5rem;
+.ds-page-case-study .case-study-hero-sub {
+    margin: 0 0 var(--space-8);
+    max-width: 640px;
+    font-size: clamp(15px, 1.4vw, 17px);
+    line-height: 1.6;
 }
 
-.case-study-headline {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-  color: #0f172a;
-  margin: 0;
+.ds-page-case-study .case-study-hero-ctas {
+    display: flex; flex-wrap: wrap;
+    gap: var(--space-3);
 }
 
-/* Sections */
-.case-study-section {
-  margin-bottom: 4rem;
+@media (max-width: 960px) {
+    .ds-page-case-study .case-study-hero-corner {
+        width: 320px; height: 320px;
+        top: -60px; right: -60px;
+    }
 }
 
-/* Section Titles - Bold, prominent */
-.case-study-section-title {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  color: #0f172a;
-  margin: 0 0 1.5rem 0;
+/* ── Cover image ───────────────────────────────────────────────────── */
+
+.ds-page-case-study .case-study-cover {
+    margin-top: var(--space-20);
+    margin-bottom: var(--space-12);
 }
 
-/* Introduction Paragraphs - Slightly larger */
-.case-study-intro {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 1.15rem;
-  font-weight: 400;
-  line-height: 1.7;
-  color: #334155;
-  margin: 0 0 1.25rem 0;
+.ds-page-case-study .case-study-cover img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    display: block;
 }
 
-.case-study-intro a,
-.case-study-body a {
-  color: #4F46E5;
-  text-decoration: none;
-  transition: color 0.2s ease;
+/* ── Headline metric strip ────────────────────────────────────────── */
+
+.ds-page-case-study .case-study-metrics {
+    margin-bottom: var(--space-12);
 }
 
-.case-study-intro a:hover,
-.case-study-body a:hover {
-  color: #4338ca;
-  text-decoration: underline;
+/* ── Narrative body ───────────────────────────────────────────────── */
+
+.ds-page-case-study .case-study-body {
+    padding-bottom: var(--space-12);
 }
 
-/* Regular Body Text */
-.case-study-body {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 1.05rem;
-  font-weight: 400;
-  line-height: 1.7;
-  color: #475569;
-  margin: 0 0 1.25rem 0;
+.ds-page-case-study .case-study-section {
+    padding: var(--space-12) 0;
 }
 
-/* Subheadings within sections */
-.case-study-subhead {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-  line-height: 1.6;
-  color: #1e293b;
-  margin: 1.5rem 0 1rem 0;
+.ds-page-case-study .case-study-section-heading {
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-6);
+    max-width: 720px;
 }
 
-/* Stat Callout - Highlighted metric with serif font */
-.case-study-stat-callout {
-  font-family: 'IBM Plex Serif', Georgia, serif;
-  font-size: 1.25rem;
-  font-weight: 500;
-  font-style: italic;
-  line-height: 1.6;
-  color: #0f172a;
-  margin: 2rem 0;
-}
-
-/* Lists */
-.case-study-list {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 1.05rem;
-  font-weight: 400;
-  line-height: 1.8;
-  color: #475569;
-  margin: 1.5rem 0;
-  padding-left: 1.5rem;
-}
-
-.case-study-list li {
-  margin-bottom: 0.75rem;
-  padding-left: 0.5rem;
-}
-
-.case-study-list li strong {
-  font-weight: 600;
-  color: #1e293b;
-}
-
-/* Quote/Pullquote Style (if needed) */
-.case-study-quote {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 1.25rem;
-  font-weight: 400;
-  font-style: italic;
-  line-height: 1.6;
-  color: #1e293b;
-  padding: 2rem 0;
-  margin: 2rem 0;
-  border-left: 3px solid #e2e8f0;
-  padding-left: 2rem;
-}
-
-/* CTA Section - Minimal design matching case study aesthetic */
-.case-study-cta {
-  max-width: 720px;
-  margin: 4rem auto 0;
-  padding: 0 40px;
-  text-align: left;
-}
-
-.case-study-cta-content {
-  border-top: 1px solid #e2e8f0;
-  padding-top: 2.5rem;
-}
-
-.case-study-cta-content h3 {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #0f172a;
-  margin: 0 0 0.75rem 0;
-  letter-spacing: -0.02em;
-}
-
-.case-study-cta-content p {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 1.05rem;
-  font-weight: 400;
-  color: #475569;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.6;
-}
-
-.case-study-cta-btn {
-  display: inline-block;
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #4F46E5;
-  background: transparent;
-  padding: 0;
-  border: none;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.case-study-cta-btn:hover {
-  color: #4338CA;
-}
-
-.case-study-cta-link {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #4F46E5;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.case-study-cta-link:hover {
-  color: #4338CA;
-}
-
-/* Loading & Error States */
-.case-study-loading,
-.case-study-error {
-  min-height: 60vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem;
-  text-align: center;
-}
-
-.case-study-loading p,
-.case-study-error p {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 1.1rem;
-  color: #64748b;
-  margin-top: 1.5rem;
-}
-
-.case-study-error h2 {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 1rem;
-}
-
-.back-to-home {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #4F46E5;
-  text-decoration: none;
-  margin-top: 1.5rem;
-  display: inline-block;
-  transition: color 0.2s ease;
-}
-
-.back-to-home:hover {
-  color: #4338ca;
-}
-
-/* Spinner */
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid #f3f4f6;
-  border-top-color: #4F46E5;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
-  .case-study-container {
-    padding: 0 24px;
-  }
+    .ds-page-case-study .case-study-hero {
+        padding: var(--space-16) 0 var(--space-10);
+    }
+    .ds-page-case-study .case-study-cover {
+        margin-top: var(--space-12);
+    }
+    .ds-page-case-study .case-study-section { padding: var(--space-8) 0; }
+}
 
-  .case-study-article {
-    padding: 100px 0 60px;
-  }
+/* ── Engagement timeline (between metric strip and narrative body) ──── */
 
-  .case-study-headline {
-    font-size: 1.5rem;
-  }
+.ds-page-case-study .case-study-timeline {
+    margin-bottom: var(--space-16);
+}
 
-  .case-study-section-title {
-    font-size: 1.35rem;
-  }
+.ds-page-case-study .case-study-timeline-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-fg-muted);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    margin: 0 0 var(--space-6);
+    font-weight: 500;
+}
 
-  .case-study-intro {
-    font-size: 1.05rem;
-  }
+.ds-page-case-study .case-study-timeline-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-5);
+    counter-reset: case-step;
+}
 
-  .case-study-body {
-    font-size: 1rem;
-  }
+@media (max-width: 960px) {
+    .ds-page-case-study .case-study-timeline-steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-  .case-study-cta {
-    padding: 2rem 1.5rem;
-  }
+@media (max-width: 540px) {
+    .ds-page-case-study .case-study-timeline-steps {
+        grid-template-columns: 1fr;
+    }
+}
 
-  .case-study-cta-content h3 {
-    font-size: 1.5rem;
-  }
+.ds-page-case-study .case-study-timeline-step {
+    counter-increment: case-step;
+    position: relative;
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-accent);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
 
-  .case-study-hero {
-    border-radius: 8px;
-  }
+.ds-page-case-study .case-study-timeline-step::before {
+    content: counter(case-step, decimal-leading-zero);
+    position: absolute;
+    top: -13px;
+    left: 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-accent);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: var(--color-bg);
+    padding-right: var(--space-3);
+}
 
-  .case-study-hero-image {
-    height: 200px;
-  }
+.ds-page-case-study .case-study-timeline-step-week {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--color-fg-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.ds-page-case-study .case-study-timeline-step-title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--color-fg);
+}
+
+.ds-page-case-study .case-study-timeline-step-body {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--color-fg-muted);
+}
+
+.ds-page-case-study .case-study-timeline-step-body strong {
+    color: var(--color-fg);
+    font-weight: 600;
+}
+
+/* ── Plain-English opener (translator's note above prose sections) ──── */
+
+.ds-page-case-study .case-study-section-tldr {
+    font-family: var(--font-sans);
+    font-size: clamp(15px, 1.4vw, 17px);
+    font-style: italic;
+    color: var(--color-fg);
+    margin: 0 0 var(--space-6);
+    padding: var(--space-3) var(--space-5);
+    border-left: 2px solid var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 4%, transparent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    max-width: 760px;
+    line-height: 1.5;
 }

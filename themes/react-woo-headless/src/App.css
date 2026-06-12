@@ -28,6 +28,60 @@
   min-height: 60vh;
 }
 
+/* PageSkeleton — branded fallback for Suspense during lazy chunk load.
+   Mirrors the visual rhythm of a hero (title + sub) so the layout
+   doesn't shift dramatically when the real component takes over. */
+.page-skeleton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  width: 100%;
+  padding: 80px 24px;
+  box-sizing: border-box;
+}
+.page-skeleton__inner {
+  max-width: 720px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  opacity: 0;
+  animation: page-skeleton-fade-in 240ms ease-out 80ms forwards;
+}
+.page-skeleton__bar {
+  height: 18px;
+  width: 100%;
+  border-radius: 9px;
+  /* Neutral fg-tinted shimmer — token-driven so it follows the active
+   * theme. Was rgba(99, 102, 241, …) — indigo-500, leftover from the
+   * pre-design-system palette. */
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-fg) 6%, transparent) 0%,
+    color-mix(in srgb, var(--color-fg) 12%, transparent) 50%,
+    color-mix(in srgb, var(--color-fg) 6%, transparent) 100%
+  );
+  background-size: 200% 100%;
+  animation: page-skeleton-shimmer 1.6s linear infinite;
+}
+.page-skeleton__bar--title { height: 56px; border-radius: 14px; width: 78%; }
+.page-skeleton__bar--sub   { height: 22px; border-radius: 11px; width: 60%; }
+.page-skeleton__bar--row   { width: 100%; }
+.page-skeleton__bar--row-short { width: 84%; }
+@keyframes page-skeleton-fade-in {
+  to { opacity: 1; }
+}
+@keyframes page-skeleton-shimmer {
+  0%   { background-position:  200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-skeleton__inner { animation: none; opacity: 1; }
+  .page-skeleton__bar { animation: none; }
+}
+
 /* Global Styles */
 * {
   margin: 0;
@@ -56,122 +110,357 @@ body {
 }
 
 /* Site Header - Enterprise Style */
+/* ── Site header (modernized · design-system v1) ─────────────────────────
+ * Theme-aware translucent backdrop, hairline border, no glass-inset/cornell-
+ * card shadow. Pill CTA in --color-accent, color-shift hover on links (no
+ * gimmicky underline animation). Agency-page dark-mode inline overrides
+ * (navLinkStyle / ctaStyle from App.jsx) still take precedence via inline
+ * style="" — kept compatible.
+ * ──────────────────────────────────────────────────────────────────────── */
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * Floater nav (v2) — single glass pill that floats with margin from the
+ * viewport edges. Inspired by the impact-page .ds-sticky-nav contract:
+ * fixed-top, blurred translucent surface, soft border, pill-shaped chips
+ * inside. Adapted to also carry the logo + a solid CTA pill.
+ * ────────────────────────────────────────────────────────────────────── */
+
+/* Header fade-in on mount. Replaces framer-motion's <motion.header
+ * initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} ...>
+ * with a one-shot CSS keyframe so the entry chunk does not need to
+ * pull in framer-motion. Same duration + cubic-bezier as the original. */
+@keyframes site-header-mount-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .site-header {
+  animation: site-header-mount-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  margin: 0 auto;
+  max-width: 1100px;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 1.25rem 3rem;
+  background: color-mix(in srgb, var(--color-bg) 62%, transparent);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
   box-shadow:
-    0 4px 30px rgba(0, 0, 0, 0.05),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 5%, transparent),
+    0 12px 32px -10px rgba(16, 9, 4, 0.10),
+    0 4px 12px -4px rgba(16, 9, 4, 0.06);
+  padding: 5px 5px 5px 16px;
+  transition:
+    background var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
 }
 
 .header-content {
-  max-width: 1400px;
-  margin: 0 auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: var(--space-3);
+  height: 42px;
 }
 
 .site-logo {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.1rem;
+  gap: 8px;
   text-decoration: none;
-  transition: opacity 0.3s ease;
+  padding-right: 4px;
+  margin-right: 4px;
+  transition: opacity var(--duration-base) var(--ease-out);
 }
 
-.site-logo:hover {
-  opacity: 0.85;
-}
+.site-logo:hover { opacity: 0.75; }
 
 .logo-image {
-  height: 36px;
+  height: 22px;
   width: auto;
   display: block;
 }
 
 .logo-text {
-  font-family: 'Space Grotesk', -apple-system, sans-serif;
-  font-size: 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--text-headline);
+  color: var(--color-fg);
 }
 
 .site-nav {
-  display: flex;
-  gap: 2.5rem;
+  display: inline-flex;
   align-items: center;
+  gap: 2px;
+  margin-left: auto;
 }
 
+/* Chip nav-link — small, transparent-by-default, fills with surface on
+ * hover and current-page. */
 .nav-link {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 0.9rem;
-  letter-spacing: -0.01em;
-  color: var(--text-body);
-  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 13px;
   font-weight: 500;
-  transition: color 0.3s ease;
-  position: relative;
-  cursor: pointer;
-}
-
-.nav-link:hover {
-  color: var(--primary-color);
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-color) 100%);
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover {
-  opacity: 0.6;
-}
-
-.nav-link:hover::after {
-  width: 100%;
-}
-
-/* CTA Navigation Link - Uses unified button system */
-.nav-link-cta {
-  font-family: 'Funnel Sans', -apple-system, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  padding: 0.625rem 1.25rem;
-  border-radius: 8px;
+  letter-spacing: -0.005em;
+  color: var(--color-fg-muted);
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  background: rgb(47 42 140 / 85%);
-  color: #ffffff;
-  border: none;
+  padding: 7px 12px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  transition:
+    color var(--duration-base) var(--ease-out),
+    background var(--duration-base) var(--ease-out);
+}
+
+.nav-link:hover {
+  color: var(--color-fg);
+  background: color-mix(in srgb, var(--color-fg) 6%, transparent);
+}
+
+.nav-link[aria-current="page"] {
+  color: var(--color-fg);
+  background: color-mix(in srgb, var(--color-fg) 9%, transparent);
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-pill);
+}
+
+/* Primary nav CTA — solid accent pill, slightly smaller than before
+ * since the wrapper pill already does the elevation. */
+.nav-link-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  margin-left: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: #FFEDD7;
+  border: 1px solid var(--color-accent);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
 }
 
 .nav-link-cta:hover {
-  background: var(--primary-color);
-  transform: translateY(-2px);
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
 }
 
 .nav-link-cta:active {
+  transform: translateY(0.5px);
+}
+
+.nav-link-cta:focus-visible {
+  outline: 2px solid var(--color-fg);
+  outline-offset: 2px;
+}
+
+/* ── Mobile hamburger toggle ─────────────────────────────────────────────
+ * Hidden on desktop. Lives inside the floater pill, sized to match the
+ * CTA-pill height. Three lines that morph to an X when open.
+ * ──────────────────────────────────────────────────────────────────────── */
+
+.mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-pill);
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  color: var(--color-fg);
+  transition: background var(--duration-base) var(--ease-out);
+}
+.mobile-menu-toggle:hover {
+  background: color-mix(in srgb, var(--color-fg) 6%, transparent);
+}
+.mobile-menu-toggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.mobile-menu-toggle-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 1.5px;
+  background: var(--color-fg);
+  border-radius: 2px;
+  transform-origin: center;
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    opacity var(--duration-fast) var(--ease-out),
+    top var(--duration-base) var(--ease-out);
+}
+
+/* Three resting positions: top -5px, center 0, bottom +5px (relative to 50%). */
+.mobile-menu-toggle-line:nth-child(1) {
+  transform: translate(-50%, calc(-50% - 5px));
+}
+.mobile-menu-toggle-line:nth-child(2) {
+  transform: translate(-50%, -50%);
+}
+.mobile-menu-toggle-line:nth-child(3) {
+  transform: translate(-50%, calc(-50% + 5px));
+}
+
+/* Open state — morph to X. */
+.mobile-menu-toggle.is-open .mobile-menu-toggle-line:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.mobile-menu-toggle.is-open .mobile-menu-toggle-line:nth-child(2) {
+  opacity: 0;
+}
+.mobile-menu-toggle.is-open .mobile-menu-toggle-line:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* ── Mobile sheet ────────────────────────────────────────────────────────
+ * Detached glass card that drops below the floater pill on small
+ * viewports. Same blur language as the pill itself.
+ * ──────────────────────────────────────────────────────────────────────── */
+
+.mobile-menu-sheet {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  box-shadow:
+    inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 5%, transparent),
+    0 16px 40px -8px rgba(16, 9, 4, 0.14);
+  display: none; /* desktop default; revealed by media query below */
+  flex-direction: column;
+  gap: 4px;
+  /* Closed state — fades + lifts above the trigger, no pointer events.
+   * Opened by toggling [data-open="true"] from App.jsx. Replaces
+   * framer-motion AnimatePresence so the entry chunk does not pull
+   * in the motion runtime for a one-property reveal. */
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  visibility: hidden;
+  transition:
+    opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0.22s;
+}
+.mobile-menu-sheet[data-open="true"] {
+  opacity: 1;
   transform: translateY(0);
+  pointer-events: auto;
+  visibility: visible;
+  transition:
+    opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0s;
+}
+
+.mobile-menu-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: var(--space-3);
+}
+
+.mobile-menu-link {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-fg);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    color var(--duration-base) var(--ease-out),
+    background var(--duration-base) var(--ease-out);
+}
+.mobile-menu-link:hover, .mobile-menu-link:active {
+  color: var(--color-fg);
+  background: color-mix(in srgb, var(--color-fg) 6%, transparent);
+}
+.mobile-menu-link[aria-current="page"] {
+  color: var(--color-fg);
+  background: color-mix(in srgb, var(--color-fg) 9%, transparent);
+}
+
+.mobile-menu-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--color-accent);
+  color: #FFEDD7;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  padding: 12px 18px;
+  text-decoration: none;
+  transition:
+    background var(--duration-base) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+.mobile-menu-cta:hover, .mobile-menu-cta:active {
+  background: var(--color-accent-hover);
+}
+.mobile-menu-cta .ds-arrow {
+  transition: transform var(--duration-base) var(--ease-out);
+}
+.mobile-menu-cta:hover .ds-arrow,
+.mobile-menu-cta:active .ds-arrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 880px) {
+  .site-nav { display: none; }
+  .mobile-menu-toggle { display: inline-flex; align-items: center; justify-content: center; margin-left: auto; }
+  .mobile-menu-sheet  { display: flex; }
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    padding: 4px 4px 4px 14px;
+  }
+  .header-content { height: 38px; gap: var(--space-2); }
+  .logo-image { height: 20px; }
+  .logo-text { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-toggle-line,
+  .mobile-menu-cta,
+  .mobile-menu-link {
+    transition: none;
+  }
 }
 
 /* Cart Icon */
@@ -471,51 +760,9 @@ body {
 }
 
 @media (max-width: 768px) {
-  .site-header {
-    padding: 1rem 1.5rem;
-  }
-
-  .header-content {
-    flex-direction: row;
-    gap: 1.5rem;
-  }
-
-  .site-logo {
-    font-size: 1.5rem;
-    letter-spacing: 2px;
-  }
-
-  .logo-image {
-    height: 28px;
-  }
-
-  .logo-text {
-    font-size: 1.125rem;
-  }
-
-  .site-nav {
-    gap: 1rem;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-  }
-
-  .nav-link {
-    font-size: 0.75rem;
-  }
-
-  /* Hide Blog link on mobile */
-  .nav-link-blog {
-    display: none;
-  }
-
-  /* Hide For WooCommerce link on mobile */
-  .nav-link-woocommerce {
-    display: none;
-  }
-
-  .nav-link-cta {
-    display: none;
-  }
+  /* Nav-specific 768px overrides removed — the floater header (v2) now
+   * carries its own responsive rules at 880px and 640px breakpoints
+   * earlier in this file. */
 
   .collection-title {
     padding: 3rem 1rem 2rem;
@@ -568,4 +815,12 @@ html {
 ::selection {
   background-color: var(--luxury-black);
   color: var(--luxury-white);
+}
+
+/* Global Dentist Footer */
+.site-footer-dentist {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  background: transparent;
 }
